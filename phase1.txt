@@ -1,0 +1,5 @@
+click on index.html
+click login top right hand side
+ -> admin, admin brings you to admin view
+ -> user, user brings you to regular standard user view
+ -> user2, user2 brings you to restaurant owner view
