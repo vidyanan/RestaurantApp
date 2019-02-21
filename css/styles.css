@@ -11,3 +11,18 @@
 .restaurant-previews {
   overflow-x: scroll;
 }
+
+#loginForm {
+	position: fixed;
+	top: 25%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#profileForm {
+	position: fixed;
+	top: 25%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}

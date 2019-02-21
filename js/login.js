@@ -8,6 +8,7 @@ function submitLoginForm(e) {
 	const username = loginForm.username.value;
 	const password = loginForm.password.value;
 	
+	// add backend login to encrtpt password save and verify type of account
 	if (username=="admin" && password=="admin"){
 		window.location.href = 'admin.html';
 	} else if (username=="user" && password=="user"){
