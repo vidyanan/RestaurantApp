@@ -1,3 +1,7 @@
+Start a static webserver serving this directory.
+ -> If you have python3 installed, you may use `python3 -m http.server`
+ -> If you have npm installed, you may use `npm install -g serve && serve .`
+
 click on index.html
 click login top right hand side
  -> admin, admin brings you to admin view
