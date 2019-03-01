@@ -26,3 +26,20 @@
 	transform: translate(-50%, -50%);
 	text-align: center;
 }
+
+#bookingList {
+  display: inline-block;
+  width: 100%;
+  background-color: #6610f2;
+}
+
+.row {
+  margin-top: 5px;
+}
+
+.col {
+  display: inline-block;
+  overflow: auto;
+  width: 19.5%;
+  margin: auto;
+}

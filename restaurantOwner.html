@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>login</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
+
+	</head>
+
+	<body>
+
+    <h2>Bookings:</h2>
+    <div id="bookingList">
+      <div class="row">
+        <div class="col">Booking ID</div>
+        <div class="col">Table #</div>
+        <div class="col">Hosting patron</div>
+        <div class="col">Time of booking</div>
+        <div class="col"></div>
+      </div>
+
+      <div class="row">
+        <div class="col">0</div>
+        <div class="col">1</div>
+        <div class="col">Tim C</div>
+        <div class="col">2019/04/01</div>
+        <button class="removeBooking">Remove Booking</button>
+      </div>
+    </div>
+
+    <p>Current Date: </p>
+    <div id="currentDate"></div>
+    <button id="previousDate">< Previous Day</button>
+    <button id="nextDate">Next Day ></button>
+
+    <br><br>
+
+    <form id='addBookingForm'>
+		  Table #:<br>
+		  <input type="text" name="tableNum"><br>
+      Host name:<br>
+		  <input type="text" name="hostName">
+      Time of Booking:<br>
+		  <input type="datetime-local" name="bookingDate">
+      <input type="submit" value="Add Booking" id="addBooking">
+		</form>
+
+    <br>
+
+    <form id='maxReservationForm'>
+		  Max reservations at a single time:<br>
+		  <input type="number" name="maxReservations"><br>
+      <input type="button" value="Update max reservations" id="setMaxReservation">
+		</form>
+
+		<script type="text/javascript" src='js/restaurantOwner.js'></script>
+
+	</body>
+
+</html>
