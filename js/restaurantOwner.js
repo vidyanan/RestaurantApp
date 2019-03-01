@@ -1,5 +1,5 @@
-const bookingList = document.querySelector('#bookingList');
-const addBookingForm = document.querySelector('#addBookingForm');
+const reservationList = document.querySelector('#reservationList');
+const addReservationForm = document.querySelector('#addReservationForm');
 const maxReservationForm = document.querySelector('#maxReservationForm');
 const previousDateButton = document.querySelector('#previousDate');
 const nextDateButton = document.querySelector('#nextDate');
@@ -8,36 +8,15 @@ const currentDateText = document.querySelector('#currentDate');
 let maxReservations;
 let currentDate = new Date();
 
-bookingList.addEventListener('click', removeBooking);
-addBookingForm.addEventListener('submit', submitBookingForm);
+reservationList.addEventListener('click', removeReservation);
+addReservationForm.addEventListener('submit', submitReservationForm);
 maxReservationForm.addEventListener('submit', updateMaxReservations);
 previousDateButton.addEventListener('click', getPreviousDay);
 nextDateButton.addEventListener('click', getNextDay);
 
-// Remove reservation from book list
-function removeBooking(e) {
-  bookingList.removeChild(e.target.parentNode);
-}
-
-// Get reservations for the next day
-function getNextDay(e) {
-  currentDate.setDate(currentDate.getDate() + 1);
-
-  createCurrentDayReservations();
-}
-
-// Get reservations for the previous day
-function getPreviousDay(e) {
-  currentDate.setDate(currentDate.getDate() - 1);
-
-  createCurrentDayReservations();
-}
-
-// Get the lowest new booking id
-function getNewBookingId() {
-  // Call database
-  return 1;
-}
+// // // // // // //
+// Date Functions //
+// // // // // // //
 
 // Fits date into the restaurant's time slots
 function fitTimeSlot(date) {
@@ -62,54 +41,48 @@ function isCurrentDay(date) {
   return currentDate.getDate() === date.getDate() && currentDate.getMonth() === date.getMonth() && currentDate.getFullYear() === date.getFullYear();
 }
 
+// Get reservations for the next day
+function getNextDay() {
+  currentDate.setDate(currentDate.getDate() + 1);
+
+  createCurrentDayReservations();
+}
+
+// Get reservations for the previous day
+function getPreviousDay() {
+  currentDate.setDate(currentDate.getDate() - 1);
+
+  createCurrentDayReservations();
+}
+
+// Changes the html date on the page
+function updateTextDate() {
+  currentDateText.innerText = (currentDate.getMonth() + 1) + "/" + currentDate.getDate() + "/" + currentDate.getFullYear();
+}
+
+// // // // // // // // //
+// Reservation Functions //
+// // // // // // // // //
+
 // Submit a new reservation
-function submitBookingForm(e) {
+function submitReservationForm(e) {
   e.preventDefault();
 
-  const tableNum = addBookingForm.tableNum.value;
-  const hostName = addBookingForm.hostName.value;
-  let bookingDate = new Date(addBookingForm.bookingDate.value);
+  const hostName = addReservationForm.hostName.value;
+  let reservationDate = new Date(addReservationForm.reservationDate.value);
 
-  bookingDate = fitTimeSlot(bookingDate);
+  reservationDate = fitTimeSlot(reservationDate);
 
   // If time slot does not conflict with max amount of reservation
-  if (!doesConflict(bookingDate) && isCurrentDay(bookingDate)) {
-    createNewBooking(tableNum, hostName, bookingDate);
+  if (!doesConflict(reservationDate) && isCurrentDay(reservationDate)) {
+    createNewReservation(hostName, reservationDate);
   }
 }
 
-// Creates a new reservation on book list
-function createNewBooking(tableNum, hostName, bookingDate) {
-  // Add new entry into database
-
-  let newBooking = document.createElement('div');
-  newBooking.setAttribute('class', 'row');
-
-  // Create default tag for booking info
-  let bookingInfo = document.createElement('div');
-  bookingInfo.setAttribute('class', 'col');
-
-  bookingInfo.innerText = getNewBookingId();
-  newBooking.appendChild(bookingInfo);
-
-  bookingInfo = bookingInfo.cloneNode(false);
-  bookingInfo.innerText = tableNum;
-  newBooking.appendChild(bookingInfo);
-
-  bookingInfo = bookingInfo.cloneNode(false);
-  bookingInfo.innerText = hostName;
-  newBooking.appendChild(bookingInfo);
-
-  bookingInfo = bookingInfo.cloneNode(false);
-  bookingInfo.innerText = bookingDate;
-  newBooking.appendChild(bookingInfo);
-
-  let removeBooking = document.createElement('button');
-  removeBooking.setAttribute('class', 'removeBooking');
-  removeBooking.innerText = "Remove Booking";
-  newBooking.appendChild(removeBooking);
-
-  bookingList.appendChild(newBooking);
+// Get the lowest new reservation id
+function getNewReservationId() {
+  // Call database
+  return 1;
 }
 
 // Updates the maximum reservations allowed in a time slot
@@ -127,21 +100,71 @@ function retrieveMaxReservations() {
   maxReservations = 5; // Call to database to find out the actual max
 }
 
+function getFreeTable(date) {
+  // Query database to return the first table free at date
+  return 1
+}
+
+// // // // // // // // // // // // //
+// Reservation Modifying Functions //
+// // // // // // // // // // // // //
+
+// Creates a new reservation on reservationList
+function createNewReservation(hostName, reservationDate) {
+  let tableNum = getFreeTable(reservationDate);
+
+  // Add new entry into database
+
+  let newReservation = document.createElement('div');
+  newReservation.setAttribute('class', 'row');
+
+  // Create default tag for reservation info
+  let reservationInfo = document.createElement('div');
+  reservationInfo.setAttribute('class', 'col');
+
+  reservationInfo.innerText = getNewReservationId();
+  newReservation.appendChild(reservationInfo);
+
+  reservationInfo = reservationInfo.cloneNode(false);
+  reservationInfo.innerText = tableNum;
+  newReservation.appendChild(reservationInfo);
+
+  reservationInfo = reservationInfo.cloneNode(false);
+  reservationInfo.innerText = hostName;
+  newReservation.appendChild(reservationInfo);
+
+  reservationInfo = reservationInfo.cloneNode(false);
+  reservationInfo.innerText = reservationDate;
+  newReservation.appendChild(reservationInfo);
+
+  let removeReservation = document.createElement('button');
+  removeReservation.setAttribute('class', 'removeReservation');
+  removeReservation.innerText = "Remove Reservation";
+  newReservation.appendChild(removeReservation);
+
+  reservationList.appendChild(newReservation);
+}
+
+// Remove reservation from reservationList
+function removeReservation(e) {
+  reservationList.removeChild(e.target.parentNode);
+}
+
 function removeAllReservations() {
-  let header = bookingList.firstElementChild;
+  let header = reservationList.firstElementChild;
 
   let child;
   // Remove all reservations
-  while((child = bookingList.firstElementChild)) {
-    bookingList.removeChild(child);
+  while((child = reservationList.firstElementChild)) {
+    reservationList.removeChild(child);
   }
 
   // Add the header back
-  bookingList.appendChild(header);
+  reservationList.appendChild(header);
 }
 
-// Puts reservations on book list for all entries on date
-function createDayReservations(date) {
+// Puts reservations on reservationList for all entries on date
+function createDayReservations() {
   let dates = [];
 
   // Call database to get all dates on date
@@ -151,7 +174,7 @@ function createDayReservations(date) {
   removeAllReservations();
 
   for (let i = 0; i < dates.length; i++) {
-    createNewBooking(dates[i]);
+    createNewReservation(dates[i]);
   }
 }
 
@@ -160,11 +183,6 @@ function createCurrentDayReservations() {
   createDayReservations(currentDate);
 
   updateTextDate();
-}
-
-// Changes the html date on the page
-function updateTextDate() {
-  currentDateText.innerText = (currentDate.getMonth() + 1) + "/" + currentDate.getDate() + "/" + currentDate.getFullYear();
 }
 
 window.onload=retrieveMaxReservations;

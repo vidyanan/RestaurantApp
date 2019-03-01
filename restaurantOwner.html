@@ -11,13 +11,13 @@
 
 	<body>
 
-    <h2>Bookings:</h2>
-    <div id="bookingList">
+    <h2>Reservations:</h2>
+    <div id="reservationList">
       <div class="row">
-        <div class="col">Booking ID</div>
+        <div class="col">Reservation ID</div>
         <div class="col">Table #</div>
         <div class="col">Hosting patron</div>
-        <div class="col">Time of booking</div>
+        <div class="col">Time of reservation</div>
         <div class="col"></div>
       </div>
 
@@ -26,7 +26,7 @@
         <div class="col">1</div>
         <div class="col">Tim C</div>
         <div class="col">2019/04/01</div>
-        <button class="removeBooking">Remove Booking</button>
+        <button class="removeReservation">Remove Reservation</button>
       </div>
     </div>
 
@@ -37,14 +37,12 @@
 
     <br><br>
 
-    <form id='addBookingForm'>
-		  Table #:<br>
-		  <input type="text" name="tableNum"><br>
+    <form id="addReservationForm">
       Host name:<br>
 		  <input type="text" name="hostName">
-      Time of Booking:<br>
-		  <input type="datetime-local" name="bookingDate">
-      <input type="submit" value="Add Booking" id="addBooking">
+      Time of Reservation:<br>
+		  <input type="datetime-local" name="reservationDate">
+      <input type="submit" value="Add Reservation" id="addReservation">
 		</form>
 
     <br>
