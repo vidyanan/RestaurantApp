@@ -2,8 +2,13 @@ Start a static webserver serving this directory.
  -> If you have python3 installed, you may use `python3 -m http.server`
  -> If you have npm installed, you may use `npm install -g serve && serve .`
 
-click on index.html
-click login top right hand side
+open http://0.0.0.0:8000/index.html
+
+click sign in top right hand side
  -> admin, admin brings you to admin view
  -> user, user brings you to regular standard user view
  -> user2, user2 brings you to restaurant owner view
+
+click sign up top right hand side
+ -> creates an account regular user redirects you to standard user view
+ -> restaurant owner redirects you to restaurant owner view
