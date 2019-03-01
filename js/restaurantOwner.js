@@ -106,6 +106,11 @@ function submitReservationForm(e) {
   const hostName = addReservationForm.hostName.value;
   let reservationDate = new Date(addReservationForm.reservationDate.value);
 
+  // Test for valid input
+  if (hostName === "" || isNaN(reservationDate)) {
+    return;
+  }
+
   reservationDate = fitTimeSlot(reservationDate);
 
   // If time slot does not conflict with max amount of reservation
@@ -131,6 +136,10 @@ function updateMaxReservations(e) {
   e.preventDefault();
 
   const newMax = maxReservationForm.maxReservations.value;
+
+  if (newMax === "") {
+    return;
+  }
   maxReservations = newMax;
 
   // Call to database to update the max
@@ -140,6 +149,8 @@ function updateMaxReservations(e) {
 // Only called on startup
 function retrieveMaxReservations() {
   maxReservations = serverMaxReservations; // Call to database to find out the actual max
+
+  maxReservationForm.maxReservations.value = maxReservations;
 }
 
 function getFreeTable(date) {
@@ -268,13 +279,16 @@ function removeAllReservations() {
 function createDayReservations() {
   let dates;
 
+  removeAllReservations();
+
   // Call database to get all dates on date
   // {
       dates = server[formatDate(currentDate)];
+      if (dates === undefined) {
+        return;
+      }
       // sort in sql
   // }
-
-  removeAllReservations();
 
   let tempDate = currentDate;
   for (let i = 0; i < dates.length; i++) {
