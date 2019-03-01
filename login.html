@@ -6,21 +6,25 @@
 		<title>login</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="css/styles.css">
+	    <link rel="stylesheet" href="/vendor/bootstrap@4.0.0/css/bootstrap.min.css">
+	    <link rel="stylesheet" href="/vendor/fontawesome@5.7.2/css/all.min.css">
 		
 	</head>
 
 	<body>
 
 		<form id='loginForm'>
-		  username:<br>
-		  <input type="text" name="username"><br>
-		  password:<br>
-		  <input type="password" name="password">
-		  <input type="submit" value="login">
+		  username:
+		  <input type="text" class="form-group" name="username">
+		  password:
+		  <input type="password" class="form-group" name="password"> 
+		  <input type="submit" class="btn btn-primary" value="login">
 		</form>
 		
 		<script type="text/javascript" src='js/login.js'></script>
-		
+	    <script src="/vendor/jquery@3.3.1/jquery.min.js"></script>
+	    <script src="/vendor/bootstrap@4.0.0/js/bootstrap.min.js"></script>
+	    <script type="module" src="/js/scripts.js"></script>
 	</body>
 
 </html>
