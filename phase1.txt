@@ -12,3 +12,9 @@ click sign in top right hand side
 click sign up top right hand side
  -> creates an account regular user redirects you to standard user view
  -> restaurant owner redirects you to restaurant owner view
+
+Admin View
+->Clicking on "modify" in user table will launch a popup form that allows the modification of the specific user such as names, passwords and date of births.
+->Clicking on "modify" in the restaurant table will launch a pop up form that allows the modification of restaurant details such as capacity, name and address.
+->Search tool filters out rows that contain the name or ID specified in the search input box
+->Clicking on "remove" in the review table will delete the specific review from the database as well as the table.
