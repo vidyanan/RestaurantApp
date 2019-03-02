@@ -59,8 +59,6 @@ function reviewDelete(e) {
 function searchUser(e){
 
   if (e.target.classList.contains('btn-searchUser')) {
-    console.log(e.target.classList);
-    console.log(e.target.parentElement.nextSibling.children[1].children);
     var k = 0;
     while(k<e.target.parentElement.nextSibling.children[1].children.length){
       e.target.parentElement.nextSibling.children[1].children[k].setAttribute("style","")
@@ -71,7 +69,7 @@ function searchUser(e){
     search.trim()
     var k = 0;
     while(k<e.target.parentElement.nextSibling.children[1].children.length){
-      if(!(e.target.parentElement.nextSibling.children[1].children[k].children[1].textContent).trim().includes(search)){
+      if(!((e.target.parentElement.nextSibling.children[1].children[k].children[1].textContent).trim().toLowerCase()).includes(search.toLowerCase())){
         e.target.parentElement.nextSibling.children[1].children[k].setAttribute("style","display:none")
       }
       k = k + 1;
@@ -82,8 +80,7 @@ function searchUser(e){
 function searchRest(e){
 
   if (e.target.classList.contains('btn-searchRest')) {
-    console.log(e.target.classList);
-    console.log(e.target.parentElement.nextSibling.children[1].children);
+
     var k = 0;
     while(k<e.target.parentElement.nextSibling.children[1].children.length){
       e.target.parentElement.nextSibling.children[1].children[k].setAttribute("style","")
@@ -94,7 +91,7 @@ function searchRest(e){
     search.trim()
     var k = 0;
     while(k<e.target.parentElement.nextSibling.children[1].children.length){
-      if(!(e.target.parentElement.nextSibling.children[1].children[k].children[1].textContent).trim().includes(search)){
+      if(!((e.target.parentElement.nextSibling.children[1].children[k].children[1].textContent).trim().toLowerCase()).includes(search.toLowerCase())){
         e.target.parentElement.nextSibling.children[1].children[k].setAttribute("style","display:none")
       }
       k = k + 1;
@@ -105,8 +102,6 @@ function searchRest(e){
 function searchReview(e){
 
   if (e.target.classList.contains('btn-searchReview')) {
-    console.log(e.target.classList);
-    console.log(e.target.parentElement.nextSibling.children[1].children);
     var k = 0;
     while(k<e.target.parentElement.nextSibling.children[1].children.length){
       e.target.parentElement.nextSibling.children[1].children[k].setAttribute("style","")
@@ -117,7 +112,7 @@ function searchReview(e){
     search.trim()
     var k = 0;
     while(k<e.target.parentElement.nextSibling.children[1].children.length){
-      if(!(e.target.parentElement.nextSibling.children[1].children[k].children[1].textContent).trim().includes(search)){
+      if(!((e.target.parentElement.nextSibling.children[1].children[k].children[1].textContent).trim().toLowerCase()).includes(search.toLowerCase())){
         e.target.parentElement.nextSibling.children[1].children[k].setAttribute("style","display:none")
       }
       k = k + 1;
