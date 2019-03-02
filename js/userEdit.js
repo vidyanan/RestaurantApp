@@ -14,11 +14,7 @@ function closeForm() {
 }
 
 function fillInData(i){
-  myform.children[4].value = i;
-  //retrieve data from server about user with userID i
-
-
-
+  myform.children[0].value = i;
 }
 
 function beginClosing(e){

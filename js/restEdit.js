@@ -12,9 +12,7 @@ function closeForm() {
 }
 
 function fillInData(i){
-  console.log(i);
-  console.log(myform.children[0]);
+
   myform.children[0].value = i;
-  console.log(myform.children[0]);
 
 }

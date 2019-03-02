@@ -3,10 +3,16 @@
 const userTable = document.getElementById('table table-user')
 const restTable = document.getElementById('table table-rest')
 const reviewTable = document.getElementById('table table-review')
+const searchUserBar = document.getElementById('searchUser')
+const searchRestBar = document.getElementById('searchRest')
+const searchReviewBar = document.getElementById('searchReview')
 
 userTable.addEventListener('click', openUserEdit);
 restTable.addEventListener('click', openRestEdit);
 reviewTable.addEventListener('click', reviewDelete);
+searchUserBar.addEventListener('click', searchUser);
+searchRestBar.addEventListener('click', searchRest);
+searchReviewBar.addEventListener('click', searchReview);
 
 
 function openUserEdit(e) {
@@ -48,4 +54,73 @@ function reviewDelete(e) {
       e.target.parentElement.parentElement.parentElement.removeChild(e.target.parentElement.parentElement.parentElement.children[k]);
     }
 
+}
+
+function searchUser(e){
+
+  if (e.target.classList.contains('btn-searchUser')) {
+    console.log(e.target.classList);
+    console.log(e.target.parentElement.nextSibling.children[1].children);
+    var k = 0;
+    while(k<e.target.parentElement.nextSibling.children[1].children.length){
+      e.target.parentElement.nextSibling.children[1].children[k].setAttribute("style","")
+      k = k + 1;
+    }
+
+    var search = (e.target.parentElement.children[0].value);
+    search.trim()
+    var k = 0;
+    while(k<e.target.parentElement.nextSibling.children[1].children.length){
+      if(!(e.target.parentElement.nextSibling.children[1].children[k].children[1].textContent).trim().includes(search)){
+        e.target.parentElement.nextSibling.children[1].children[k].setAttribute("style","display:none")
+      }
+      k = k + 1;
+    }
+  }
+}
+
+function searchRest(e){
+
+  if (e.target.classList.contains('btn-searchRest')) {
+    console.log(e.target.classList);
+    console.log(e.target.parentElement.nextSibling.children[1].children);
+    var k = 0;
+    while(k<e.target.parentElement.nextSibling.children[1].children.length){
+      e.target.parentElement.nextSibling.children[1].children[k].setAttribute("style","")
+      k = k + 1;
+    }
+
+    var search = (e.target.parentElement.children[0].value);
+    search.trim()
+    var k = 0;
+    while(k<e.target.parentElement.nextSibling.children[1].children.length){
+      if(!(e.target.parentElement.nextSibling.children[1].children[k].children[1].textContent).trim().includes(search)){
+        e.target.parentElement.nextSibling.children[1].children[k].setAttribute("style","display:none")
+      }
+      k = k + 1;
+    }
+  }
+}
+
+function searchReview(e){
+
+  if (e.target.classList.contains('btn-searchReview')) {
+    console.log(e.target.classList);
+    console.log(e.target.parentElement.nextSibling.children[1].children);
+    var k = 0;
+    while(k<e.target.parentElement.nextSibling.children[1].children.length){
+      e.target.parentElement.nextSibling.children[1].children[k].setAttribute("style","")
+      k = k + 1;
+    }
+
+    var search = (e.target.parentElement.children[0].value);
+    search.trim()
+    var k = 0;
+    while(k<e.target.parentElement.nextSibling.children[1].children.length){
+      if(!(e.target.parentElement.nextSibling.children[1].children[k].children[1].textContent).trim().includes(search)){
+        e.target.parentElement.nextSibling.children[1].children[k].setAttribute("style","display:none")
+      }
+      k = k + 1;
+    }
+  }
 }
