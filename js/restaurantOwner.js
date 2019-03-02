@@ -57,9 +57,13 @@ function doesConflict(date) {
   // Query database to get count of reservations at that time slot on that day
   // {
       let serverLst = server[formatDate(date)];
-      for(let i = 0; i < serverLst.length; i++) {
-        if(serverLst[i]['hour'] === hour || serverLst[i]['timeSlot'] === timeSlot) {
-          reservCount++;
+
+      // If it is undefined then there are no reservations to count
+      if (serverLst !== undefined) {
+        for(let i = 0; i < serverLst.length; i++) {
+          if (serverLst[i]['hour'] === hour || serverLst[i]['timeSlot'] === timeSlot) {
+            reservCount++;
+          }
         }
       }
   // }
@@ -114,7 +118,7 @@ function submitReservationForm(e) {
   reservationDate = fitTimeSlot(reservationDate);
 
   // If time slot does not conflict with max amount of reservation
-  if (!doesConflict(reservationDate) && isCurrentDay(reservationDate)) {
+  if (!doesConflict(reservationDate)) {
     createNewReservation(hostName, reservationDate);
   }
 }
@@ -138,6 +142,7 @@ function updateMaxReservations(e) {
   const newMax = maxReservationForm.maxReservations.value;
 
   if (newMax === "") {
+    // No input found!
     return;
   }
   maxReservations = newMax;
@@ -154,22 +159,25 @@ function retrieveMaxReservations() {
 }
 
 function getFreeTable(date) {
-  let table = 0;
+  let table = 1;
 
   // Query database to return the first table free at date
   //{
     // This function just goes through the dictionary in server until an incremented int doesn't appear for that date
     let list = server[formatDate(date)];
-    let tempTable = 1;
-    while(table === 0) {
-      for (let i = 0; i < list.length; i++) {
-        if(list[i]['table'] === tempTable) {
-          break;
-        } else if (i === list.length - 1) {
-          table = tempTable;
+
+    if (list !== undefined) {
+      let tempTable = 1;
+      while (table === 0) {
+        for (let i = 0; i < list.length; i++) {
+          if (list[i]['table'] === tempTable) {
+            break;
+          } else if (i === list.length - 1) {
+            table = tempTable;
+          }
         }
+        tempTable++;
       }
-      tempTable++;
     }
   //}
 
@@ -187,17 +195,18 @@ function createNewReservation(hostName, reservationDate) {
 
   // Add new entry into database
   // {
-      for(let i = 0; i < Object.keys(server).length; i++) {
-        if (formatDate(reservationDate) === Object.keys(server)[i]) {
-          server[formatDate(reservationDate)].push({'id': id, 'table': tableNum, 'host': hostName, 'hour': reservationDate.getHours(), 'timeSlot': reservationDate.getMinutes()});
-          break;
-        } else if (i === Object.keys(server).length - 1) {
-          server[formatDate(reservationDate)] = [{'id': id, 'table': tableNum, 'host': hostName, 'hour': reservationDate.getHours(), 'timeSlot': reservationDate.getMinutes()}];
-        }
+      let serverLst = server[formatDate(reservationDate)];
+
+      if(serverLst === undefined) { // No reservations are booked for that date yet
+        server[formatDate(reservationDate)] = [{'id': id, 'table': tableNum, 'host': hostName, 'hour': reservationDate.getHours(), 'timeSlot': reservationDate.getMinutes()}];
+      } else {
+        server[formatDate(reservationDate)].push({'id': id, 'table': tableNum, 'host': hostName, 'hour': reservationDate.getHours(), 'timeSlot': reservationDate.getMinutes()});
       }
   // }
 
-  addReservation(hostName, reservationDate, tableNum, id)
+  if (isCurrentDay(reservationDate)) {
+    addReservation(hostName, reservationDate, tableNum, id)
+  }
 }
 
 function addReservation(hostName, reservationDate, tableNum, id) {
@@ -251,11 +260,15 @@ function deleteReservation(child) {
       let date = new Date(child.firstChild.nextSibling.nextSibling.nextSibling.innerText);
       let serverLst = server[formatDate(date)];
 
-      for(let i = 0; i < serverLst.length; i++) {
-        if(serverLst[i]['id'] === id) {
-          serverLst.splice(i, 1);
-          server[formatDate(date)] = serverLst;
-          break;
+      if (serverLst === undefined) {
+        console.log("Date does not exist to be deleted!");
+      } else {
+        for (let i = 0; i < serverLst.length; i++) {
+          if (serverLst[i]['id'] === id) {
+            serverLst.splice(i, 1);
+            server[formatDate(date)] = serverLst;
+            break;
+          }
         }
       }
   // }
@@ -285,6 +298,7 @@ function createDayReservations() {
   // {
       dates = server[formatDate(currentDate)];
       if (dates === undefined) {
+        // No reservations exist on the current Date!
         return;
       }
       // sort in sql
