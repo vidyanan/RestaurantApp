@@ -1,0 +1,39 @@
+.card {
+  --mobile-margin: 10px;
+
+  position: absolute;
+  box-sizing: border-box;
+  background: var(--light);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  border-radius: 4px;
+
+  left: var(--mobile-margin);
+  top: 90px;
+  width: calc(100% - calc(var(--mobile-margin) * 2));
+  padding: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .card {
+    left: 160px;
+    top: 120px;
+    width: 500px;
+    padding: 20px;
+  }
+}
+
+.heading {
+  margin: 0;
+}
+
+.description {
+  color: var(--dark);
+}
+
+.dollars {
+  color: var(--green);
+}
+
+.stars {
+  color: var(--yellow);
+}
