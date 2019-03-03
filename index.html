@@ -24,23 +24,15 @@
           <form class="row" method="GET" action="/restaurantsSearch.html">
             <div class="form-row align-items-center">
               <div class="col-auto">
-                <label class="sr-only" for="city">City</label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text">
-                      <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                  </div>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="city"
-                    name="city"
-                    placeholder="City"
-                    required
-                  />
-                </div>
+                <csc309-input
+                  input-id="city"
+                  name="city"
+                  placeholder="City"
+                  icon-class="fas fa-map-marker-alt"
+                >
+                </csc309-input>
               </div>
+
               <div class="col-auto">
                 <button type="submit" class="btn btn-primary">Find</button>
               </div>
@@ -56,21 +48,21 @@
         <csc309-restaurant-preview
           heading="Italian"
           image="/images/restaurants/porta-via.png"
-          url="/restaurant.html?id=porta-via"
+          url="/restaurantsSearch.html?cuisine=italian"
         >
         </csc309-restaurant-preview>
 
         <csc309-restaurant-preview
           heading="Mediterranean"
           image="/images/restaurants/flava-ceen.jpg"
-          url="/restaurant.html?id=flava-ceen"
+          url="/restaurantsSearch.html?cuisine=mediterranean"
         >
         </csc309-restaurant-preview>
 
         <csc309-restaurant-preview
           heading="Chinese"
           image="/images/restaurants/umami-hakka.jpg"
-          url="/restaurant.html?id=umami-hakka"
+          url="/restaurantsSearch.html?cuisine=chinese"
         >
         </csc309-restaurant-preview>
       </div>
