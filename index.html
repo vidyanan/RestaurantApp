@@ -15,13 +15,13 @@
   <csc309-navigation></csc309-navigation>
 
   <div class="mb-5">
-    <csc309-container-curve class="mb-5">
+    <csc309-cover-curve class="mb-5">
       <div class="container my-5" slot="children">
           <div class="row">
             <h1 class="mb-4">Discover restaurants in your area</h1>
           </div>
 
-          <form class="row" method="GET" action="/restaurants-search.html">
+          <form class="row" method="GET" action="/restaurantsSearch.html">
             <div class="form-row align-items-center">
               <div class="col-auto">
                 <label class="sr-only" for="city">City</label>
@@ -37,6 +37,7 @@
                     id="city"
                     name="city"
                     placeholder="City"
+                    required
                   />
                 </div>
               </div>
@@ -46,30 +47,30 @@
             </div>
           </form>
         </div>
-    </csc309-container-curve>
+    </csc309-cover-curve>
   </div>
 
   <div class="container">
     <div class="row">
       <div class="restaurant-previews d-flex my-5">
         <csc309-restaurant-preview
-          title="Italian"
+          heading="Italian"
           image="/images/restaurants/porta-via.png"
-          url="/restaurants.html?id=porta-via"
+          url="/restaurant.html?id=porta-via"
         >
         </csc309-restaurant-preview>
 
         <csc309-restaurant-preview
-          title="Mediterranean"
+          heading="Mediterranean"
           image="/images/restaurants/flava-ceen.jpg"
-          url="/restaurants.html?id=flava-ceen"
+          url="/restaurant.html?id=flava-ceen"
         >
         </csc309-restaurant-preview>
 
         <csc309-restaurant-preview
-          title="Chinese"
+          heading="Chinese"
           image="/images/restaurants/umami-hakka.jpg"
-          url="/restaurants.html?id=umami-hakka"
+          url="/restaurant.html?id=umami-hakka"
         >
         </csc309-restaurant-preview>
       </div>
@@ -91,7 +92,7 @@
               nunc elit, vulputate sit amet bibendum ac, facilisis in leo.
           </p>
 
-          <a class="btn btn-primary" href="/profile.html">
+          <a class="btn btn-primary mb-5" href="/profile.html">
             Get Started
           </a>
         </div>
@@ -108,6 +109,6 @@
 
   <script src="/vendor/jquery@3.3.1/jquery.min.js"></script>
   <script src="/vendor/bootstrap@4.0.0/js/bootstrap.min.js"></script>
-  <script type="module" src="/js/scripts.js"></script>
+  <script type="module" src="/components/loader.js"></script>
 </body>
 </html>
