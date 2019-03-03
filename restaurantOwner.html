@@ -19,7 +19,8 @@
 
     <csc309-navigation></csc309-navigation>
 
-    <div class="mb-5">
+    <!-- From the restaurant page -->
+    <div class="mb-5" id="coverCard">
       <csc309-cover-image src="/images/restaurants/porta-via.png" alt="">
       </csc309-cover-image>
       <csc309-cover-card
@@ -34,34 +35,27 @@
       </csc309-cover-card>
     </div>
 
-    <!-- Date selector -->
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-0 fa-pull-left">
-          <button type="button" id="previousDate" class="btn btn-default btn-sm">
-            <b>Previous Day</b>
-            <br>
-            <span class="fas fa-backward"></span>
-          </button>
-        </div>
-        <div class="col-sm-9 text-center">
+
+    <div class="d-flex justify-content-around">
+      <button type="button" id="previousDate" class="btn btn-primary">
+        <b>Previous Day</b>
+        <br>
+        <span class="fas fa-backward"></span>
+      </button>
+
+        <div class="col-sm-8 text-center">
           <h4>
             Reservations for the day for:
             <div id="currentDate"></div>
           </h4>
         </div>
-        <div class="col-sm-1 fa-pull-right">
-          <button type="button" id="nextDate" class="btn btn-default btn-sm">
-            <b>Next Day</b>
-            <br>
-            <span class="fas fa-forward"></span>
-          </button>
-        </div>
-      </div>
+
+      <button type="button" id="nextDate" class="btn btn-primary">
+        <b>Next Day</b>
+        <br>
+        <span class="fas fa-forward"></span>
+      </button>
     </div>
-
-
-
 
     <br>
 
@@ -79,7 +73,13 @@
             Hosting Patron
           </th>
           <th scope="col">
+            Phone Number
+          </th>
+          <th scope="col">
             Time of reservation
+          </th>
+          <th scope="col">
+            Number of seats
           </th>
           <th scope="col">
           </th>
@@ -91,37 +91,94 @@
           <td scope="row">0</td>
           <td>1</td>
           <td>Tim C</td>
+          <td>000-000-0000</td>
+          <td>1</td>
           <td>2019/04/01</td>
           <td>
-            <button type="button" class="btn btn-default btn-sm">
-              <span class="fas fa-trash-alt"> Remove</span>
+            <button type="button" class="btn btn-danger">
+              <span class="fas fa-trash-alt"></span> Remove
             </button>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <button type="button" class="btn btn-default btn-sm">
-      <span class="fas fa-edit"> Edit</span>
-    </button>
+    <br><br>
+
+    <!-- From the restaurant page -->
+    <div class="container">
+      <div class="row">
+        <form class="col-sm" id="addReservationForm">
+          <h2>Book a Table</h2>
+
+          <csc309-input
+            input-id="name"
+            name="name"
+            label="Name"
+            icon-class="fas fa-user"
+            required
+          >
+          </csc309-input>
+
+          <csc309-input
+            input-id="phone"
+            name="phone"
+            type="tel"
+            label="Phone"
+            icon-class="fas fa-phone"
+            required
+          >
+          </csc309-input>
+
+          <csc309-input
+            input-id="datetime"
+            name="datetime"
+            type="datetime-local"
+            label="Date & Time"
+            icon-class="fas fa-calendar-alt"
+            required
+          >
+          </csc309-input>
+
+          <csc309-input
+            input-id="seats"
+            name="seats"
+            type="number"
+            label="Number of seats"
+            icon-class="fas fa-chair"
+            min="1"
+            required
+          >
+          </csc309-input>
+
+          <button type="submit" class="btn btn-primary my-3">
+            Book Now
+          </button>
+        </form>
+
+        <div class="col-sm">
+          <csc309-restaurant-calendar id="calendar">
+          </csc309-restaurant-calendar>
+        </div>
+      </div>
+    </div>
 
     <br><br>
 
-    <form id="addReservationForm">
-      Host name:<br>
-		  <input type="text" name="hostName">
-      Time of Reservation:<br>
-		  <input type="datetime-local" name="reservationDate">
-      <input type="submit" value="Add Reservation" id="addReservation">
-		</form>
-
-    <br>
-
-    <form id='maxReservationForm'>
-		  Max reservations at a single time:<br>
-		  <input type="number" name="maxReservations"><br>
-      <input type="button" value="Update max reservations" id="setMaxReservation">
-		</form>
+    <div class="d-flex justify-content-center">
+      <form id="setMaxReservation">
+        <csc309-input
+          input-id="maxReservations"
+          name="maxReservations"
+          type="number"
+          label="Maximum number of reservations per time slot"
+          min="1"
+          required
+        >
+        </csc309-input>
+        <input type="submit" value="Update" class="btn btn-primary btn-block">
+      </form>
+    </div>
 
     <script src="/vendor/jquery@3.3.1/jquery.min.js"></script>
     <script src="/vendor/bootstrap@4.0.0/js/bootstrap.min.js"></script>

@@ -11,13 +11,12 @@ tomorrow.setDate(tomorrow.getDate() + 1);
 tomorrow = formatDate(tomorrow);
 
 let server = {};
-server[yesterday] = [{"id": 1, "table": 0, "host": "Bob", "hour": 5, "timeSlot": 30}];
-server[today] = [{"id": 0, "table": 0, "host": "Tim", "hour": 3, "timeSlot": 0}, {"id": 2, "table": 3, "host": "Jim", "hour": 3, "timeSlot": 30}];
-server[tomorrow] = [{"id": 3, "table": 5, "host": "Him", "hour": 3, "timeSlot": 0}];
+server[yesterday] = [{"id": 1, "table": 0, "host": "Bob", "phone": "000-000-0000", "numSeats": 2, "hour": 5, "timeSlot": 30}];
+server[today] = [{"id": 0, "table": 0, "host": "Tim", "phone": "000-000-0000", "numSeats": 3, "hour": 3, "timeSlot": 0}, {"id": 2, "table": 3, "host": "Jim", "phone": "000-000-0000", "numSeats": 1, "hour": 3, "timeSlot": 30}];
+server[tomorrow] = [{"id": 3, "table": 5, "host": "Him", "phone": "000-000-0000", "numSeats": 5, "hour": 3, "timeSlot": 0}];
 
 let serverMaxReservations = 5;
 let serverNextID = 4;
-
 
 let intToDay = {0: "Monday", 1: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday", 7: "Sunday"};
 let intToMonth = {0: "January", 1: "February", 2: "March", 3: "April", 4: "May", 5: "June", 6: "July", 7: "August", 8: "September", 9: "October", 10: "November", 11: "December"};
@@ -26,20 +25,44 @@ let currentDate = new Date();
 
 const reservationList = document.querySelector('#reservationList');
 const addReservationForm = document.querySelector('#addReservationForm');
-const maxReservationForm = document.querySelector('#maxReservationForm');
+const maxReservationForm = document.querySelector('#setMaxReservation');
 const previousDateButton = document.querySelector('#previousDate');
 const nextDateButton = document.querySelector('#nextDate');
 const currentDateText = document.querySelector('#currentDate');
+const calendar = document.querySelector('#calendar');
 
 reservationList.addEventListener('click', removeButtonFunction);
 addReservationForm.addEventListener('submit', submitReservationForm);
-maxReservationForm.addEventListener('click', updateMaxReservations);
+calendar.addEventListener('datechange', onDateChange);
+maxReservationForm.addEventListener('submit', updateMaxReservations);
 previousDateButton.addEventListener('click', getPreviousDay);
 nextDateButton.addEventListener('click', getNextDay);
 
 // // // // // // //
 // Date Functions //
 // // // // // // //
+
+// From the restaurant page
+/**
+   * Sets the date when a day in the calendar is clicked.
+   *
+   * @param {CustomEvent} event
+   */
+function onDateChange(event) {
+  const value = event.detail;
+
+  const leftZeroPad = n => (n >= 10 ? String(n) : `0${n}`);
+
+  const year = value.getFullYear();
+  const month = leftZeroPad(value.getMonth() + 1);
+  const day = leftZeroPad(value.getDate());
+  const hour = leftZeroPad(value.getHours());
+  const minute = leftZeroPad(value.getMinutes());
+
+  const datetimeLocal = `${year}-${month}-${day}T${hour}:${minute}`;
+
+  $("#datetime").val(datetimeLocal);
+}
 
 // Fits date into the restaurant's time slots
 function fitTimeSlot(date) {
@@ -147,8 +170,10 @@ function getStandardTimeFormat(Date) {
 function submitReservationForm(e) {
   e.preventDefault();
 
-  const hostName = addReservationForm.hostName.value;
+  const hostName = addReservationForm.name.value;
   let reservationDate = new Date(addReservationForm.reservationDate.value);
+  const phone = addReservationForm.phone.value;
+  const numSeats = addReservationForm.seats.value;
 
   // Test for valid input
   if (hostName === "" || isNaN(reservationDate)) {
@@ -159,7 +184,7 @@ function submitReservationForm(e) {
 
   // If time slot does not conflict with max amount of reservation
   if (!doesConflict(reservationDate)) {
-    createNewReservation(hostName, reservationDate);
+    createNewReservation(hostName, reservationDate, phone, numSeats);
   }
 }
 
@@ -185,6 +210,7 @@ function updateMaxReservations(e) {
     // No input found!
     return;
   }
+
   maxReservations = newMax;
 
   // Call to database to update the max
@@ -195,7 +221,7 @@ function updateMaxReservations(e) {
 function retrieveMaxReservations() {
   maxReservations = serverMaxReservations; // Call to database to find out the actual max
 
-  maxReservationForm.maxReservations.value = maxReservations;
+  $("#maxReservations").val(maxReservations);
 }
 
 function getFreeTable(date) {
@@ -229,7 +255,7 @@ function getFreeTable(date) {
 // // // // // // // // // // // // //
 
 // Creates a new reservation on reservationList
-function createNewReservation(hostName, reservationDate) {
+function createNewReservation(hostName, reservationDate, phone, numSeats) {
   let tableNum = getFreeTable(reservationDate);
   let id = getNewReservationId();
 
@@ -238,18 +264,18 @@ function createNewReservation(hostName, reservationDate) {
       let serverLst = server[formatDate(reservationDate)];
 
       if(serverLst === undefined) { // No reservations are booked for that date yet
-        server[formatDate(reservationDate)] = [{'id': id, 'table': tableNum, 'host': hostName, 'hour': reservationDate.getHours(), 'timeSlot': reservationDate.getMinutes()}];
+        server[formatDate(reservationDate)] = [{'id': id, 'table': tableNum, 'host': hostName, 'phone': phone, 'numSeats': numSeats, 'hour': reservationDate.getHours(), 'timeSlot': reservationDate.getMinutes()}];
       } else {
-        server[formatDate(reservationDate)].push({'id': id, 'table': tableNum, 'host': hostName, 'hour': reservationDate.getHours(), 'timeSlot': reservationDate.getMinutes()});
+        server[formatDate(reservationDate)].push({'id': id, 'table': tableNum, 'host': hostName, 'phone': phone, 'numSeats': numSeats, 'hour': reservationDate.getHours(), 'timeSlot': reservationDate.getMinutes()});
       }
   // }
 
   if (isCurrentDay(reservationDate)) {
-    addReservation(hostName, reservationDate, tableNum, id)
+    addReservation(hostName, reservationDate, tableNum, id, phone)
   }
 }
 
-function addReservation(hostName, reservationDate, tableNum, id) {
+function addReservation(hostName, reservationDate, tableNum, id, phone, numSeats) {
   let newReservation = document.createElement('tr');
 
   // Create default tag for reservation info
@@ -270,6 +296,16 @@ function addReservation(hostName, reservationDate, tableNum, id) {
   reservationInfo.innerText = hostName;
   newReservation.appendChild(reservationInfo);
 
+  // Host phone number
+  reservationInfo = reservationInfo.cloneNode(false);
+  reservationInfo.innerText = phone;
+  newReservation.appendChild(reservationInfo);
+
+  // Number of seats
+  reservationInfo = reservationInfo.cloneNode(false);
+  reservationInfo.innerText = numSeats;
+  newReservation.appendChild(reservationInfo);
+
   // Date of reservation
   reservationInfo = reservationInfo.cloneNode(false);
   reservationInfo.innerText = getStandardTimeFormat(reservationDate);
@@ -278,12 +314,12 @@ function addReservation(hostName, reservationDate, tableNum, id) {
   // Remove button
   let removeReservation = document.createElement('button');
   removeReservation.setAttribute('type', 'button');
-  removeReservation.setAttribute('class', 'btn btn-default btn-sm');
+  removeReservation.setAttribute('class', 'btn btn-danger');
 
   // Button icon & text
   let removeInner = document.createElement('span');
   removeInner.setAttribute('class', 'fas fa-trash-alt');
-  removeInner.innerText = "Remove";
+  removeInner.innerText += " Remove";
 
   removeReservation.appendChild(removeInner);
   newReservation.appendChild(removeReservation);
@@ -363,7 +399,7 @@ function createDayReservations() {
   for (let i = 0; i < dates.length; i++) {
     tempDate.setHours(dates[i]['hour']);
     tempDate.setMinutes(dates[i]['timeSlot']);
-    addReservation(dates[i]['host'], tempDate, dates[i]['table'], dates[i]['id']);
+    addReservation(dates[i]['host'], tempDate, dates[i]['table'], dates[i]['id'], dates[i]['phone'], dates[i]['numSeats']);
   }
 }
 
