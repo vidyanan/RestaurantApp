@@ -27,23 +27,6 @@
   text-align: center;
 }
 
-#bookingList {
-  display: inline-block;
-  width: 100%;
-  background-color: #6610f2;
-}
-
-.row {
-  margin-top: 5px;
-}
-
-.col {
-  display: inline-block;
-  overflow: auto;
-  width: 19.5%;
-  margin: auto;
-}
-
 .input-small {
   max-width: 320px;
 }

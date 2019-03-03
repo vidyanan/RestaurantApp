@@ -19,7 +19,8 @@ let serverMaxReservations = 5;
 let serverNextID = 4;
 
 
-
+let intToDay = {0: "Monday", 1: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday", 7: "Sunday"};
+let intToMonth = {0: "January", 1: "February", 2: "March", 3: "April", 4: "May", 5: "June", 6: "July", 7: "August", 8: "September", 9: "October", 10: "November", 11: "December"};
 let maxReservations;
 let currentDate = new Date();
 
@@ -96,7 +97,46 @@ function formatDate(date) {
 
 // Changes the html date on the page
 function updateTextDate() {
-  currentDateText.innerText = formatDate(currentDate);
+  currentDateText.innerText = getStandardDateFormat(currentDate);
+}
+
+function getStandardDateFormat(Date) {
+  let day = intToDay[Date.getDay()];
+  let date = Date.getDate();
+  let dateEnd = "th";
+  let month = intToMonth[Date.getMonth()];
+  let year = Date.getFullYear();
+
+  if (date < 3) {
+    if (date === 0) {
+      dateEnd = "st";
+    }
+    else if (date === 1) {
+      dateEnd = "nd";
+    }
+    else {
+      dateEnd = "rd";
+    }
+  }
+
+  return day + " " + month + " " + date + dateEnd + ", " + year;
+}
+
+function getStandardTimeFormat(Date) {
+  let hours = Date.getHours();
+  let minutes = Date.getMinutes();
+  let amPM = "AM";
+
+  if (hours > 12) {
+    hours = hours % 12;
+    amPM = "PM"
+  }
+
+  if (minutes === 0) {
+    minutes = "00"
+  }
+
+  return hours + ":" + minutes + " " + amPM;
 }
 
 // // // // // // // // //
@@ -210,31 +250,42 @@ function createNewReservation(hostName, reservationDate) {
 }
 
 function addReservation(hostName, reservationDate, tableNum, id) {
-  let newReservation = document.createElement('div');
-  newReservation.setAttribute('class', 'row');
+  let newReservation = document.createElement('tr');
 
   // Create default tag for reservation info
-  let reservationInfo = document.createElement('div');
-  reservationInfo.setAttribute('class', 'col');
+  let reservationInfo = document.createElement('td');
+  reservationInfo.setAttribute('scope', 'row');
 
+  // Reservation ID
   reservationInfo.innerText = id;
   newReservation.appendChild(reservationInfo);
 
+  // Table number
   reservationInfo = reservationInfo.cloneNode(false);
   reservationInfo.innerText = tableNum;
   newReservation.appendChild(reservationInfo);
 
+  // Host name
   reservationInfo = reservationInfo.cloneNode(false);
   reservationInfo.innerText = hostName;
   newReservation.appendChild(reservationInfo);
 
+  // Date of reservation
   reservationInfo = reservationInfo.cloneNode(false);
-  reservationInfo.innerText = reservationDate;
+  reservationInfo.innerText = getStandardTimeFormat(reservationDate);
   newReservation.appendChild(reservationInfo);
 
+  // Remove button
   let removeReservation = document.createElement('button');
-  removeReservation.setAttribute('class', 'removeReservation');
-  removeReservation.innerText = "Remove Reservation";
+  removeReservation.setAttribute('type', 'button');
+  removeReservation.setAttribute('class', 'btn btn-default btn-sm');
+
+  // Button icon & text
+  let removeInner = document.createElement('span');
+  removeInner.setAttribute('class', 'fas fa-trash-alt');
+  removeInner.innerText = "Remove";
+
+  removeReservation.appendChild(removeInner);
   newReservation.appendChild(removeReservation);
 
   reservationList.appendChild(newReservation);
@@ -244,13 +295,22 @@ function addReservation(hostName, reservationDate, tableNum, id) {
 function removeButtonFunction(e) {
   e.preventDefault();
 
-  if (e.target.getAttribute('class') === "removeReservation") {
-    deleteReservation(e.target.parentNode);
+  let parentNode = e.target;
+
+  // If they clicked on the text instead of the button
+  if (parentNode.getAttribute('class') === 'fas fa-trash-alt') {
+    parentNode = parentNode.parentNode;
+  }
+
+
+  if (parentNode.getAttribute('class') === "btn btn-default btn-sm") {
+    deleteReservation(parentNode.parentNode);
   }
 }
 
 // Remove reservation from reservationList
 function deleteReservation(child) {
+
   reservationList.removeChild(child);
 
   // Remove entry from database
@@ -258,7 +318,7 @@ function deleteReservation(child) {
       // irl it would go by id
       let id = parseInt(child.firstChild.innerText);
       let date = new Date(child.firstChild.nextSibling.nextSibling.nextSibling.innerText);
-      let serverLst = server[formatDate(date)];
+      let serverLst = server[formatDate(currentDate)];
 
       if (serverLst === undefined) {
         console.log("Date does not exist to be deleted!");
@@ -276,16 +336,11 @@ function deleteReservation(child) {
 
 // Removes but doesn't delete all reservations
 function removeAllReservations() {
-  let header = reservationList.firstElementChild;
-
   let child;
   // Remove all reservations
   while((child = reservationList.firstElementChild)) {
     reservationList.removeChild(child);
   }
-
-  // Add the header back
-  reservationList.appendChild(header);
 }
 
 // Puts reservations on reservationList for all entries on date

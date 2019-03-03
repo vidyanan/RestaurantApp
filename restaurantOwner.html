@@ -1,39 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
-		<title>login</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" type="text/css" href="css/styles.css">
-
-	</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurant Owner &bull; CSC309 Team 5</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="/vendor/bootstrap@4.0.0/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/vendor/fontawesome@5.7.2/css/all.min.css" />
+  </head>
 
 	<body>
 
-    <h2>Reservations:</h2>
-    <div id="reservationList">
-      <div class="row">
-        <div class="col">Reservation ID</div>
-        <div class="col">Table #</div>
-        <div class="col">Hosting patron</div>
-        <div class="col">Time of reservation</div>
-        <div class="col"></div>
-      </div>
+    <div id="loading"></div>
 
+    <csc309-navigation></csc309-navigation>
+
+    <div class="mb-5">
+      <csc309-cover-image src="/images/restaurants/porta-via.png" alt="">
+      </csc309-cover-image>
+      <csc309-cover-card
+        heading="Porta Via"
+        description="Italian &bull; Pasta &bull; Sandwiches &bull; Salads">
+        <div slot="children">
+          <csc309-dollars count="2"></csc309-dollars>
+          &bull;
+          <csc309-stars count="4"></csc309-stars>
+        </div>
+
+      </csc309-cover-card>
+    </div>
+
+    <!-- Date selector -->
+    <div class="container">
       <div class="row">
-        <div class="col">0</div>
-        <div class="col">1</div>
-        <div class="col">Tim C</div>
-        <div class="col">2019/04/01</div>
-        <button class="removeReservation">Remove Reservation</button>
+        <div class="col-sm-0 fa-pull-left">
+          <button type="button" id="previousDate" class="btn btn-default btn-sm">
+            <b>Previous Day</b>
+            <br>
+            <span class="fas fa-backward"></span>
+          </button>
+        </div>
+        <div class="col-sm-9 text-center">
+          <h4>
+            Reservations for the day for:
+            <div id="currentDate"></div>
+          </h4>
+        </div>
+        <div class="col-sm-1 fa-pull-right">
+          <button type="button" id="nextDate" class="btn btn-default btn-sm">
+            <b>Next Day</b>
+            <br>
+            <span class="fas fa-forward"></span>
+          </button>
+        </div>
       </div>
     </div>
 
-    <p>Current Date: </p>
-    <div id="currentDate"></div>
-    <button id="previousDate">< Previous Day</button>
-    <button id="nextDate">Next Day ></button>
+
+
+
+    <br>
+
+    <!-- Reservation table -->
+    <table class="table table-user">
+      <thead>
+        <tr>
+          <th scope="col">
+            Reservation ID
+          </th>
+          <th scope="col">
+            Table #
+          </th>
+          <th scope="col">
+            Hosting Patron
+          </th>
+          <th scope="col">
+            Time of reservation
+          </th>
+          <th scope="col">
+          </th>
+        </tr>
+      </thead>
+
+      <tbody id="reservationList">
+        <tr>
+          <td scope="row">0</td>
+          <td>1</td>
+          <td>Tim C</td>
+          <td>2019/04/01</td>
+          <td>
+            <button type="button" class="btn btn-default btn-sm">
+              <span class="fas fa-trash-alt"> Remove</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button type="button" class="btn btn-default btn-sm">
+      <span class="fas fa-edit"> Edit</span>
+    </button>
 
     <br><br>
 
@@ -53,8 +123,10 @@
       <input type="button" value="Update max reservations" id="setMaxReservation">
 		</form>
 
-		<script type="text/javascript" src='js/restaurantOwner.js'></script>
-
+    <script src="/vendor/jquery@3.3.1/jquery.min.js"></script>
+    <script src="/vendor/bootstrap@4.0.0/js/bootstrap.min.js"></script>
+    <script type="module" src="/components/loader.js"></script>
+    <script type="module" src="/js/restaurantOwner.js"></script>
 	</body>
 
 </html>
