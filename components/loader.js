@@ -1,14 +1,16 @@
-import * as components from './index.js';
+import * as components from "./index.js";
 
 $(document).ready(function() {
   if (
-    'registerElement' in document
-    && 'import' in document.createElement('link')
-    && 'content' in document.createElement('template')
+    "registerElement" in document &&
+    "import" in document.createElement("link") &&
+    "content" in document.createElement("template")
   ) {
-    registerComponents(components).then(onComponentsReady)
+    registerComponents(components).then(onComponentsReady);
   } else {
-    window.addEventListener('WebComponentsReady', () => registerComponents(components).then(onComponentsReady))
+    window.addEventListener("WebComponentsReady", () =>
+      registerComponents(components).then(onComponentsReady)
+    );
   }
 
   /**
@@ -18,22 +20,32 @@ $(document).ready(function() {
    * @returns {Promise}
    */
   function registerComponents(components) {
-    const prefix = 'csc309';
-    const kebabCase = x => x.replace(/([A-Z])/g, '-$1').toLowerCase();
-    return Promise.all(Object.entries(components)
-      .map(([componentName, Component]) => new Promise((resolve) => {
-        $.get(`/components/${componentName}/${componentName}.html`, (templateHTML) => {
-          document.head.insertAdjacentHTML('beforeend', templateHTML);
-          customElements.define(`${prefix}${kebabCase(componentName)}`, Component)
-          resolve()
-        })
-      })))
+    const prefix = "csc309";
+    const kebabCase = x => x.replace(/([A-Z])/g, "-$1").toLowerCase();
+    return Promise.all(
+      Object.entries(components).map(
+        ([componentName, Component]) =>
+          new Promise(resolve => {
+            $.get(
+              `/components/${componentName}/${componentName}.html`,
+              templateHTML => {
+                document.head.insertAdjacentHTML("beforeend", templateHTML);
+                customElements.define(
+                  `${prefix}${kebabCase(componentName)}`,
+                  Component
+                );
+                resolve();
+              }
+            );
+          })
+      )
+    );
   }
 
   /**
    * Fired when web components have been defined.
    */
   function onComponentsReady() {
-    document.getElementById('loading').remove();
+    document.getElementById("loading").remove();
   }
-})
+});

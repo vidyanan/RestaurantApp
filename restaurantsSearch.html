@@ -1,145 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Restaurants Search &bull; CSC309 Team 5</title>
-  <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="/vendor/bootstrap@4.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/vendor/fontawesome@5.7.2/css/all.min.css">
-</head>
-<body>
-  <div id="loading"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Restaurants Search &bull; CSC309 Team 5</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="/vendor/bootstrap@4.0.0/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/vendor/fontawesome@5.7.2/css/all.min.css" />
+  </head>
+  <body>
+    <div id="loading"></div>
 
-  <csc309-navigation></csc309-navigation>
+    <csc309-navigation></csc309-navigation>
 
-  <div class="mb-5">
-    <csc309-container-curve class="mb-5">
-      <form class="container my-5" method="GET" action="/restaurantsSearch.html">
-        <div class="form-row align-items-center">
-          <div class="col-auto mb-1">
-            <csc309-input
-              input-id="city"
-              name="city"
-              placeholder="City"
-              icon-class="fas fa-map-marker-alt"
-            >
-            </csc309-input>
-          </div>
-          <div class="col-auto mb-1">
-            <csc309-input
-              input-id="cuisine"
-              name="cuisine"
-              placeholder="Cuisine"
-              icon-class="fas fa-utensils"
-            >
-            </csc309-input>
-          </div>
-          <div class="col-auto mb-1">
-            <csc309-input
-              input-id="datetime"
-              name="datetime"
-              type="datetime-local"
-              placeholder="Date & Time"
-              icon-class="fas fa-calendar-alt"
-            >
-            </csc309-input>
-          </div>
+    <div class="mb-5">
+      <csc309-container-curve class="mb-5">
+        <form
+          class="container my-5"
+          method="GET"
+          action="/restaurantsSearch.html"
+        >
+          <div class="form-row align-items-center">
+            <div class="col-auto mb-1">
+              <csc309-input
+                input-id="city"
+                name="city"
+                placeholder="City"
+                icon-class="fas fa-map-marker-alt"
+              >
+              </csc309-input>
+            </div>
+            <div class="col-auto mb-1">
+              <csc309-input
+                input-id="cuisine"
+                name="cuisine"
+                placeholder="Cuisine"
+                icon-class="fas fa-utensils"
+              >
+              </csc309-input>
+            </div>
+            <div class="col-auto mb-1">
+              <csc309-input
+                input-id="datetime"
+                name="datetime"
+                type="datetime-local"
+                placeholder="Date & Time"
+                icon-class="fas fa-calendar-alt"
+              >
+              </csc309-input>
+            </div>
 
-          <div class="col-auto mb-1">
-            <button type="submit" class="btn btn-primary">Find</button>
+            <div class="col-auto mb-1">
+              <button type="submit" class="btn btn-primary">Find</button>
+            </div>
           </div>
+        </form>
+      </csc309-container-curve>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="d-flex flex-wrap my-5">
+          <csc309-restaurant-preview
+            heading="Porta Via"
+            image="/images/restaurants/porta-via.png"
+            url="/restaurant.html?id=porta-via"
+          >
+          </csc309-restaurant-preview>
+
+          <csc309-restaurant-preview
+            heading="Flava Ceen"
+            image="/images/restaurants/flava-ceen.jpg"
+            url="/restaurant.html?id=flava-ceen"
+          >
+          </csc309-restaurant-preview>
+
+          <csc309-restaurant-preview
+            heading="Umami Hakka"
+            image="/images/restaurants/umami-hakka.jpg"
+            url="/restaurant.html?id=umami-hakka"
+          >
+          </csc309-restaurant-preview>
+
+          <csc309-restaurant-preview
+            heading="Swiss Chalet"
+            image="/images/restaurants/swiss-chalet.jpg"
+            url="/restaurant.html?id=swiss-chalet"
+          >
+          </csc309-restaurant-preview>
+
+          <csc309-restaurant-preview
+            heading="Sail Sushi"
+            image="/images/restaurants/sail-sushi.jpg"
+            url="/restaurant.html?id=sail-sushi"
+          >
+          </csc309-restaurant-preview>
+
+          <csc309-restaurant-preview
+            heading="Big Bite Burrito"
+            image="/images/restaurants/big-bite-burrito.jpg"
+            url="/restaurant.html?id=big-bite-burrito"
+          >
+          </csc309-restaurant-preview>
+
+          <csc309-restaurant-preview
+            heading="Twice As Nice"
+            image="/images/restaurants/twice-as-nice.jpg"
+            url="/restaurant.html?id=twice-as-nice"
+          >
+          </csc309-restaurant-preview>
+
+          <csc309-restaurant-preview
+            heading="Sunrise Caribbean"
+            image="/images/restaurants/sunrise-caribbean.jpg"
+            url="/restaurant.html?id=sunrise-caribbean"
+          >
+          </csc309-restaurant-preview>
+
+          <csc309-restaurant-preview
+            heading="Kinton Ramen"
+            image="/images/restaurants/kinton-ramen.jpg"
+            url="/restaurant.html?id=kinton-ramen"
+          >
+          </csc309-restaurant-preview>
+
+          <csc309-restaurant-preview
+            heading="Little Caesars"
+            image="/images/restaurants/little-caesars.jpg"
+            url="/restaurant.html?id=little-caesars"
+          >
+          </csc309-restaurant-preview>
+
+          <csc309-restaurant-preview
+            heading="La Sani Grill"
+            image="/images/restaurants/la-sani-grill.jpg"
+            url="/restaurant.html?id=la-sani-grill"
+          >
+          </csc309-restaurant-preview>
         </div>
-      </form>
-    </csc309-container-curve>
-  </div>
-
-  <div class="container">
-    <div class="row">
-      <div class="d-flex flex-wrap my-5">
-        <csc309-restaurant-preview
-          heading="Porta Via"
-          image="/images/restaurants/porta-via.png"
-          url="/restaurant.html?id=porta-via"
-        >
-        </csc309-restaurant-preview>
-
-        <csc309-restaurant-preview
-          heading="Flava Ceen"
-          image="/images/restaurants/flava-ceen.jpg"
-          url="/restaurant.html?id=flava-ceen"
-        >
-        </csc309-restaurant-preview>
-
-        <csc309-restaurant-preview
-          heading="Umami Hakka"
-          image="/images/restaurants/umami-hakka.jpg"
-          url="/restaurant.html?id=umami-hakka"
-        >
-        </csc309-restaurant-preview>
-
-        <csc309-restaurant-preview
-          heading="Swiss Chalet"
-          image="/images/restaurants/swiss-chalet.jpg"
-          url="/restaurant.html?id=swiss-chalet"
-        >
-        </csc309-restaurant-preview>
-
-        <csc309-restaurant-preview
-          heading="Sail Sushi"
-          image="/images/restaurants/sail-sushi.jpg"
-          url="/restaurant.html?id=sail-sushi"
-        >
-        </csc309-restaurant-preview>
-
-        <csc309-restaurant-preview
-          heading="Big Bite Burrito"
-          image="/images/restaurants/big-bite-burrito.jpg"
-          url="/restaurant.html?id=big-bite-burrito"
-        >
-        </csc309-restaurant-preview>
-
-        <csc309-restaurant-preview
-          heading="Twice As Nice"
-          image="/images/restaurants/twice-as-nice.jpg"
-          url="/restaurant.html?id=twice-as-nice"
-        >
-        </csc309-restaurant-preview>
-
-        <csc309-restaurant-preview
-          heading="Sunrise Caribbean"
-          image="/images/restaurants/sunrise-caribbean.jpg"
-          url="/restaurant.html?id=sunrise-caribbean"
-        >
-        </csc309-restaurant-preview>
-
-        <csc309-restaurant-preview
-          heading="Kinton Ramen"
-          image="/images/restaurants/kinton-ramen.jpg"
-          url="/restaurant.html?id=kinton-ramen"
-        >
-        </csc309-restaurant-preview>
-
-        <csc309-restaurant-preview
-          heading="Little Caesars"
-          image="/images/restaurants/little-caesars.jpg"
-          url="/restaurant.html?id=little-caesars"
-        >
-        </csc309-restaurant-preview>
-
-        <csc309-restaurant-preview
-          heading="La Sani Grill"
-          image="/images/restaurants/la-sani-grill.jpg"
-          url="/restaurant.html?id=la-sani-grill"
-        >
-        </csc309-restaurant-preview>
       </div>
     </div>
-  </div>
 
-  <script src="/vendor/jquery@3.3.1/jquery.min.js"></script>
-  <script src="/vendor/bootstrap@4.0.0/js/bootstrap.min.js"></script>
-  <script type="module" src="/components/loader.js"></script>
-</body>
+    <script src="/vendor/jquery@3.3.1/jquery.min.js"></script>
+    <script src="/vendor/bootstrap@4.0.0/js/bootstrap.min.js"></script>
+    <script type="module" src="/components/loader.js"></script>
+  </body>
 </html>

@@ -1,151 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Restaurant &bull; CSC309 Team 5</title>
-  <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="/vendor/bootstrap@4.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/vendor/fontawesome@5.7.2/css/all.min.css">
-</head>
-<body>
-  <div id="loading"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Restaurant &bull; CSC309 Team 5</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="/vendor/bootstrap@4.0.0/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/vendor/fontawesome@5.7.2/css/all.min.css" />
+  </head>
+  <body>
+    <div id="loading"></div>
 
-  <csc309-navigation></csc309-navigation>
+    <csc309-navigation></csc309-navigation>
 
-  <div class="mb-5">
-    <csc309-cover-image
-      src="/images/restaurants/porta-via.png"
-      alt=""
-    >
-    </csc309-cover-image>
-    <csc309-cover-card
-      heading="Porta Via"
-      description="Italian &bull; Pasta &bull; Sandwiches &bull; Salads"
-    >
-      <div slot="children">
-        <csc309-dollars count="2"></csc309-dollars>
-        &bull;
-        <csc309-stars count="4"></csc309-stars>
-      </div>
-    </csc309-cover-card>
-  </div>
-
-  <div class="container">
-    <div class="row">
-      <form class="col-sm">
-        <h2>Book Your Table</h2>
-
-        <csc309-input
-          input-id="name"
-          name="name"
-          label="Name"
-          icon-class="fas fa-user"
-          required
-        >
-        </csc309-input>
-
-        <csc309-input
-          input-id="phone"
-          name="phone"
-          type="tel"
-          label="Phone"
-          icon-class="fas fa-phone"
-          help="We may call you to verify your reservation"
-          required
-        >
-        </csc309-input>
-
-        <csc309-input
-          input-id="datetime"
-          name="datetime"
-          type="datetime-local"
-          label="Date & Time"
-          icon-class="fas fa-calendar-alt"
-          required
-        >
-        </csc309-input>
-
-        <csc309-input
-          input-id="seats"
-          name="seats"
-          type="number"
-          label="Number of seats"
-          icon-class="fas fa-chair"
-          min="1"
-          required
-        >
-        </csc309-input>
-
-        <button type="submit" class="btn btn-primary my-3">
-          Book Now
-        </button>
-      </form>
-
-      <div class="col-sm">
-        <csc309-restaurant-calendar id="calendar">
-        </csc309-restaurant-calendar>
-      </div>
+    <div class="mb-5">
+      <csc309-cover-image src="/images/restaurants/porta-via.png" alt="">
+      </csc309-cover-image>
+      <csc309-cover-card
+        heading="Porta Via"
+        description="Italian &bull; Pasta &bull; Sandwiches &bull; Salads"
+      >
+        <div slot="children">
+          <csc309-dollars count="2"></csc309-dollars>
+          &bull;
+          <csc309-stars count="4"></csc309-stars>
+        </div>
+      </csc309-cover-card>
     </div>
 
-    <div class="row">
-      <div class="col-sm">
-        <h2 class="mt-5">Reviews</h2>
-        <section id="reviews" class="reviews">
-        </section>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm">
-        <h3>Leave a review</h3>
-
-        <form id="review">
-          <div class="input-small">
-            <csc309-input
-              input-id="name"
-              name="name"
-              label="Name"
-              icon-class="fas fa-user"
-              required
-            >
-            </csc309-input>
-          </div>
-
-          <div class="input-small">
-            <csc309-input
-              input-id="stars"
-              name="stars"
-              label="Rating (1 to 5)"
-              type="number"
-              icon-class="fas fa-star"
-              min="1"
-              max="5"
-              required
-            >
-            </csc309-input>
-          </div>
+    <div class="container">
+      <div class="row">
+        <form class="col-sm">
+          <h2>Book Your Table</h2>
 
           <csc309-input
-            input-id="comment"
-            name="comment"
-            label="Feedback"
-            icon-class="fas fa-comments"
+            input-id="name"
+            name="name"
+            label="Name"
+            icon-class="fas fa-user"
+            required
+          >
+          </csc309-input>
+
+          <csc309-input
+            input-id="phone"
+            name="phone"
+            type="tel"
+            label="Phone"
+            icon-class="fas fa-phone"
+            help="We may call you to verify your reservation"
+            required
+          >
+          </csc309-input>
+
+          <csc309-input
+            input-id="datetime"
+            name="datetime"
+            type="datetime-local"
+            label="Date & Time"
+            icon-class="fas fa-calendar-alt"
+            required
+          >
+          </csc309-input>
+
+          <csc309-input
+            input-id="seats"
+            name="seats"
+            type="number"
+            label="Number of seats"
+            icon-class="fas fa-chair"
+            min="1"
+            required
           >
           </csc309-input>
 
           <button type="submit" class="btn btn-primary my-3">
-            Publish
+            Book Now
           </button>
         </form>
+
+        <div class="col-sm">
+          <csc309-restaurant-calendar id="calendar">
+          </csc309-restaurant-calendar>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm">
+          <h2 class="mt-5">Reviews</h2>
+          <section id="reviews" class="reviews"></section>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm">
+          <h3>Leave a review</h3>
+
+          <form id="review">
+            <div class="input-small">
+              <csc309-input
+                input-id="name"
+                name="name"
+                label="Name"
+                icon-class="fas fa-user"
+                required
+              >
+              </csc309-input>
+            </div>
+
+            <div class="input-small">
+              <csc309-input
+                input-id="stars"
+                name="stars"
+                label="Rating (1 to 5)"
+                type="number"
+                icon-class="fas fa-star"
+                min="1"
+                max="5"
+                required
+              >
+              </csc309-input>
+            </div>
+
+            <csc309-input
+              input-id="comment"
+              name="comment"
+              label="Feedback"
+              icon-class="fas fa-comments"
+            >
+            </csc309-input>
+
+            <button type="submit" class="btn btn-primary my-3">
+              Publish
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script src="/vendor/jquery@3.3.1/jquery.min.js"></script>
-  <script src="/vendor/bootstrap@4.0.0/js/bootstrap.min.js"></script>
-  <script type="module" src="/components/loader.js"></script>
-  <script type="module" src="/js/restaurant.js"></script>
-</body>
+    <script src="/vendor/jquery@3.3.1/jquery.min.js"></script>
+    <script src="/vendor/bootstrap@4.0.0/js/bootstrap.min.js"></script>
+    <script type="module" src="/components/loader.js"></script>
+    <script type="module" src="/js/restaurant.js"></script>
+  </body>
 </html>
