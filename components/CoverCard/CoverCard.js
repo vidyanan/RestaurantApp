@@ -1,25 +1,37 @@
 export class CoverCard extends HTMLElement {
+  static get observedAttributes() {
+    return Object.keys(this.onAttributeChanged);
+  }
+
+  static get onAttributeChanged() {
+    return {
+      heading: CoverCard.prototype.onHeadingAttributeChanged,
+      description: CoverCard.prototype.onDescriptionAttributeChanged,
+    }
+  }
+
   constructor() {
     super();
     const shadowRoot = this.attachShadow({ mode: "open" });
     const template = document.getElementById("CoverCard");
     const fragment = document.importNode(template.content, true);
     shadowRoot.appendChild(fragment);
-    const $sr = $(shadowRoot);
+    this.$sr = $(shadowRoot);
 
-    $sr.find(".heading").text(this.getAttribute("heading"));
-    $sr.find(".description").text(this.getAttribute("description"));
+    this.$heading = this.$sr.find(".heading")
+    this.$description = this.$sr.find(".description")
+  }
 
-    const dollars = $sr.find(".dollars");
-    const dollarCount = Number(this.getAttribute("dollars")) || 0;
-    for (let i = 0; i < dollarCount; i++) {
-      dollars.append($('<i class="faß fa-dollar-sign"></i>'));
-    }
+  attributeChangedCallback(attrName, oldVal, newVal) {
+    const handler = CoverCard.onAttributeChanged[attrName];
+    handler.call(this, oldVal, newVal);
+  }
 
-    const stars = $sr.find(".stars");
-    const starCount = Number(this.getAttribute("stars")) || 0;
-    for (let i = 0; i < starCount; i++) {
-      stars.append($('<i class="fa fa-star"></i>'));
-    }
+  onHeadingAttributeChanged(oldVal, newVal) {
+    this.$heading.text(newVal);
+  }
+
+  onDescriptionAttributeChanged(oldVal, newVal) {
+    this.$description.text(newVal);
   }
 }

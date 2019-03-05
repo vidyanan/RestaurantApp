@@ -27,25 +27,27 @@
           <div class="form-row align-items-center">
             <div class="col-auto mb-1">
               <csc309-input
-                input-id="city"
-                name="city"
+                id="location"
+                name="location"
                 placeholder="City"
                 icon-class="fas fa-map-marker-alt"
+                list="locations"
               >
               </csc309-input>
             </div>
             <div class="col-auto mb-1">
               <csc309-input
-                input-id="cuisine"
+                id="cuisine"
                 name="cuisine"
                 placeholder="Cuisine"
                 icon-class="fas fa-utensils"
+                list="cuisines"
               >
               </csc309-input>
             </div>
             <div class="col-auto mb-1">
               <csc309-input
-                input-id="datetime"
+                id="datetime"
                 name="datetime"
                 type="datetime-local"
                 placeholder="Date & Time"
@@ -64,89 +66,18 @@
 
     <div class="container">
       <div class="row">
-        <div class="d-flex flex-wrap my-5">
-          <csc309-restaurant-preview
-            heading="Porta Via"
-            image="/images/restaurants/porta-via.png"
-            url="/restaurant.html?id=porta-via"
-          >
-          </csc309-restaurant-preview>
-
-          <csc309-restaurant-preview
-            heading="Flava Ceen"
-            image="/images/restaurants/flava-ceen.jpg"
-            url="/restaurant.html?id=flava-ceen"
-          >
-          </csc309-restaurant-preview>
-
-          <csc309-restaurant-preview
-            heading="Umami Hakka"
-            image="/images/restaurants/umami-hakka.jpg"
-            url="/restaurant.html?id=umami-hakka"
-          >
-          </csc309-restaurant-preview>
-
-          <csc309-restaurant-preview
-            heading="Swiss Chalet"
-            image="/images/restaurants/swiss-chalet.jpg"
-            url="/restaurant.html?id=swiss-chalet"
-          >
-          </csc309-restaurant-preview>
-
-          <csc309-restaurant-preview
-            heading="Sail Sushi"
-            image="/images/restaurants/sail-sushi.jpg"
-            url="/restaurant.html?id=sail-sushi"
-          >
-          </csc309-restaurant-preview>
-
-          <csc309-restaurant-preview
-            heading="Big Bite Burrito"
-            image="/images/restaurants/big-bite-burrito.jpg"
-            url="/restaurant.html?id=big-bite-burrito"
-          >
-          </csc309-restaurant-preview>
-
-          <csc309-restaurant-preview
-            heading="Twice As Nice"
-            image="/images/restaurants/twice-as-nice.jpg"
-            url="/restaurant.html?id=twice-as-nice"
-          >
-          </csc309-restaurant-preview>
-
-          <csc309-restaurant-preview
-            heading="Sunrise Caribbean"
-            image="/images/restaurants/sunrise-caribbean.jpg"
-            url="/restaurant.html?id=sunrise-caribbean"
-          >
-          </csc309-restaurant-preview>
-
-          <csc309-restaurant-preview
-            heading="Kinton Ramen"
-            image="/images/restaurants/kinton-ramen.jpg"
-            url="/restaurant.html?id=kinton-ramen"
-          >
-          </csc309-restaurant-preview>
-
-          <csc309-restaurant-preview
-            heading="Little Caesars"
-            image="/images/restaurants/little-caesars.jpg"
-            url="/restaurant.html?id=little-caesars"
-          >
-          </csc309-restaurant-preview>
-
-          <csc309-restaurant-preview
-            heading="La Sani Grill"
-            image="/images/restaurants/la-sani-grill.jpg"
-            url="/restaurant.html?id=la-sani-grill"
-          >
-          </csc309-restaurant-preview>
+        <div id="restaurants" class="d-flex flex-wrap my-5">
         </div>
       </div>
     </div>
 
+    <datalist id="locations"></datalist>
+
+    <datalist id="cuisines"></datalist>
+
     <script src="/vendor/jquery@3.3.1/jquery.min.js"></script>
     <script src="/vendor/bootstrap@4.0.0/js/bootstrap.min.js"></script>
     <script type="module" src="/components/loader.js"></script>
+    <script type="module" src="/js/restaurantsSearch.js"></script>
   </body>
 </html>

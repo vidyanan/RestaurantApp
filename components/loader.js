@@ -47,5 +47,6 @@ $(document).ready(function() {
    */
   function onComponentsReady() {
     document.getElementById("loading").remove();
+    window.dispatchEvent(new CustomEvent('CSC309CustomElementsReady'));
   }
 });
