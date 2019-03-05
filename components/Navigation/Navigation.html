@@ -14,18 +14,30 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbar-collapse">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav mr-auto navigation-loggedout">
         <li class="nav-item active">
           <a class="nav-link" href="/index.html">Restaurants</a>
         </li>
       </ul>
 
-      <ul class="navbar-nav">
+      <ul class="navbar-nav mr-auto navigation-loggedin">
+        <li class="nav-item active">
+          <!-- TODO: Links for logged in user -->
+        </li>
+      </ul>
+
+      <ul class="navbar-nav navigation-loggedout">
         <li class="nav-item active">
           <a class="nav-link" href="/login.html">Sign In</a>
         </li>
         <li class="nav-item active">
           <a class="nav-link" href="/profile.html">Sign Up</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav navigation-loggedin">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Logout</a>
         </li>
       </ul>
     </div>
