@@ -20,19 +20,24 @@ window.addEventListener('CSC309CustomElementsReady', () => {
 
   // GET restaurant reviews from server and render them
   getRestaurantReviewsByRestaurantSlug(slug)
-    .then((reviews) => $("#reviews").append(reviews.map(renderReview)));
+    .then(renderReviews);
 });
 
 function renderRestaurant(restaurant) {
-  $('#restaurant-card')
-    .attr('heading', restaurant.name)
-    .attr('description', restaurant.cuisine);
-
   $('#restaurant-dollars')
     .attr('count', restaurant.dollars);
 
   $('#restaurant-stars')
     .attr('count', restaurant.stars);
+
+  return $('#restaurant-card')
+    .attr('heading', restaurant.name)
+    .attr('description', restaurant.cuisine);
+}
+
+function renderReviews(reviews) {
+  return $("#reviews")
+    .append(reviews.map(renderReview))
 }
 
 function renderReview(review) {
