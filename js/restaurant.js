@@ -47,7 +47,7 @@ $(document).ready(function() {
   const id = query.get('id');
 
   getRestaurant(id).then(renderRestaurant)
-  $("#reviews").append(getRestaurantReviews(id).then((reviews) => reviews.map(renderReview)));
+  getRestaurantReviews(id).then((reviews) => $("#reviews").append(reviews.map(renderReview)));
 
   function renderRestaurant(restaurant) {
     $('#restaurant-card').attr('heading', restaurant.name);
