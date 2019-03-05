@@ -18,10 +18,11 @@ server[tomorrow] = [{"id": 3, "table": 5, "host": "Him", "phone": "000-000-0000"
 let serverMaxReservations = 5;
 let serverNextID = 4;
 
-let intToDay = {1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday", 7: "Sunday"};
+let intToDay = {1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday", 0: "Sunday"};
 let intToMonth = {0: "January", 1: "February", 2: "March", 3: "April", 4: "May", 5: "June", 6: "July", 7: "August", 8: "September", 9: "October", 10: "November", 11: "December"};
 let maxReservations;
 let currentDate = new Date();
+let currentReviews = 0;
 
 const reservationList = document.querySelector('#reservationList');
 const addReservationForm = document.querySelector('#addReservationForm');
@@ -30,6 +31,7 @@ const previousDateButton = document.querySelector('#previousDate');
 const nextDateButton = document.querySelector('#nextDate');
 const currentDateText = document.querySelector('#currentDate');
 const calendar = document.querySelector('#calendar');
+const reviewList = document.querySelector("#reviews");
 
 reservationList.addEventListener('click', removeButtonFunction);
 addReservationForm.addEventListener('submit', submitReservationForm);
@@ -37,6 +39,7 @@ calendar.addEventListener('datechange', onDateChange);
 maxReservationForm.addEventListener('submit', updateMaxReservations);
 previousDateButton.addEventListener('click', getPreviousDay);
 nextDateButton.addEventListener('click', getNextDay);
+reviewList.addEventListener('click', addReviewPrompt);
 
 // // // // // // //
 // Date Functions //
@@ -124,7 +127,6 @@ function updateTextDate() {
 }
 
 function getStandardDateFormat(Date) {
-  console.log(Date.getDay());
   let day = intToDay[Date.getDay()];
   let date = Date.getDate();
   let dateEnd = "th";
@@ -255,11 +257,8 @@ function getFreeTable(date) {
 // Reservation Modifying Functions //
 // // // // // // // // // // // // //
 
-// Creates a new reservation on reservationList
-function createNewReservation(hostName, reservationDate, phone, numSeats) {
-  let tableNum = getFreeTable(reservationDate);
-  let id = getNewReservationId();
-
+// POST creation of reservation
+async function addReservationToServer(id, tableNum, hostName, phone, numSeats, reservationDate) {
   // Add new entry into database
   // {
       let serverLst = server[formatDate(reservationDate)];
@@ -270,6 +269,16 @@ function createNewReservation(hostName, reservationDate, phone, numSeats) {
         server[formatDate(reservationDate)].push({'id': id, 'table': tableNum, 'host': hostName, 'phone': phone, 'numSeats': numSeats, 'hour': reservationDate.getHours(), 'timeSlot': reservationDate.getMinutes()});
       }
   // }
+
+  return true;
+}
+
+// Creates a new reservation on reservationList
+function createNewReservation(hostName, reservationDate, phone, numSeats) {
+  let tableNum = getFreeTable(reservationDate);
+  let id = getNewReservationId();
+
+  addReservationToServer(id, tableNum, hostName, phone, numSeats, reservationDate);
 
   if (isCurrentDay(reservationDate)) {
     addReservation(hostName, reservationDate, tableNum, id, phone)
@@ -339,17 +348,13 @@ function removeButtonFunction(e) {
     parentNode = parentNode.parentNode;
   }
 
-
-  if (parentNode.getAttribute('class') === "btn btn-default btn-sm") {
+  if (parentNode.getAttribute('class') === "btn btn-danger") {
     deleteReservation(parentNode.parentNode);
   }
 }
 
-// Remove reservation from reservationList
-function deleteReservation(child) {
-
-  reservationList.removeChild(child);
-
+// POST removal of reservation
+async function removeReservationFromServer(child) {
   // Remove entry from database
   // {
       // irl it would go by id
@@ -359,6 +364,7 @@ function deleteReservation(child) {
 
       if (serverLst === undefined) {
         console.log("Date does not exist to be deleted!");
+        return false;
       } else {
         for (let i = 0; i < serverLst.length; i++) {
           if (serverLst[i]['id'] === id) {
@@ -369,6 +375,15 @@ function deleteReservation(child) {
         }
       }
   // }
+
+  return true;
+}
+
+// Remove reservation from reservationList
+function deleteReservation(child) {
+  reservationList.removeChild(child);
+
+  removeReservationFromServer(child)
 }
 
 // Removes but doesn't delete all reservations
@@ -380,22 +395,21 @@ function removeAllReservations() {
   }
 }
 
-// Puts reservations on reservationList for all entries on date
-function createDayReservations() {
-  let dates;
-
-  removeAllReservations();
-
+// GET from server
+async function requestDayReservations(date) {
   // Call database to get all dates on date
   // {
-      dates = server[formatDate(currentDate)];
-      if (dates === undefined) {
-        // No reservations exist on the current Date!
-        return;
-      }
-      // sort in sql
+    let dates = server[formatDate(date)];
+    if (dates === undefined) {
+      // No reservations exist on the current Date!
+      return;
+    }
+    // sort in sql
   // }
+  return dates;
+}
 
+function addReservations(dates) {
   let tempDate = currentDate;
   for (let i = 0; i < dates.length; i++) {
     tempDate.setHours(dates[i]['hour']);
@@ -404,11 +418,83 @@ function createDayReservations() {
   }
 }
 
+// Puts reservations on reservationList for all entries on date
+function createDayReservations() {
+  removeAllReservations();
+
+  // GET all reservations on this day then add them to the screen
+  requestDayReservations(currentDate).then(addReservations);
+}
+
 // Creates entries for the current day
 function createCurrentDayReservations() {
   createDayReservations(currentDate);
 
   updateTextDate();
+}
+
+// // // // // // // // // // //
+// Review modifying functions //
+// // // // // // // // // // //
+
+function createCustomInputTag() {
+  let text = document.createElement('input');
+  text.required = true;
+  return text;
+}
+
+function createTextBubble() {
+  let bubble = document.createElement('div');
+  bubble.setAttribute('class', 'row offset-1');
+
+  let text = createCustomInputTag();
+
+  bubble.appendChild(text);
+
+  let button = document.createElement('input');
+  button.setAttribute('type', 'button');
+  button.setAttribute('value', 'Submit');
+  button.setAttribute('class', 'btn btn-primary h-50" style="margin-top: 23.5px');
+
+  bubble.appendChild(button);
+
+  return bubble;
+}
+
+function addTextBubble(target) {
+  let parent = target.parentNode;
+  let children = parent.children;
+
+  for (let i = 0; i < children.length; i++) {
+    if (children[i] === target) {
+      try {
+        if (children[i + 1].getAttribute('class') === 'review') {
+          parent.insertBefore(createTextBubble(), children[i + 1]);
+        }
+      } catch (Exception) {
+        parent.appendChild(createTextBubble());
+      }
+
+      break;
+    }
+  }
+}
+
+function addReviewPrompt(e) {
+  let review = e.target;
+
+  if (review.getAttribute('class') !== 'review' &&
+      review.parentNode.getAttribute('class') !== 'review') {
+    return;
+  }
+
+  else if (review.getAttribute('class') !== 'review') {
+    review = review.parentNode;
+  }
+
+
+  console.log(review);
+  addTextBubble(review)
 }
 
 // Run startup procedures
