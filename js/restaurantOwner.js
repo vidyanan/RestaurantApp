@@ -18,7 +18,7 @@ server[tomorrow] = [{"id": 3, "table": 5, "host": "Him", "phone": "000-000-0000"
 let serverMaxReservations = 5;
 let serverNextID = 4;
 
-let intToDay = {0: "Monday", 1: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday", 7: "Sunday"};
+let intToDay = {1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday", 7: "Sunday"};
 let intToMonth = {0: "January", 1: "February", 2: "March", 3: "April", 4: "May", 5: "June", 6: "July", 7: "August", 8: "September", 9: "October", 10: "November", 11: "December"};
 let maxReservations;
 let currentDate = new Date();
@@ -124,6 +124,7 @@ function updateTextDate() {
 }
 
 function getStandardDateFormat(Date) {
+  console.log(Date.getDay());
   let day = intToDay[Date.getDay()];
   let date = Date.getDate();
   let dateEnd = "th";
