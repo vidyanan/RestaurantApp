@@ -34,6 +34,8 @@
         <form id="booking" class="col-sm">
           <h2>Book Your Table</h2>
 
+          <input class="restaurant-slug" name="slug" type="hidden">
+
           <csc309-input
             input-id="name"
             name="name"
@@ -78,9 +80,6 @@
           <button type="submit" class="btn btn-primary my-3">
             Book Now
           </button>
-
-          <div class="text-success"></div>
-          <div class="text-danger"></div>
         </form>
 
         <div class="col-sm">
@@ -101,30 +100,30 @@
           <h3>Leave a review</h3>
 
           <form id="review">
-            <div class="input-small">
-              <csc309-input
-                input-id="name"
-                name="name"
-                label="Name"
-                icon-class="fas fa-user"
-                required
-              >
-              </csc309-input>
-            </div>
+            <input class="restaurant-id" name="id" type="hidden">
 
-            <div class="input-small">
-              <csc309-input
-                input-id="stars"
-                name="stars"
-                label="Rating (1 to 5)"
-                type="number"
-                icon-class="fas fa-star"
-                min="1"
-                max="5"
-                required
-              >
-              </csc309-input>
-            </div>
+            <csc309-input
+              input-id="name"
+              name="name"
+              label="Name"
+              icon-class="fas fa-user"
+              required
+              size="small"
+            >
+            </csc309-input>
+
+            <csc309-input
+              input-id="stars"
+              name="stars"
+              label="Rating (1 to 5)"
+              type="number"
+              icon-class="fas fa-star"
+              min="1"
+              max="5"
+              required
+              size="small"
+            >
+            </csc309-input>
 
             <csc309-input
               input-id="comment"

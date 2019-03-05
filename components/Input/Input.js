@@ -17,6 +17,7 @@ export class Input extends HTMLElement {
       type: Input.prototype.onTypeAttributeChanged,
       required: Input.prototype.onRequiredAttributeChanged,
       value: Input.prototype.onValueAttributeChanged,
+      size: Input.prototype.onSizeAttributeChanged,
     }
   }
 
@@ -27,10 +28,14 @@ export class Input extends HTMLElement {
     this.appendChild(fragment);
 
     this.$this = $(this);
+    this.$inputContainer = this.$this.find(".input-container");
     this.$label = this.$this.find("label");
     this.$input = this.$this.find(".form-control");
-    this.$help = this.$this.find(".form-text");
-    this.$iconContainer = this.$this.find(".input-group-prepend");
+    this.$formTextParent = this.$this.find(".form-text").parent();
+    this.$formText = this.$this.find(".form-text").remove();
+    this.$inputGroup = this.$this.find(".input-group");
+    this.$iconGroupPrependParent = this.$this.find(".input-group-prepend").parent();
+    this.$iconGroupPrepend = this.$this.find(".input-group-prepend").remove();
   }
 
   attributeChangedCallback(attrName, oldVal, newVal) {
@@ -39,21 +44,19 @@ export class Input extends HTMLElement {
   }
 
   onHelpAttributeChanged(oldVal, newVal) {
+    this.$formText.remove();
     if (newVal) {
-      this.$help.text(newVal);
-      // TODO: If this.$help was removed then re-add it.
-    } else {
-      this.$help.remove();
+      this.$formTextParent.prepend(this.$formText);
+      this.$formText.text(newVal);
     }
   }
 
   onIconClassAttributeChanged(oldVal, newVal) {
+    this.$iconGroupPrepend.remove();
     if (newVal) {
-      const $icon = this.$iconContainer.find("i");
+      this.$iconGroupPrependParent.prepend(this.$iconGroupPrepend);
+      const $icon = this.$iconGroupPrepend.find("i");
       $icon.addClass(newVal);
-      // TODO: if this.$iconContainer was removed then re-add it.
-    } else {
-      this.$iconContainer.remove();
     }
   }
 
@@ -101,10 +104,15 @@ export class Input extends HTMLElement {
   }
 
   onRequiredAttributeChanged(oldVal, newVal) {
-    if (newVal) {
+    if (newVal !== null) {
       this.$input.attr("required", true);
     } else {
       this.$input.removeAttr("required");
     }
+  }
+
+  onSizeAttributeChanged(oldVal, newVal) {
+    this.$inputContainer.removeClass(`input-${oldVal}`);
+    this.$inputContainer.addClass(`input-${newVal}`);
   }
 }

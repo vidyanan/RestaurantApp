@@ -1,0 +1,7 @@
+.input-container {
+  display: block;
+}
+
+.input-small {
+  max-width: 320px;
+}
