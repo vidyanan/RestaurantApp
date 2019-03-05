@@ -40,4 +40,10 @@ From "/admin.html" or login from "/index.html" Admin View
  -> Clicking on "remove" in the review table will delete the specific review from the database as well as the table.
 
 From "/restaurantOwner.html" or login from "/index.html" Restaurant Owner View
- -> TIM FILL IN
+ -> Click on the "Logout" button on the top right to be directed back to the /index.html page
+ -> Clicking on the "Previous Day" or "Next day" allows you to cycle through the reservations on any particular day shown in the middle.
+ -> Clicking the "Remove" button on a reservation removes the reservation from the server and the list of reservations.
+ -> Booking a table has the same functionality as in /restaurant.html.
+   -> Clicking "Book Now" additionally updates the list of reservations on the respective day.
+ -> At the bottom you can input the maximum number of reservations per time slot the restaurant eligible to take.
+   -> Clicking the "Update" button sends the updated maximum number to the server and does not effect any existing reservations.
