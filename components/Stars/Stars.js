@@ -1,16 +1,34 @@
 export class Stars extends HTMLElement {
+  static get observedAttributes() {
+    return Object.keys(this.onAttributeChanged);
+  }
+
+  static get onAttributeChanged() {
+    return {
+      count: Stars.prototype.onCountAttributeChanged,
+    }
+  }
+
   constructor() {
     super();
     const shadowRoot = this.attachShadow({ mode: "open" });
     const template = document.getElementById("Stars");
     const fragment = document.importNode(template.content, true);
     shadowRoot.appendChild(fragment);
-    const $sr = $(shadowRoot);
 
-    const stars = $sr.find(".stars");
-    const starCount = Number(this.getAttribute("count")) || 0;
-    for (let i = 0; i < starCount; i++) {
-      stars.append($('<i class="fa fa-star"></i>'));
+    this.$sr = $(shadowRoot);
+    this.$stars = this.$sr.find(".stars");
+  }
+
+  attributeChangedCallback(attrName, oldVal, newVal) {
+    const handler = Stars.onAttributeChanged[attrName];
+    handler.call(this, oldVal, newVal);
+  }
+
+  onCountAttributeChanged(oldVal, newVal) {
+    const count = Number(newVal) || 0;
+    for (let i = 0; i < count; i++) {
+      this.$stars.append($('<i class="fa fa-star"></i>'));
     }
   }
 }

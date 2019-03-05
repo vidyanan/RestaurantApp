@@ -1,45 +1,118 @@
 export class Input extends HTMLElement {
+  static get observedAttributes() {
+    return Object.keys(this.onAttributeChanged);
+  }
+
+  static get onAttributeChanged() {
+    return {
+      help: Input.prototype.onHelpAttributeChanged,
+      'icon-class': Input.prototype.onIconClassAttributeChanged,
+      'input-id': Input.prototype.onInputIdAttributeChanged,
+      label: Input.prototype.onLabelAttributeChanged,
+      list: Input.prototype.onListAttributeChanged,
+      max: Input.prototype.onMaxAttributeChanged,
+      min: Input.prototype.onMinAttributeChanged,
+      name: Input.prototype.onNameAttributeChanged,
+      placeholder: Input.prototype.onPlaceholderAttributeChanged,
+      type: Input.prototype.onTypeAttributeChanged,
+      required: Input.prototype.onRequiredAttributeChanged,
+      value: Input.prototype.onValueAttributeChanged,
+      size: Input.prototype.onSizeAttributeChanged,
+    }
+  }
+
   constructor() {
     super();
     const template = document.getElementById("Input");
     const fragment = document.importNode(template.content, true);
     this.appendChild(fragment);
 
-    const $sr = $(this);
+    this.$this = $(this);
+    this.$inputContainer = this.$this.find(".input-container");
+    this.$label = this.$this.find("label");
+    this.$input = this.$this.find(".form-control");
+    this.$formTextParent = this.$this.find(".form-text").parent();
+    this.$formText = this.$this.find(".form-text").remove();
+    this.$inputGroup = this.$this.find(".input-group");
+    this.$iconGroupPrependParent = this.$this.find(".input-group-prepend").parent();
+    this.$iconGroupPrepend = this.$this.find(".input-group-prepend").remove();
+  }
 
-    const $label = $sr.find("label");
-    if (this.hasAttribute("label")) {
-      $label.text(this.getAttribute("label"));
+  attributeChangedCallback(attrName, oldVal, newVal) {
+    const handler = Input.onAttributeChanged[attrName];
+    handler.call(this, oldVal, newVal);
+  }
+
+  onHelpAttributeChanged(oldVal, newVal) {
+    this.$formText.remove();
+    if (newVal) {
+      this.$formTextParent.prepend(this.$formText);
+      this.$formText.text(newVal);
+    }
+  }
+
+  onIconClassAttributeChanged(oldVal, newVal) {
+    this.$iconGroupPrepend.remove();
+    if (newVal) {
+      this.$iconGroupPrependParent.prepend(this.$iconGroupPrepend);
+      const $icon = this.$iconGroupPrepend.find("i");
+      $icon.addClass(newVal);
+    }
+  }
+
+  onInputIdAttributeChanged(oldVal, newVal) {
+    this.$input.attr("id", newVal);
+    this.$label.attr("for", newVal);
+  }
+
+  onLabelAttributeChanged(oldVal, newVal) {
+    if (newVal) {
+      this.$label.text(newVal);
+      this.$label.removeClass("sr-only");
     } else {
-      $label.addClass("sr-only");
+      this.$label.text('');
+      this.$label.addClass("sr-only");
     }
-    $label.text(this.getAttribute("label") || this.getAttribute("placeholder"));
-    $label.attr("for", this.getAttribute("input-id"));
+  }
 
-    const $input = $sr.find(".form-control");
-    $input.attr("id", this.getAttribute("input-id"));
-    $input.attr("name", this.getAttribute("name"));
-    $input.attr("type", this.getAttribute("type"));
-    $input.attr("placeholder", this.getAttribute("placeholder"));
-    $input.attr("min", this.getAttribute("min"));
-    $input.attr("max", this.getAttribute("max"));
-    if (this.hasAttribute("required")) {
-      $input.attr("required", true);
-    }
+  onListAttributeChanged(oldVal, newVal) {
+    this.$input.attr("list", newVal);
+  }
 
-    const $help = $sr.find(".form-text");
-    if (this.hasAttribute("help")) {
-      $help.text(this.getAttribute("help"));
+  onMaxAttributeChanged(oldVal, newVal) {
+    this.$input.attr("max", newVal);
+  }
+
+  onMinAttributeChanged(oldVal, newVal) {
+    this.$input.attr("min", newVal);
+  }
+
+  onNameAttributeChanged(oldVal, newVal) {
+    this.$input.attr("name", newVal);
+  }
+
+  onPlaceholderAttributeChanged(oldVal, newVal) {
+    this.$input.attr("placeholder", newVal);
+  }
+
+  onTypeAttributeChanged(oldVal, newVal) {
+    this.$input.attr("type", newVal);
+  }
+
+  onValueAttributeChanged(oldVal, newVal) {
+    this.$input.attr("value", newVal);
+  }
+
+  onRequiredAttributeChanged(oldVal, newVal) {
+    if (newVal !== null) {
+      this.$input.attr("required", true);
     } else {
-      $help.remove();
+      this.$input.removeAttr("required");
     }
+  }
 
-    const $iconContainer = $sr.find(".input-group-prepend");
-    if (this.hasAttribute("icon-class")) {
-      const $icon = $iconContainer.find("i");
-      $icon.addClass(this.getAttribute("icon-class"));
-    } else {
-      $iconContainer.remove();
-    }
+  onSizeAttributeChanged(oldVal, newVal) {
+    this.$inputContainer.removeClass(`input-${oldVal}`);
+    this.$inputContainer.addClass(`input-${newVal}`);
   }
 }

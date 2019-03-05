@@ -1,0 +1,14 @@
+.review {
+  width: 300px;
+  padding: 10px;
+  box-sizing: border-box;
+  background: var(--light);
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  margin: 10px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}

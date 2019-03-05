@@ -1,51 +1,89 @@
-$(document).ready(function() {
-  $("#calendar").on("datechange", onDateChange);
-  $("#review").on("submit", onReviewSubmit);
+import {
+  getRestaurantBySlug,
+  getRestaurantReviewsByRestaurantSlug,
+  createRestaurantBooking,
+  createRestaurantReview,
+} from '/js/network/index.js';
 
-  /**
-   * Sets the date when a day in the calendar is clicked.
-   *
-   * @param {CustomEvent} event
-   */
-  function onDateChange(event) {
-    const value = event.detail;
+window.addEventListener('CSC309CustomElementsReady', () => {
+  $("#booking").on('submit', onCreateBookingSubmit);
+  $("#review").on("submit", onCreateReviewSubmit);
+  $("#calendar").on("datechange", onCalendarDateChange);
 
-    const leftZeroPad = n => (n >= 10 ? String(n) : `0${n}`);
+  const query = new URLSearchParams(location.search);
+  const slug = query.get('slug');
+  $(".restaurant-slug").val(slug)
 
-    const year = value.getFullYear();
-    const month = leftZeroPad(value.getMonth() + 1);
-    const day = leftZeroPad(value.getDate());
-    const hour = leftZeroPad(value.getHours());
-    const minute = leftZeroPad(value.getMinutes());
+  // GET restaurant from server and render it
+  getRestaurantBySlug(slug)
+    .then(renderRestaurant)
 
-    const datetimeLocal = `${year}-${month}-${day}T${hour}:${minute}`;
-
-    $("#datetime").val(datetimeLocal);
-  }
-
-  /**
-   * Creates a new review when the review form is submitted.
-   *
-   * @param {Event} event
-   */
-  function onReviewSubmit(event) {
-    event.preventDefault();
-    const data = new FormData(event.target);
-    $("#reviews").append(
-      $('<div class="review"></div>')
-        .append(
-          $('<div class="d-flex justify-content-between"></div>')
-            .append(
-              $(`<csc309-stars count="${data.get("stars")}"></csc309-stars>`)
-            )
-            .append(
-              $('<span class="text-muted"></span>').text(
-                new Date().toLocaleString()
-              )
-            )
-        )
-        .append($("<h4></h4>").text(data.get("name")))
-        .append($('<p class="lead"></p>').text(data.get("comment")))
-    );
-  }
+  // GET restaurant reviews from server and render them
+  getRestaurantReviewsByRestaurantSlug(slug)
+    .then((reviews) => $("#reviews").append(reviews.map(renderReview)));
 });
+
+function renderRestaurant(restaurant) {
+  $('#restaurant-card')
+    .attr('heading', restaurant.name)
+    .attr('description', restaurant.cuisine);
+
+  $('#restaurant-dollars')
+    .attr('count', restaurant.dollars);
+
+  $('#restaurant-stars')
+    .attr('count', restaurant.stars);
+}
+
+function renderReview(review) {
+  return $('<csc309-restaurant-review></csc309-restaurant-review')
+    .attr('heading', review.name)
+    .attr('comment', review.comment)
+    .attr('stars', review.stars)
+    .attr('date', new Date(review.createdAt).toLocaleDateString())
+}
+
+/**
+ * Sets the date when a day in the calendar is clicked.
+ *
+ * @param {CustomEvent} event
+ */
+function onCalendarDateChange(event) {
+  const value = event.detail;
+
+  const leftZeroPad = n => (n >= 10 ? String(n) : `0${n}`);
+
+  const year = value.getFullYear();
+  const month = leftZeroPad(value.getMonth() + 1);
+  const day = leftZeroPad(value.getDate());
+  const hour = leftZeroPad(value.getHours());
+  const minute = leftZeroPad(value.getMinutes());
+
+  const datetimeLocal = `${year}-${month}-${day}T${hour}:${minute}`;
+
+  $("#datetime").val(datetimeLocal);
+}
+
+// POST booking to server
+async function onCreateBookingSubmit(event) {
+  event.preventDefault();
+  const data = new FormData(event.target);
+  await createRestaurantBooking(data);
+  alert(`${data.get('name')}, we have received your booking!`)
+  event.target.reset();
+}
+
+// POST review to server
+async function onCreateReviewSubmit(event) {
+  event.preventDefault();
+  const data = new FormData(event.target);
+  await createRestaurantReview(data);
+  $("#reviews").append(
+    renderReview({
+      name: data.get("name"),
+      stars: data.get("stars"),
+      comment: data.get("comment"),
+    })
+  );
+  event.target.reset();
+}
