@@ -174,7 +174,7 @@ function submitReservationForm(e) {
   e.preventDefault();
 
   const hostName = addReservationForm.name.value;
-  let reservationDate = new Date(addReservationForm.reservationDate.value);
+  let reservationDate = new Date(addReservationForm.datetime.value);
   const phone = addReservationForm.phone.value;
   const numSeats = addReservationForm.seats.value;
 
@@ -224,7 +224,7 @@ function updateMaxReservations(e) {
 function retrieveMaxReservations() {
   maxReservations = serverMaxReservations; // Call to database to find out the actual max
 
-  $("#maxReservations").val(maxReservations);
+  $("#maxReservations").attr('value', maxReservations);
 }
 
 function getFreeTable(date) {
@@ -281,7 +281,7 @@ function createNewReservation(hostName, reservationDate, phone, numSeats) {
   addReservationToServer(id, tableNum, hostName, phone, numSeats, reservationDate);
 
   if (isCurrentDay(reservationDate)) {
-    addReservation(hostName, reservationDate, tableNum, id, phone)
+    addReservation(hostName, reservationDate, tableNum, id, phone, numSeats)
   }
 }
 
@@ -311,14 +311,14 @@ function addReservation(hostName, reservationDate, tableNum, id, phone, numSeats
   reservationInfo.innerText = phone;
   newReservation.appendChild(reservationInfo);
 
-  // Number of seats
-  reservationInfo = reservationInfo.cloneNode(false);
-  reservationInfo.innerText = numSeats;
-  newReservation.appendChild(reservationInfo);
-
   // Date of reservation
   reservationInfo = reservationInfo.cloneNode(false);
   reservationInfo.innerText = getStandardTimeFormat(reservationDate);
+  newReservation.appendChild(reservationInfo);
+
+  // Number of seats
+  reservationInfo = reservationInfo.cloneNode(false);
+  reservationInfo.innerText = numSeats;
   newReservation.appendChild(reservationInfo);
 
   // Remove button
