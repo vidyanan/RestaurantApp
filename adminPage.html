@@ -1,414 +1,419 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="vendor/bootstrap@4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
 
-  </head>
-  <body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="vendor/bootstrap@4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="/vendor/fontawesome@5.7.2/css/all.min.css" />
 
-			<h3 class="text-center">
-				Admin View
-			</h3>
-    </br>
+</head>
 
-      <h4 class="text-center"> User List </h4>
+<body>
+  <csc309-navigation></csc309-navigation>
 
-			<table class="table table-user" id="table table-user">
+  <h3 class="text-center">
+    Admin
+  </h3>
+  </br>
 
-				<thead>
-          <div class="topnav" id="searchUser">
-              <input type="text" placeholder="Search By Name..">
-              <button type="submit" class="btn btn-searchUser">Search</button>
-          </div>
-					<tr>
-						<th>
-							UserID
-						</th>
-						<th>
-						  First Name
-						</th>
-            <th>
-              Last Name
-            </th>
-            <th>
-              Address
-            </th>
-            <th>
-              Phone number
-            </th>
-            <th>
-              Birthdays
-            </th>
-						<th>
-							Password
-						</th>
-            <th>
-              Email Address
-            </th>
-						<th>
-							Type
-						</th>
-            <th>
-              Modify
-            </th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="table-danger">
-						<td>
-							1
-						</td>
-						<td>
-							iman
-						</td>
-            <td>
-              kumar
-            </td>
-						<td>
-							223 borden
-						</td>
-            <td>
-              647-906-1440
-            </td>
-            <td>
-              1998-08-10
-            </td>
-            <td>
-              CSC309
-            </td>
-            <td>
-              imankk98@gmail.com
-            </td>
-            <td>
-              Admin
-            </td>
-						<td>
-              <button type="submit" class="btn btn-success">
-                Modify
-              </button>
-						</td>
-					</tr>
-					<tr class="table-warning">
-            <td>
-              2
-            </td>
-            <td>
-              iman
-            </td>
-            <td>
-              kumar
-            </td>
-            <td>
-              223 borden
-            </td>
-            <td>
-              647-906-1440
-            </td>
-            <td>
-              1998-08-10
-            </td>
-            <td>
-              CSC309
-            </td>
-            <td>
-              imankk98@gmail.com
-            </td>
-            <td>
-              User
-            </td>
-            <td>
-              <button type="submit" class="btn btn-success">
-                Modify
-              </button>
-            </td>
-          </tr>
-          <tr class="table-warning">
-            <td>
-              3
-            </td>
-            <td>
-              Tim
-            </td>
-            <td>
-              Cosby
-            </td>
-            <td>
-              223 borden
-            </td>
-            <td>
-              647-906-1440
-            </td>
-            <td>
-              1998-08-10
-            </td>
-            <td>
-              CSC309
-            </td>
-            <td>
-              imankk98@gmail.com
-            </td>
-            <td>
-              User
-            </td>
-            <td>
-              <button type="submit" class="btn btn-success">
-                Modify
-              </button>
-            </td>
-          </tr>
-          <tr class="table-warning">
-            <td>
-              4
-            </td>
-            <td>
-              Sean
-            </td>
-            <td>
-              Patterson
-            </td>
-            <td>
-              223 borden
-            </td>
-            <td>
-              647-906-1440
-            </td>
-            <td>
-              1998-08-10
-            </td>
-            <td>
-              CSC309
-            </td>
-            <td>
-              imankk98@gmail.com
-            </td>
-            <td>
-              User
-            </td>
-            <td>
-              <button type="submit" class="btn btn-success">
-                Modify
-              </button>
-            </td>
-          </tr>
-          <tr class="table-warning">
-            <td>
-              5
-            </td>
-            <td>
-              Megan
-            </td>
-            <td>
-              Uppal
-            </td>
-            <td>
-              223 borden
-            </td>
-            <td>
-              647-906-1440
-            </td>
-            <td>
-              1998-08-10
-            </td>
-            <td>
-              CSC309
-            </td>
-            <td>
-              imankk98@gmail.com
-            </td>
-            <td>
-              User
-            </td>
-            <td>
-              <button type="submit" class="btn btn-success">
-                Modify
-              </button>
-            </td>
-          </tr>
-					<tr class="table-success">
-            <td>
-              6
-            </td>
-            <td>
-              Marcos
-            </td>
-            <td>
-              Cruz
-            </td>
-            <td>
-              223 borden
-            </td>
-            <td>
-              647-906-1440
-            </td>
-            <td>
-              1998-08-10
-            </td>
-            <td>
-              CSC309
-            </td>
-            <td>
-              imankk98@gmail.com
-            </td>
-            <td>
-              Restaurant Owner
-            </td>
-            <td>
-              <button type="submit" class="btn btn-success">
-                Modify
-              </button>
-            </td>
-          </tr>
-          <tr class="table-warning">
-            <td>
-              7
-            </td>
-            <td>
-              Tala
-            </td>
-            <td>
-              Abusharif
-            </td>
-            <td>
-              223 borden
-            </td>
-            <td>
-              647-906-1440
-            </td>
-            <td>
-              1998-08-10
-            </td>
-            <td>
-              CSC309
-            </td>
-            <td>
-              imankk98@gmail.com
-            </td>
-            <td>
-              User
-            </td>
-            <td>
-              <button type="submit" class="btn btn-success">
-                Modify
-              </button>
-            </td>
-          </tr>
-				</tbody>
-			</table>
-		</div>
+  <h4 class="text-center"> User List </h4>
+
+  <table class="table table-user" id="table table-user">
+
+    <thead>
+      <div class="topnav" id="searchUser">
+        <input type="text" placeholder="Search By Name..">
+        <button type="submit" class="btn btn-searchUser">Search</button>
+      </div>
+      <tr>
+        <th>
+          UserID
+        </th>
+        <th>
+          First Name
+        </th>
+        <th>
+          Last Name
+        </th>
+        <th>
+          Address
+        </th>
+        <th>
+          Phone number
+        </th>
+        <th>
+          Birthdays
+        </th>
+        <th>
+          Password
+        </th>
+        <th>
+          Email Address
+        </th>
+        <th>
+          Type
+        </th>
+        <th>
+          Modify
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="table-danger">
+        <td>
+          1
+        </td>
+        <td>
+          iman
+        </td>
+        <td>
+          kumar
+        </td>
+        <td>
+          223 borden
+        </td>
+        <td>
+          647-906-1440
+        </td>
+        <td>
+          1998-08-10
+        </td>
+        <td>
+          CSC309
+        </td>
+        <td>
+          imankk98@gmail.com
+        </td>
+        <td>
+          Admin
+        </td>
+        <td>
+          <button type="submit" class="btn btn-success">
+            Modify
+          </button>
+        </td>
+      </tr>
+      <tr class="table-warning">
+        <td>
+          2
+        </td>
+        <td>
+          iman
+        </td>
+        <td>
+          kumar
+        </td>
+        <td>
+          223 borden
+        </td>
+        <td>
+          647-906-1440
+        </td>
+        <td>
+          1998-08-10
+        </td>
+        <td>
+          CSC309
+        </td>
+        <td>
+          imankk98@gmail.com
+        </td>
+        <td>
+          User
+        </td>
+        <td>
+          <button type="submit" class="btn btn-success">
+            Modify
+          </button>
+        </td>
+      </tr>
+      <tr class="table-warning">
+        <td>
+          3
+        </td>
+        <td>
+          Tim
+        </td>
+        <td>
+          Cosby
+        </td>
+        <td>
+          223 borden
+        </td>
+        <td>
+          647-906-1440
+        </td>
+        <td>
+          1998-08-10
+        </td>
+        <td>
+          CSC309
+        </td>
+        <td>
+          imankk98@gmail.com
+        </td>
+        <td>
+          User
+        </td>
+        <td>
+          <button type="submit" class="btn btn-success">
+            Modify
+          </button>
+        </td>
+      </tr>
+      <tr class="table-warning">
+        <td>
+          4
+        </td>
+        <td>
+          Sean
+        </td>
+        <td>
+          Patterson
+        </td>
+        <td>
+          223 borden
+        </td>
+        <td>
+          647-906-1440
+        </td>
+        <td>
+          1998-08-10
+        </td>
+        <td>
+          CSC309
+        </td>
+        <td>
+          imankk98@gmail.com
+        </td>
+        <td>
+          User
+        </td>
+        <td>
+          <button type="submit" class="btn btn-success">
+            Modify
+          </button>
+        </td>
+      </tr>
+      <tr class="table-warning">
+        <td>
+          5
+        </td>
+        <td>
+          Megan
+        </td>
+        <td>
+          Uppal
+        </td>
+        <td>
+          223 borden
+        </td>
+        <td>
+          647-906-1440
+        </td>
+        <td>
+          1998-08-10
+        </td>
+        <td>
+          CSC309
+        </td>
+        <td>
+          imankk98@gmail.com
+        </td>
+        <td>
+          User
+        </td>
+        <td>
+          <button type="submit" class="btn btn-success">
+            Modify
+          </button>
+        </td>
+      </tr>
+      <tr class="table-success">
+        <td>
+          6
+        </td>
+        <td>
+          Marcos
+        </td>
+        <td>
+          Cruz
+        </td>
+        <td>
+          223 borden
+        </td>
+        <td>
+          647-906-1440
+        </td>
+        <td>
+          1998-08-10
+        </td>
+        <td>
+          CSC309
+        </td>
+        <td>
+          imankk98@gmail.com
+        </td>
+        <td>
+          Restaurant Owner
+        </td>
+        <td>
+          <button type="submit" class="btn btn-success">
+            Modify
+          </button>
+        </td>
+      </tr>
+      <tr class="table-warning">
+        <td>
+          7
+        </td>
+        <td>
+          Tala
+        </td>
+        <td>
+          Abusharif
+        </td>
+        <td>
+          223 borden
+        </td>
+        <td>
+          647-906-1440
+        </td>
+        <td>
+          1998-08-10
+        </td>
+        <td>
+          CSC309
+        </td>
+        <td>
+          imankk98@gmail.com
+        </td>
+        <td>
+          User
+        </td>
+        <td>
+          <button type="submit" class="btn btn-success">
+            Modify
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
 
 
   </br>
 
-    <h4 class="text-center"> Restaurant List </h4>
+  <h4 class="text-center"> Restaurant List </h4>
 
-    <table class="table table-rest" id="table table-rest">
-      <thead>
-        <div class="topnav" id="searchRest">
-            <input type="text" placeholder="Search By Name..">
-            <button type="submit" class="btn btn-searchRest">Search</button>
-        </div>
-        <tr>
-          <th>
-            RestaurantID
-          </th>
-          <th>
-            Name
-          </th>
-          <th>
-            Address
-          </th>
-          <th>
-            Restaurant Owner userID
-          </th>
-          <th>
-            Cuisine
-          </th>
-          <th>
-            Hours
-          </th>
-          <th>
-            Current Capacity
-          </th>
-          <th>
+  <table class="table table-rest" id="table table-rest">
+    <thead>
+      <div class="topnav" id="searchRest">
+        <input type="text" placeholder="Search By Name..">
+        <button type="submit" class="btn btn-searchRest">Search</button>
+      </div>
+      <tr>
+        <th>
+          RestaurantID
+        </th>
+        <th>
+          Name
+        </th>
+        <th>
+          Address
+        </th>
+        <th>
+          Restaurant Owner userID
+        </th>
+        <th>
+          Cuisine
+        </th>
+        <th>
+          Hours
+        </th>
+        <th>
+          Current Capacity
+        </th>
+        <th>
+          Modify
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="table-active">
+        <td>
+          1
+        </td>
+        <td>
+          Iman's Thai Restaurant
+        </td>
+        <td>
+          223 Borden Street, Toronto, Ontario
+        </td>
+        <td>
+          1
+        </td>
+        <td>
+          Thai
+        </td>
+        <td>
+          09:00 - 21:00
+        </td>
+        <td>
+          20
+        </td>
+        <td>
+          <button type="submit" class="btn btn-success">
             Modify
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="table-active">
-          <td>
-            1
-          </td>
-          <td>
-            Iman's Thai Restaurant
-          </td>
-          <td>
-            223 Borden Street, Toronto, Ontario
-          </td>
-          <td>
-            1
-          </td>
-          <td>
-            Thai
-          </td>
-          <td>
-            09:00 - 21:00
-          </td>
-          <td>
-            20
-          </td>
-          <td>
-            <button type="submit" class="btn btn-success">
-              Modify
-            </button>
-          </td>
-        </tr>
-        <tr class="table-active">
-          <td>
-            2
-          </td>
-          <td>
-            Iman's Pho
-          </td>
-          <td>
-            224 Borden Street, Toronto, Ontario
-          </td>
-          <td>
-            1
-          </td>
-          <td>
-            Vietnamese
-          </td>
-          <td>
-            08:00 - 18:00
-          </td>
-          <td>
-            1s0
-          </td>
-          <td>
-            <button type="submit" class="btn btn-success">
-              Modify
-            </button>
-          </td>
-        </tr>
+          </button>
+        </td>
+      </tr>
+      <tr class="table-active">
+        <td>
+          2
+        </td>
+        <td>
+          Iman's Pho
+        </td>
+        <td>
+          224 Borden Street, Toronto, Ontario
+        </td>
+        <td>
+          1
+        </td>
+        <td>
+          Vietnamese
+        </td>
+        <td>
+          08:00 - 18:00
+        </td>
+        <td>
+          1s0
+        </td>
+        <td>
+          <button type="submit" class="btn btn-success">
+            Modify
+          </button>
+        </td>
+      </tr>
 
-      </tbody>
-    </table>
+    </tbody>
+  </table>
   </div>
 
 
-</br>
+  </br>
 
   <h4 class="text-center"> Users rating & reviews </h4>
 
   <table class="table table-review" id="table table-review">
     <thead>
       <div class="topnav" id="searchReview">
-          <input type="text" placeholder="Search By userID..">
-          <button type="submit" class="btn btn-searchReview">Search</button>
+        <input type="text" placeholder="Search By userID..">
+        <button type="submit" class="btn btn-searchReview">Search</button>
       </div>
       <tr>
         <th>
@@ -487,7 +492,11 @@
       </tr>
     </tbody>
   </table>
-</div>
-    <script type="text/javascript" src="js/adminPage.js"></script>
-  </body>
+  </div>
+  <script type="text/javascript" src="js/adminPage.js"></script>
+  <script src="/vendor/jquery@3.3.1/jquery.min.js"></script>
+  <script src="/vendor/bootstrap@4.0.0/js/bootstrap.min.js"></script>
+  <script type="module" src="/components/loader.js"></script>
+</body>
+
 </html>

@@ -1,49 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
-		<title>profile</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" type="text/css" href="css/styles.css">
-		<link rel="stylesheet" type="text/css" href="css/popup.css">
-		
-	    <link rel="stylesheet" href="/vendor/bootstrap@4.0.0/css/bootstrap.min.css">
-	    <link rel="stylesheet" href="/vendor/fontawesome@5.7.2/css/all.min.css">
-		
-	</head>
+<head>
+	<meta charset="utf-8">
+	<title>profile</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<link rel="stylesheet" type="text/css" href="css/popup.css">
 
-	<body>
+	<link rel="stylesheet" href="/vendor/bootstrap@4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/vendor/fontawesome@5.7.2/css/all.min.css">
 
 
-		<h1> Register </h1>
+</head>
 
-		<div class="form-popup" id="popup">
-			<form class="form-container" id='profileForm' >
-				  firstname:
-				  <input type="text" name="firstname">
-				  lastname:
-				  <input type="text" name="lastname">
-				  address:
-				  <input type="text" name="address">
-				  email:
-				  <input type="text" name="email" placeholder="email@email.com">
-				  phonenumber:
-				  <input type="text" name="phonenumber" placeholder="000000000">
-				  birthday:
-				  <input type="text" name="birthday" placeholder="01/31/2019">
+<body>
+	<csc309-navigation></csc309-navigation>
 
-				  type of account: <br>
-				  <input type="radio" name="type" value="regularuser" id="myRadio1" checked> regular user <br>
-				  <input type="radio" name="type" value="restaurantowner" id="myRadio" > restaurant owner</br></br>
+	<h1> Register </h1>
 
-				  <input type="submit" class="btn btn-primary" value="create profile"></br>
-			  </form>
-		</div>
+	<div class="form-popup" id="popup">
+		<form class="form-container" id='profileForm'>
+			firstname:
+			<input type="text" name="firstname">
+			lastname:
+			<input type="text" name="lastname">
+			address:
+			<input type="text" name="address">
+			email:
+			<input type="text" name="email" placeholder="email@email.com">
+			phonenumber:
+			<input type="text" name="phonenumber" placeholder="000000000">
+			birthday:
+			<input type="text" name="birthday" placeholder="01/31/2019">
 
-		<script type="text/javascript" src='js/profile.js'></script>
+			type of account: <br>
+			<input type="radio" name="type" value="regularuser" id="myRadio1" checked> regular user <br>
+			<input type="radio" name="type" value="restaurantowner" id="myRadio"> restaurant owner</br></br>
 
-		
-	</body>
+			<input type="submit" class="btn btn-primary" value="create profile"></br>
+		</form>
+	</div>
+
+	<script type="text/javascript" src='js/profile.js'></script>
+	<script src="/vendor/jquery@3.3.1/jquery.min.js"></script>
+	<script src="/vendor/bootstrap@4.0.0/js/bootstrap.min.js"></script>
+	<script type="module" src="/components/loader.js"></script>
+
+</body>
 
 </html>
