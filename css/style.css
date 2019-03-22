@@ -19,7 +19,7 @@
 
 /* Style the search box inside the navigation bar */
 .topnav input[type=text] {
- padding: 6px;
+  padding: 6px;
   border: none;
   margin-top: 8px;
   margin-right: 16px;
