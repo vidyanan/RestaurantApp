@@ -1,0 +1,86 @@
+POST /profile ?firstname=&lastname=&address=&email=&password=&phonenumber&birthday=&type=
+      firstname === String
+      lastname === String
+      address === String
+      email === String && will be unique
+      password === String
+      phonenumber === Number
+      birthday === String
+      type === user || owner || admin ---> defaults to user
+GET /profile
+      returns all the profiles as {}
+GET /profile?id=&email=&firstname=
+      returns profiles by any combination of query parameter as {}
+GET /login?email=&password=
+      returns type of user by STRING which is either user|owner|admin| or blank which means no valid account
+PUT /login?email=
+      modify any attributes pass it along with email, has to be defined as its unique
+DELETE /profile
+      returns response 202 if accepted, pass in any query parameter combination
+
+
+
+POST /restaurant ?name=&featuredImage=&url=&location=&cuisine=&mon=&tues=&wed=&thurs=&fri=&sat=&sun=
+      name === String && will be unique
+      featureImage === String
+      url === String
+      location === String && will be unique
+      cuisine === String
+      mon === String
+      tues === String
+      wed === String
+      thurs === String
+      fri === String
+      sat === String
+      sun === String
+
+GET /restaurant
+      returns all the restaurant as {}
+GET /restaurant?id=&name=&location=
+      returns restaurants by any combination of query parameter as {}
+GET /restaurant/name
+      returns all unique restaurant names as []
+GET /restaurant/location
+      returns all unique restaurant locations as []
+GET /restaurant/cuisine
+      returns all unique restaurant cuisines as []
+GET /restaurant/hours
+      returns all unique restaurant hours as []  ***needs to be updated
+PUT /restaurant?name=&location=
+      modify any attributes pass it along with name, location, has to be defined as its unique
+DELETE /restaurant
+      returns response 202 if accepted, pass in any query parameter combination
+
+
+
+POST /review ?name=&stars=&comment=
+      name === String && will be unique
+      stars === Number
+      comment === String
+GET /review
+      returns all the review as {}
+GET /review?id=&name=&stars=
+      returns review by any combination of query parameter as {}
+PUT /review?name=
+      modify any attributes pass it along with name, has to be defined as its unique
+DELETE /review
+      returns response 202 if accepted, pass in any query parameter combination
+
+
+
+POST /reservation ?name=&location=&email=&host=&table=&startTime=&endTime=
+      name === String && will be unique
+      location === String && will be unique
+      email === String && will be unique
+      host === String
+      table === Number
+      startTime === Date
+      endTime === Date
+GET /reservation
+      returns all the reservation as {}
+GET /reservation?id=&name=&location=&email=
+      returns reservation by any combination of query parameter as {}
+PUT /reservation?name=&location=&email=
+      modify any attributes pass it along with name, location, email has to be defined as its unique
+DELETE /reservation
+      returns response 202 if accepted, pass in any query parameter combination
