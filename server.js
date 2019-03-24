@@ -48,6 +48,25 @@ app.post('/profile', (req, res) => {
 	})
 })
 
+app.get('/profile/:id', (req, res) => {
+	log('GET' + '/profile/:id ' + req.params)
+
+	const id = req.params.id
+	if (!ObjectID.isValid(id)) {
+		res.status(404).send()
+	}
+
+	Profile.findById(id).then((profile) => {
+		if (!profile) {
+			res.status(404).send()
+		} else {
+			res.send(profile)
+		}
+	}).catch((error) => {
+		res.status(500).send()
+	})
+})
+
 app.get('/profile', (req, res) => {
 	log('GET ' + '/profile ' + req.query)
 
@@ -132,6 +151,25 @@ app.post('/restaurant', (req, res) => {
 		res.send(result)
 	}, (error) => {
 		res.status(400).send(error)
+	})
+})
+
+app.get('/restaurant/:id', (req, res) => {
+	log('GET' + '/restaurant/:id ' + req.params)
+
+	const id = req.params.id
+	if (!ObjectID.isValid(id)) {
+		res.status(404).send()
+	}
+
+	Restaurant.findById(id).then((restaurant) => {
+		if (!restaurant) {
+			res.status(404).send()
+		} else {
+			res.send(restaurant)
+		}
+	}).catch((error) => {
+		res.status(500).send()
 	})
 })
 
@@ -269,6 +307,25 @@ app.post('/review', (req, res) => {
 	})
 })
 
+app.get('/review/:id', (req, res) => {
+	log('GET' + '/review/:id ' + req.params)
+
+	const id = req.params.id
+	if (!ObjectID.isValid(id)) {
+		res.status(404).send()
+	}
+
+	Review.findById(id).then((review) => {
+		if (!review) {
+			res.status(404).send()
+		} else {
+			res.send(review)
+		}
+	}).catch((error) => {
+		res.status(500).send()
+	})
+})
+
 app.get('/review', (req, res) => {
 	log('GET ' + '/review ' + req.query)
 
@@ -317,9 +374,6 @@ app.put('/review', (req, res) => {
 app.post('/reservation', (req, res) => {
 	log('POST ' + '/reservation ' + req.query)
 
-	const sT = Date(req.query.startTime)
-	log(sT)
-
 	const reservation = new Reservation({
 		name: req.query.name,
 		location: req.query.location,
@@ -334,6 +388,25 @@ app.post('/reservation', (req, res) => {
 		res.send(result)
 	}, (error) => {
 		res.status(400).send(error) // 400 for bad request
+	})
+})
+
+app.get('/reservation/:id', (req, res) => {
+	log('GET' + '/reservation/:id ' + req.params)
+
+	const id = req.params.id
+	if (!ObjectID.isValid(id)) {
+		res.status(404).send()
+	}
+
+	Reservation.findById(id).then((reservation) => {
+		if (!reservation) {
+			res.status(404).send()
+		} else {
+			res.send(reservation)
+		}
+	}).catch((error) => {
+		res.status(500).send()
 	})
 })
 

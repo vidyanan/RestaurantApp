@@ -9,13 +9,15 @@ POST /profile ?firstname=&lastname=&address=&email=&password=&phonenumber&birthd
       type === user || owner || admin ---> defaults to user
 GET /profile
       returns all the profiles as {}
-GET /profile?id=&email=&firstname=
+GET /profile/:id
+      returns profile with id as {}
+GET /profile?______
       returns profiles by any combination of query parameter as {}
 GET /login?email=&password=
       returns type of user by STRING which is either user|owner|admin| or blank which means no valid account
 PUT /login?email=
       modify any attributes pass it along with email, has to be defined as its unique
-DELETE /profile
+DELETE /profile?______
       returns response 202 if accepted, pass in any query parameter combination
 
 
@@ -36,7 +38,9 @@ POST /restaurant ?name=&featuredImage=&url=&location=&cuisine=&mon=&tues=&wed=&t
 
 GET /restaurant
       returns all the restaurant as {}
-GET /restaurant?id=&name=&location=
+GET /restaurant/:id
+      returns restaurant with id as {}
+GET /restaurant?______
       returns restaurants by any combination of query parameter as {}
 GET /restaurant/name
       returns all unique restaurant names as []
@@ -46,9 +50,9 @@ GET /restaurant/cuisine
       returns all unique restaurant cuisines as []
 GET /restaurant/hours
       returns all unique restaurant hours as []  ***needs to be updated
-PUT /restaurant?name=&location=
+PUT /restaurant?name=&location=&______
       modify any attributes pass it along with name, location, has to be defined as its unique
-DELETE /restaurant
+DELETE /restaurant?______
       returns response 202 if accepted, pass in any query parameter combination
 
 
@@ -59,11 +63,13 @@ POST /review ?name=&stars=&comment=
       comment === String
 GET /review
       returns all the review as {}
-GET /review?id=&name=&stars=
+GET /review/:id
+      returns review with id as {}
+GET /review?______
       returns review by any combination of query parameter as {}
-PUT /review?name=
+PUT /review?name=&______
       modify any attributes pass it along with name, has to be defined as its unique
-DELETE /review
+DELETE /review?______
       returns response 202 if accepted, pass in any query parameter combination
 
 
@@ -78,9 +84,11 @@ POST /reservation ?name=&location=&email=&host=&table=&startTime=&endTime=
       endTime === Date
 GET /reservation
       returns all the reservation as {}
-GET /reservation?id=&name=&location=&email=
+GET /reservation/:id
+      returns reservation with id as {}
+GET /reservation?______
       returns reservation by any combination of query parameter as {}
-PUT /reservation?name=&location=&email=
+PUT /reservation?name=&location=&email=&______
       modify any attributes pass it along with name, location, email has to be defined as its unique
-DELETE /reservation
+DELETE /reservation?______
       returns response 202 if accepted, pass in any query parameter combination
