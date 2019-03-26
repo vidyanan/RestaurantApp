@@ -2,6 +2,7 @@
 const log = console.log
 
 const express = require('express')
+const path = require('path')
 const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
 const { ObjectID } = require('mongodb')
@@ -18,6 +19,9 @@ const { Reservation } = require('./models/reservation')
 const app = express();
 // body-parser middleware - will parse the JSON and convert to object
 app.use(bodyParser.json())
+
+
+app.use(express.static(path.resolve('../client')));
 
 
 //****************************************************************************//

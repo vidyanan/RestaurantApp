@@ -11,9 +11,6 @@ mongod --config /usr/local/etc/mongod.conf
 ## run a shell instance of mongod (not needed)
 $ mongo
 
-## (install mongoose)
-$ npm install mongoose
-
 ## Install all modules
 $ npm install
 
@@ -24,4 +21,4 @@ $ mongod --dbpath ./mongo-data
 $ sudo killall -15 mongod
 
 ## Start web server
-$ node server.js
+$ npm start
