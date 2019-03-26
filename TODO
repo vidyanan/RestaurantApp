@@ -1,0 +1,30 @@
+* Client
+  * Sign in
+    [ ] Style
+      * Heading is ugly
+      * Redirect to
+    [ ] Connect to server
+  * Sign up
+    [ ] Style
+      * Heading is ugly
+      * Fix on small screen size
+    [ ] Connect to server
+  * Admin Page (IMAN)
+    [ ] Create a new restaurant (button + form)
+    [ ] Connect to server
+    [ ] Fix nav bar
+    [ ] Cancel or close, what's the difference? Fix or remove one
+  * Home (OMAR)
+    [ ] Connect to server, get top 3 categories
+  * Restaurants Search (OMAR)
+    [ ] Connect to server
+  * Restaurant Owner
+    [ ] Popup to edit the restaurant info
+    [ ] Add reviews
+  * User profile
+    [ ] Recycle user edit form
+* Server
+  [ ] Cuisine endpoint add featured image
+  [ ] Hours needs to be updated on restaurant model and controller
+  [ ] Index fields that are used frequently in find queries
+  [ ]

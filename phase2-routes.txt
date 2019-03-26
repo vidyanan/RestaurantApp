@@ -50,6 +50,7 @@ GET /restaurant/cuisine
       returns all unique restaurant cuisines as []
 GET /restaurant/hours
       returns all unique restaurant hours as []  ***needs to be updated
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay
 PUT /restaurant?name=&location=&______
       modify any attributes pass it along with name, location, has to be defined as its unique
 DELETE /restaurant?______
