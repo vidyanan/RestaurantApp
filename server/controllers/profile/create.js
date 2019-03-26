@@ -1,10 +1,6 @@
-
-const log = console.log
 const { Profile } = require('../../models/profile')
 
 module.exports = (req, res) => {
-	log('POST ' + '/profile ' + req.query)
-
 	const profile = new Profile({
 		firstname: req.query.firstname,
 		lastname: req.query.lastname,

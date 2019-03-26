@@ -16,15 +16,19 @@ const { Review } = require('./models/review')
 const { Reservation } = require('./models/reservation')
 
 const profileCreate = require('./controllers/profile/create');
+const profileGetAll = require('./controllers/profile/getAll');
 
 // express
 const app = express();
 // body-parser middleware - will parse the JSON and convert to object
 app.use(bodyParser.json())
 
-
 app.use(express.static(path.resolve('../client')));
 
+app.use(function(req, res, next) {
+  log(req.method + ' ' + req.url)
+  next()
+});
 
 //****************************************************************************//
 //                                Profile                                     //
@@ -32,8 +36,6 @@ app.use(express.static(path.resolve('../client')));
 app.post('/profile', profileCreate);
 
 app.get('/profile/:id', (req, res) => {
-	log('GET' + '/profile/:id ' + req.params)
-
 	const id = req.params.id
 	if (!ObjectID.isValid(id)) {
 		res.status(404).send()
@@ -50,23 +52,9 @@ app.get('/profile/:id', (req, res) => {
 	})
 })
 
-app.get('/profile', (req, res) => {
-	log('GET ' + '/profile ' + req.query)
-
-	Profile.find(req.query).then((profile) => {
-		if (!profile) {
-			res.status(404).send()
-		} else {
-			res.send(profile)
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
+app.get('/profile', profileGetAll)
 
 app.get('/login', (req, res) => {
-	log('GET ' + '/login ' + req.query.email + ' ' + req.query.password)
-
 	const e = req.query.email
 	const pw = req.query.password
 
@@ -82,8 +70,6 @@ app.get('/login', (req, res) => {
 })
 
 app.delete('/profile', (req, res) => {
-	log('DELETE ' + '/profile ' + req.query)
-
 	Profile.findOneAndDelete(req.query).then((profile) => {
 		if (!profile) {
 			res.status(404).send()
@@ -113,8 +99,6 @@ app.put('/profile', (req, res) => {
 //                                Restaurant                                  //
 //****************************************************************************//
 app.post('/restaurant', (req, res) => {
-	log('POST ' + '/restaurant ' + req.query)
-
 	const restaurant = new Restaurant({
 		name: req.query.name,
 		featuredImage: req.query.featuredImage,
@@ -138,8 +122,6 @@ app.post('/restaurant', (req, res) => {
 })
 
 app.get('/restaurant/:id', (req, res) => {
-	log('GET' + '/restaurant/:id ' + req.params)
-
 	const id = req.params.id
 	if (!ObjectID.isValid(id)) {
 		res.status(404).send()
@@ -157,8 +139,6 @@ app.get('/restaurant/:id', (req, res) => {
 })
 
 app.get('/restaurant', (req, res) => {
-	log('GET ' + '/restaurant ' + req.query)
-
 	Restaurant.find(req.query).then((restaurant) => {
 		if (!restaurant) {
 			res.status(404).send()
@@ -171,8 +151,6 @@ app.get('/restaurant', (req, res) => {
 })
 
 app.get('/restaurant/name', (req, res) => {
-	log('GET ' + '/restaurant/name ')
-
 	Restaurant.find({}).then((restaurant) => {
 		if (!restaurant) {
 			res.status(404).send()
@@ -189,8 +167,6 @@ app.get('/restaurant/name', (req, res) => {
 })
 
 app.get('/restaurant/location', (req, res) => {
-	log('GET ' + '/restaurant/location ')
-
 	Restaurant.find({}).then((restaurant) => {
 		if (!restaurant) {
 			res.status(404).send()
@@ -207,8 +183,6 @@ app.get('/restaurant/location', (req, res) => {
 })
 
 app.get('/restaurant/cuisine', (req, res) => {
-	log('GET ' + '/restaurant/cuisine ')
-
 	Restaurant.find({}).then((restaurant) => {
 		if (!restaurant) {
 			res.status(404).send()
@@ -225,8 +199,6 @@ app.get('/restaurant/cuisine', (req, res) => {
 })
 
 app.get('/restaurant/hours', (req, res) => {
-	log('GET ' + '/restaurant/hours ')
-
 	Restaurant.find({}).then((restaurant) => {
 		if (!restaurant) {
 			res.status(404).send()
@@ -243,8 +215,6 @@ app.get('/restaurant/hours', (req, res) => {
 })
 
 app.delete('/restaurant', (req, res) => {
-	log('DELETE ' + '/restaurant ' + req.query)
-
 	Restaurant.findOneAndDelete(req.query).then((restaurant) => {
 		if (!restaurant) {
 			res.status(404).send()
@@ -275,8 +245,6 @@ app.put('/restaurant', (req, res) => {
 //                                Review                                      //
 //****************************************************************************//
 app.post('/review', (req, res) => {
-	log('POST ' + '/review ' + req.query)
-
 	const review = new Review({
 		name: req.query.name,
 		stars: req.query.stars,
@@ -291,8 +259,6 @@ app.post('/review', (req, res) => {
 })
 
 app.get('/review/:id', (req, res) => {
-	log('GET' + '/review/:id ' + req.params)
-
 	const id = req.params.id
 	if (!ObjectID.isValid(id)) {
 		res.status(404).send()
@@ -310,8 +276,6 @@ app.get('/review/:id', (req, res) => {
 })
 
 app.get('/review', (req, res) => {
-	log('GET ' + '/review ' + req.query)
-
 	Review.find(req.query).then((review) => {
 		if (!review) {
 			res.status(404).send()
@@ -324,8 +288,6 @@ app.get('/review', (req, res) => {
 })
 
 app.delete('/review', (req, res) => {
-	log('DELETE ' + '/review ' + req.query)
-
 	Review.findOneAndDelete(req.query).then((review) => {
 		if (!review) {
 			res.status(404).send()
@@ -355,8 +317,6 @@ app.put('/review', (req, res) => {
 //                                Reservation                                 //
 //****************************************************************************//
 app.post('/reservation', (req, res) => {
-	log('POST ' + '/reservation ' + req.query)
-
 	const reservation = new Reservation({
 		name: req.query.name,
 		location: req.query.location,
@@ -375,8 +335,6 @@ app.post('/reservation', (req, res) => {
 })
 
 app.get('/reservation/:id', (req, res) => {
-	log('GET' + '/reservation/:id ' + req.params)
-
 	const id = req.params.id
 	if (!ObjectID.isValid(id)) {
 		res.status(404).send()
@@ -394,8 +352,6 @@ app.get('/reservation/:id', (req, res) => {
 })
 
 app.get('/reservation', (req, res) => {
-	log('GET ' + '/reservation ' + req.query)
-
 	Reservation.find(req.query).then((reservation) => {
 		if (!reservation) {
 			res.status(404).send()
@@ -408,8 +364,6 @@ app.get('/reservation', (req, res) => {
 })
 
 app.delete('/reservation', (req, res) => {
-	log('DELETE ' + '/reservation ' + req.query)
-
 	Reservation.findOneAndDelete(req.query).then((reservation) => {
 		if (!reservation) {
 			res.status(404).send()
