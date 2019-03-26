@@ -55,10 +55,14 @@ app.get('/profile/:id', (req, res) => {
 app.get('/profile', profileGetAll)
 
 app.get('/login', (req, res) => {
-	const e = req.query.email
-	const pw = req.query.password
-
-	Profile.find({ email: e, password: pw }).then((profile) => {
+	const {
+    email,
+    password,
+  } = req.query
+	Profile.find({
+    email,
+    password,
+  }).then((profile) => {
 		if (!profile) {
 			res.send()
 		} else {
