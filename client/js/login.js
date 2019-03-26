@@ -10,11 +10,11 @@ function submitLoginForm(e) {
 
 	// add backend login to encrtpt password save and verify type of account
 	if (username=="admin" && password=="admin"){
-		window.location.href = '/html/adminPage.html';
+		window.location.href = '/adminPage.html';
 	} else if (username=="user" && password=="user"){
-		window.location.href = '/html/restaurant.html';
+		window.location.href = '/restaurant.html';
 	} else if (username=="user2" && password=="user2"){
-		window.location.href = '/html/restaurantOwner.html';
+		window.location.href = '/restaurantOwner.html';
 	} else {
 		alert("error: invalid username and password")
 	}

@@ -53,7 +53,7 @@ async function getRestaurants({
   return [{
     name: "Porta Via",
     featuredImage: "/images/restaurants/porta-via.png",
-    url: "/html/restaurant.html?id=porta-via",
+    url: "/restaurant.html?id=porta-via",
     location: "Mississauga",
     cuisine: "Mexican",
     hours: [
@@ -68,7 +68,7 @@ async function getRestaurants({
   }, {
     name: "Flava Ceen",
     featuredImage: "/images/restaurants/flava-ceen.jpg",
-    url: "/html/restaurant.html?id=flava-ceen",
+    url: "/restaurant.html?id=flava-ceen",
     location: "Mississauga",
     cuisine: "Jamaican",
     hours: [
@@ -83,7 +83,7 @@ async function getRestaurants({
   }, {
     name: "Umami Hakka",
     featuredImage: "/images/restaurants/umami-hakka.jpg",
-    url: "/html/restaurant.html?id=umami-hakka",
+    url: "/restaurant.html?id=umami-hakka",
     location: "Mississauga",
     cuisine: "Indian",
     hours: [
@@ -98,7 +98,7 @@ async function getRestaurants({
   }, {
     name: "Swiss Chalet",
     featuredImage: "/images/restaurants/swiss-chalet.jpg",
-    url: "/html/restaurant.html?id=swiss-chalet",
+    url: "/restaurant.html?id=swiss-chalet",
     location: "Mississauga",
     cuisine: "Canadian",
     hours: [
@@ -113,7 +113,7 @@ async function getRestaurants({
   }, {
     name: "Sail Sushi",
     featuredImage: "/images/restaurants/sail-sushi.jpg",
-    url: "/html/restaurant.html?id=sail-sushi",
+    url: "/restaurant.html?id=sail-sushi",
     location: "Toronto",
     cuisine: "Japanese",
     hours: [
@@ -128,7 +128,7 @@ async function getRestaurants({
   }, {
     name: "Big Bite Burrito",
     featuredImage: "/images/restaurants/big-bite-burrito.jpg",
-    url: "/html/restaurant.html?id=big-bite-burrito",
+    url: "/restaurant.html?id=big-bite-burrito",
     location: "Scarborough",
     cuisine: "Mexican",
     hours: [
@@ -143,7 +143,7 @@ async function getRestaurants({
   }, {
     name: "Twice As Nice",
     featuredImage: "/images/restaurants/twice-as-nice.jpg",
-    url: "/html/restaurant.html?id=twice-as-nice",
+    url: "/restaurant.html?id=twice-as-nice",
     location: "Toronto",
     cuisine: "Jamaican",
     hours: [
@@ -158,7 +158,7 @@ async function getRestaurants({
   }, {
     name: "Sunrise Caribbean",
     featuredImage: "/images/restaurants/sunrise-caribbean.jpg",
-    url: "/html/restaurant.html?id=sunrise-caribbean",
+    url: "/restaurant.html?id=sunrise-caribbean",
     location: "Toronto",
     cuisine: "Jamaican",
     hours: [
@@ -173,7 +173,7 @@ async function getRestaurants({
   }, {
     name: "Kinton Ramen",
     featuredImage: "/images/restaurants/kinton-ramen.jpg",
-    url: "/html/restaurant.html?id=kinton-ramen",
+    url: "/restaurant.html?id=kinton-ramen",
     location: "Scarborough",
     cuisine: "Japanese",
     hours: [
@@ -188,7 +188,7 @@ async function getRestaurants({
   }, {
     name: "Little Caesars",
     featuredImage: "/images/restaurants/little-caesars.jpg",
-    url: "/html/restaurant.html?id=little-caesars",
+    url: "/restaurant.html?id=little-caesars",
     location: "Scarborough",
     cuisine: "Italian",
     hours: [
@@ -203,7 +203,7 @@ async function getRestaurants({
   }, {
     name: "La Sani Grill",
     featuredImage: "/images/restaurants/la-sani-grill.jpg",
-    url: "/html/restaurant.html?id=la-sani-grill",
+    url: "/restaurant.html?id=la-sani-grill",
     location: "Scarborough",
     cuisine: "Mediterranean",
     hours: [
@@ -249,7 +249,7 @@ async function getRestaurantLocations() {
  * @example
  * await getRestaurantCuisines()
  * [
- *   "Mississauga",
+ *   "Canadian",
  * ]
  */
 async function getRestaurantCuisines() {

@@ -26,20 +26,20 @@ From "/index.html"
       -> Click on the 9 in the datetime input and use up and down arrow to cycle through different hours
           of the day.
 
-From "/html/restaurantsSearch.html"
+From "/restaurantsSearch.html"
  -> Click on the "Porta Via" restaurant (if it's not there delete all searches)
   We are now at "/restaurant.html?id=porta-via"
     -> Click on the prev and next arrows in the custom calendar.
     -> Click on a cell in the custom calendar, notice how it sets the date in the Book Your Table form.
     -> Scroll down to "Leave A Review" fill in the form and submit. Notice how it adds a new review.
 
-From "/html/admin.html" or login from "/index.html" Admin View
+From "/admin.html" or login from "/index.html" Admin View
  -> Clicking on "modify" in user table will launch a popup form that allows the modification of the specific user such as names, passwords and date of births.
  -> Clicking on "modify" in the restaurant table will launch a pop up form that allows the modification of restaurant details such as capacity, name and address.
  -> Search tool filters out rows that contain the name or ID specified in the search input box
  -> Clicking on "remove" in the review table will delete the specific review from the database as well as the table.
 
-From "/html/restaurantOwner.html" or login from "/index.html" Restaurant Owner View
+From "/restaurantOwner.html" or login from "/index.html" Restaurant Owner View
  -> Click on the "Logout" button on the top right to be directed back to the /index.html page
  -> Clicking on the "Previous Day" or "Next day" allows you to cycle through the reservations on any particular day shown in the middle.
  -> Clicking the "Remove" button on a reservation removes the reservation from the server and the list of reservations.

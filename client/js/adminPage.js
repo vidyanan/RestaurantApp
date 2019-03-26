@@ -19,7 +19,7 @@ function openUserEdit(e) {
     e.preventDefault();
     var f = parseInt(e.target.parentElement.parentElement.children[0].textContent);
     if (e.target.classList.contains('btn-success')) {
-      var l = "/html/userEdit.html?"
+      var l = "/userEdit.html?"
       var final = l.concat(f)
       window.open(final, "edit", "scrollbars=1,height=1050px,width=375px");
     }
@@ -30,7 +30,7 @@ function openRestEdit(e) {
     e.preventDefault();
     var f = parseInt(e.target.parentElement.parentElement.children[0].textContent);
     if (e.target.classList.contains('btn-success')) {
-      var l = "/html/restEdit.html?"
+      var l = "/restEdit.html?"
       var final = l.concat(f)
       window.open(final, "edit", "scrollbars=1,height=1050px,width=375px");
     }

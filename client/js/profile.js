@@ -16,9 +16,9 @@ function submitProfileForm(e) {
 
 	// add backend login to create account save preferences, etc.
 	if (type=="regularuser"){
-		window.location.href = '/html/restaurant.html';
+		window.location.href = '/restaurant.html';
 	} else if (type=="restaurantowner"){
-		window.location.href = '/html/restaurantOwner.html';
+		window.location.href = '/restaurantOwner.html';
 	} else {
 		alert("error: account creation failed")
 	}
