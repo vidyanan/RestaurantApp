@@ -14,6 +14,8 @@ const { Restaurant } = require('./models/restaurant')
 const { Review } = require('./models/review')
 const { Reservation } = require('./models/reservation')
 
+const profileCreate = require('./controllers/profile/create');
+
 // express
 const app = express();
 // body-parser middleware - will parse the JSON and convert to object
@@ -23,30 +25,7 @@ app.use(bodyParser.json())
 //****************************************************************************//
 //                                Profile                                     //
 //****************************************************************************//
-app.post('/profile', (req, res) => {
-	log('POST ' + '/profile ' + req.query)
-
-	const profile = new Profile({
-		firstname: req.query.firstname,
-		lastname: req.query.lastname,
-		address: req.query.address,
-		email: req.query.email,
-		password: req.query.password,
-		phonenumber: req.query.phonenumber,
-		birthday: req.query.birthday,
-		type: req.query.type
-	})
-
-	if(profile.type != "user" && profile.type != "owner" && profile.type != "admin"){
-		profile.type = "user";
-	}
-
-	profile.save().then((result) => {
-		res.send(result)
-	}, (error) => {
-		res.status(400).send(error) // 400 for bad request
-	})
-})
+app.post('/profile', profileCreate);
 
 app.get('/profile/:id', (req, res) => {
 	log('GET' + '/profile/:id ' + req.params)
