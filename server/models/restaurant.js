@@ -23,16 +23,12 @@ const Restaurant = mongoose.model('Restaurant', {
 		type: String,
 		required: true
 	},
+	cuisineImage: {
+		type: String,
+		required: true
+	},
 	hours: {
-		type:
-		{ mon: {type: String},
-			tues: {type: String},
-			wed: {type: String},
-			thurs: {type: String},
-			fri: {type: String},
-			sat: {type: String},
-			sun: {type: String}
-		},
+		type: Array,
 		required: true
 	}
 })

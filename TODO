@@ -29,6 +29,8 @@
   [ ] format documents nicely, control shift f, shortcut for most editors
 
 * Server (YATHAN)
-  [ ] Cuisine endpoint add featured image
-  [ ] Hours needs to be updated on restaurant model and controller
-  [ ] Index fields that are used frequently in find queries
+  [X] split server.js into seperate controllers
+  [X] Cuisine endpoint add featured image
+  [X] Hours needs to be updated on restaurant model and controller
+  [?] Index fields that are used frequently in find queries
+  [ ] restaurant/location, restaurant/cuisine, etc seem to be broken need to fix

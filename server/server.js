@@ -15,9 +15,6 @@ const { Restaurant } = require('./models/restaurant')
 const { Review } = require('./models/review')
 const { Reservation } = require('./models/reservation')
 
-const profileCreate = require('./controllers/profile/create');
-const profileGetAll = require('./controllers/profile/getAll');
-
 // express
 const app = express();
 // body-parser middleware - will parse the JSON and convert to object
@@ -33,367 +30,72 @@ app.use(function(req, res, next) {
 //****************************************************************************//
 //                                Profile                                     //
 //****************************************************************************//
-app.post('/profile', profileCreate);
+const profilePost = require('./controllers/profile/post');
+const profileGetById = require('./controllers/profile/getById');
+const profileGetAll = require('./controllers/profile/get');
+const profileLogin = require('./controllers/profile/login');
+const profileDelete = require('./controllers/profile/delete');
+const profilePut = require('./controllers/profile/put');
 
-app.get('/profile/:id', (req, res) => {
-	const id = req.params.id
-	if (!ObjectID.isValid(id)) {
-		res.status(404).send()
-	}
-
-	Profile.findById(id).then((profile) => {
-		if (!profile) {
-			res.status(404).send()
-		} else {
-			res.send(profile)
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
+app.post('/profile', profilePost)
+app.get('/profile/:id', profileGetById)
 app.get('/profile', profileGetAll)
-
-app.get('/login', (req, res) => {
-	const {
-    email,
-    password,
-  } = req.query
-	Profile.find({
-    email,
-    password,
-  }).then((profile) => {
-		if (!profile) {
-			res.send()
-		} else {
-			res.send(profile[0].type)
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
-app.delete('/profile', (req, res) => {
-	Profile.findOneAndDelete(req.query).then((profile) => {
-		if (!profile) {
-			res.status(404).send()
-		} else {
-			res.status(202).send() //Accepted status
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
-app.put('/profile', (req, res) => {
-	const e = req.query.email
-
-	Profile.findOneAndUpdate({email : e}, {$set: req.query},  {new: true}).then((profile) => {
-		if (!profile) {
-			res.status(404).send()
-		} else {
-			res.send(profile)
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
+app.get('/login', profileLogin)
+app.delete('/profile', profileDelete)
+app.put('/profile', profilePut)
 
 //****************************************************************************//
 //                                Restaurant                                  //
 //****************************************************************************//
-app.post('/restaurant', (req, res) => {
-	const restaurant = new Restaurant({
-		name: req.query.name,
-		featuredImage: req.query.featuredImage,
-		url: req.query.url,
-		location: req.query.location,
-		cuisine: req.query.cuisine,
-		hours: {mon: req.query.mon,
-						tues: req.query.tues,
-						wed: req.query.wed,
-						thurs: req.query.thurs,
-						fri: req.query.fri,
-						sat: req.query.sat,
-						sun: req.query.sun}
-	})
+const restaurantPost = require('./controllers/restaurant/post');
+const restaurantGetById = require('./controllers/restaurant/getById');
+const restaurantGet = require('./controllers/restaurant/get');
+const restaurantGetName = require('./controllers/restaurant/getName');
+const restaurantGetLocation = require('./controllers/restaurant/getLocation');
+const restaurantGetCuisine = require('./controllers/restaurant/getCuisine');
+const restaurantGetHours = require('./controllers/restaurant/getHours');
+const restaurantDelete = require('./controllers/restaurant/delete');
+const restaurantPut = require('./controllers/restaurant/put');
 
-	restaurant.save().then((result) => {
-		res.send(result)
-	}, (error) => {
-		res.status(400).send(error)
-	})
-})
-
-app.get('/restaurant/:id', (req, res) => {
-	const id = req.params.id
-	if (!ObjectID.isValid(id)) {
-		res.status(404).send()
-	}
-
-	Restaurant.findById(id).then((restaurant) => {
-		if (!restaurant) {
-			res.status(404).send()
-		} else {
-			res.send(restaurant)
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
-app.get('/restaurant', (req, res) => {
-	Restaurant.find(req.query).then((restaurant) => {
-		if (!restaurant) {
-			res.status(404).send()
-		} else {
-			res.send(restaurant)
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
-app.get('/restaurant/name', (req, res) => {
-	Restaurant.find({}).then((restaurant) => {
-		if (!restaurant) {
-			res.status(404).send()
-		} else {
-			let name = new Set()
-			for (let i = 0; i < restaurant.length; i++){
-					name.add(restaurant[i].name);
-			}
-			res.send(Array.from(name))
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
-app.get('/restaurant/location', (req, res) => {
-	Restaurant.find({}).then((restaurant) => {
-		if (!restaurant) {
-			res.status(404).send()
-		} else {
-			let locations = new Set()
-			for (let i = 0; i < restaurant.length; i++){
-					locations.add(restaurant[i].location);
-			}
-			res.send(Array.from(locations))
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
-app.get('/restaurant/cuisine', (req, res) => {
-	Restaurant.find({}).then((restaurant) => {
-		if (!restaurant) {
-			res.status(404).send()
-		} else {
-			let cuisine = new Set()
-			for (let i = 0; i < restaurant.length; i++){
-					cuisine.add(restaurant[i].cuisine);
-			}
-			res.send(Array.from(cuisine))
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
-app.get('/restaurant/hours', (req, res) => {
-	Restaurant.find({}).then((restaurant) => {
-		if (!restaurant) {
-			res.status(404).send()
-		} else {
-			let hours = new Set()
-			for (let i = 0; i < restaurant.length; i++){
-					hours.add(restaurant[i].hours);
-			}
-			res.send(Array.from(hours))
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
-app.delete('/restaurant', (req, res) => {
-	Restaurant.findOneAndDelete(req.query).then((restaurant) => {
-		if (!restaurant) {
-			res.status(404).send()
-		} else {
-			res.status(202).send() //Accepted status
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
-app.put('/restaurant', (req, res) => {
-	const n = req.query.name
-	const l = req.query.location
-
-	Restaurant.findOneAndUpdate({name : n, location: l}, {$set: req.query},  {new: true}).then((restaurant) => {
-		if (!restaurant) {
-			res.status(404).send()
-		} else {
-			res.send(restaurant)
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
+app.post('/restaurant', restaurantPost)
+app.get('/restaurant/:id', restaurantGetById)
+app.get('/restaurant', restaurantGet)
+app.get('/restaurant/name', restaurantGetName)
+app.get('/restaurant/location', restaurantGetLocation)
+app.get('/restaurant/cuisine', restaurantGetCuisine)
+app.get('/restaurant/hours', restaurantGetHours)
+app.delete('/restaurant', restaurantDelete)
+app.put('/restaurant', restaurantPut)
 //****************************************************************************//
 //                                Review                                      //
 //****************************************************************************//
-app.post('/review', (req, res) => {
-	const review = new Review({
-		name: req.query.name,
-		stars: req.query.stars,
-		comment: req.query.comment
-	})
+const reviewPost = require('./controllers/review/post');
+const reviewGetById = require('./controllers/review/getById');
+const reviewGet = require('./controllers/review/get');
+const reviewDelete = require('./controllers/review/delete');
+const reviewPut = require('./controllers/review/put');
 
-	review.save().then((result) => {
-		res.send(result)
-	}, (error) => {
-		res.status(400).send(error) // 400 for bad request
-	})
-})
-
-app.get('/review/:id', (req, res) => {
-	const id = req.params.id
-	if (!ObjectID.isValid(id)) {
-		res.status(404).send()
-	}
-
-	Review.findById(id).then((review) => {
-		if (!review) {
-			res.status(404).send()
-		} else {
-			res.send(review)
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
-app.get('/review', (req, res) => {
-	Review.find(req.query).then((review) => {
-		if (!review) {
-			res.status(404).send()
-		} else {
-			res.send(review)
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
-app.delete('/review', (req, res) => {
-	Review.findOneAndDelete(req.query).then((review) => {
-		if (!review) {
-			res.status(404).send()
-		} else {
-			res.status(202).send() //Accepted status
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
-app.put('/review', (req, res) => {
-	const n = req.query.name
-
-	Review.findOneAndUpdate({name : n}, {$set: req.query},  {new: true}).then((review) => {
-		if (!review) {
-			res.status(404).send()
-		} else {
-			res.send(review)
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
+app.post('/review', reviewPost)
+app.get('/review/:id', reviewGetById)
+app.get('/review', reviewGet)
+app.delete('/review', reviewDelete)
+app.put('/review', reviewPut)
 
 //****************************************************************************//
 //                                Reservation                                 //
 //****************************************************************************//
-app.post('/reservation', (req, res) => {
-	const reservation = new Reservation({
-		name: req.query.name,
-		location: req.query.location,
-		email: req.query.email,
-		host: req.query.host,
-		table: req.query.table,
-		startTime: Date(req.query.startTime),
-		endTime: Date(req.query.endTime)
-	})
+const reservationPost = require('./controllers/reservation/post');
+const reservationGetById = require('./controllers/reservation/getById');
+const reservationGet = require('./controllers/reservation/get');
+const reservationDelete = require('./controllers/reservation/delete');
+const reservationPut = require('./controllers/reservation/put');
 
-	reservation.save().then((result) => {
-		res.send(result)
-	}, (error) => {
-		res.status(400).send(error) // 400 for bad request
-	})
-})
+app.post('/reservation', reservationPost)
+app.get('/reservation/:id', reservationGetById)
+app.get('/reservation', reservationGet)
+app.delete('/reservation', reservationDelete)
+app.put('/reservation', reservationPut)
 
-app.get('/reservation/:id', (req, res) => {
-	const id = req.params.id
-	if (!ObjectID.isValid(id)) {
-		res.status(404).send()
-	}
-
-	Reservation.findById(id).then((reservation) => {
-		if (!reservation) {
-			res.status(404).send()
-		} else {
-			res.send(reservation)
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
-app.get('/reservation', (req, res) => {
-	Reservation.find(req.query).then((reservation) => {
-		if (!reservation) {
-			res.status(404).send()
-		} else {
-			res.send(reservation)
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
-app.delete('/reservation', (req, res) => {
-	Reservation.findOneAndDelete(req.query).then((reservation) => {
-		if (!reservation) {
-			res.status(404).send()
-		} else {
-			res.status(202).send() //Accepted status
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
-
-app.put('/reservation', (req, res) => {
-	const n = req.query.name
-	const l = req.query.location
-	const e = req.query.email
-
-	Reservation.findOneAndUpdate({name : n, location: l, email: e}, {$set: req.query},  {new: true}).then((reservation) => {
-		if (!reservation) {
-			res.status(404).send()
-		} else {
-			res.send(reservation)
-		}
-	}).catch((error) => {
-		res.status(500).send()
-	})
-})
 
 
 app.listen(port, () => {
