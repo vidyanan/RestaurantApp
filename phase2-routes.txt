@@ -36,13 +36,13 @@ GET /restaurant/:id
       returns restaurant with id as {}
 GET /restaurant?______
       returns restaurants by any combination of query parameter as {}
-GET /restaurant/name
+GET /name
       returns all unique restaurant names as []
-GET /restaurant/location
+GET /location
       returns all unique restaurant locations as []
-GET /restaurant/cuisine
+GET /cuisine
       returns all unique restaurant cuisines as []
-GET /restaurant/hours
+GET /hours
       returns all unique restaurant hours as []  ***needs to be updated
 PUT /restaurant?name=&location=&______
       modify any attributes pass it along with name, location, has to be defined as its unique
