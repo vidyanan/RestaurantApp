@@ -16,7 +16,8 @@ const Profile = mongoose.model('Profile', {
 	email: {
 		type: String,
 		required: true,
-		unique: true
+		unique: true,
+		index: true
 	},
 	password: {
 		type: String,

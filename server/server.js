@@ -50,22 +50,24 @@ app.put('/profile', profilePut)
 const restaurantPost = require('./controllers/restaurant/post');
 const restaurantGetById = require('./controllers/restaurant/getById');
 const restaurantGet = require('./controllers/restaurant/get');
-const restaurantGetName = require('./controllers/restaurant/getName');
-const restaurantGetLocation = require('./controllers/restaurant/getLocation');
-const restaurantGetCuisine = require('./controllers/restaurant/getCuisine');
-const restaurantGetHours = require('./controllers/restaurant/getHours');
+const restaurantName = require('./controllers/restaurant/name');
+const restaurantLocation = require('./controllers/restaurant/location');
+const restaurantCuisine = require('./controllers/restaurant/getCuisine');
+const restaurantHours = require('./controllers/restaurant/hours');
 const restaurantDelete = require('./controllers/restaurant/delete');
 const restaurantPut = require('./controllers/restaurant/put');
 
 app.post('/restaurant', restaurantPost)
 app.get('/restaurant/:id', restaurantGetById)
 app.get('/restaurant', restaurantGet)
-app.get('/restaurant/name', restaurantGetName)
-app.get('/restaurant/location', restaurantGetLocation)
-app.get('/restaurant/cuisine', restaurantGetCuisine)
-app.get('/restaurant/hours', restaurantGetHours)
+app.get('/name', restaurantName)
+app.get('/location', restaurantLocation)
+app.get('/cuisine', restaurantCuisine)
+app.get('/hours', restaurantHours)
 app.delete('/restaurant', restaurantDelete)
 app.put('/restaurant', restaurantPut)
+
+
 //****************************************************************************//
 //                                Review                                      //
 //****************************************************************************//

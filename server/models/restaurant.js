@@ -3,8 +3,9 @@ const mongoose = require('mongoose')
 const Restaurant = mongoose.model('Restaurant', {
 	name: {
 		type: String,
+		required: true,
 		unique: true,
-		required: true
+		index: true
 	},
 	featuredImage: {
 		type: String,
@@ -16,8 +17,9 @@ const Restaurant = mongoose.model('Restaurant', {
 	},
 	location: {
 		type: String,
+		required: true,
 		unique: true,
-		required: true
+		index: true
 	},
 	cuisine: {
 		type: String,

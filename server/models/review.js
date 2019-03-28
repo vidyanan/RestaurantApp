@@ -4,7 +4,8 @@ const Review = mongoose.model('Review', {
 	name: {
 		type: String,
 		required: true,
-		unique: true
+		unique: true,
+		index: true
 	},
 	stars: {
 		type: Number,
