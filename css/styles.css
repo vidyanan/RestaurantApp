@@ -31,3 +31,7 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+#editCard {
+  float: right;
+}

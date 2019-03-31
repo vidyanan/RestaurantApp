@@ -11,9 +11,9 @@ tomorrow.setDate(tomorrow.getDate() + 1);
 tomorrow = formatDate(tomorrow);
 
 let server = {};
-server[yesterday] = [{"id": 1, "table": 0, "host": "Bob", "phone": "000-000-0000", "numSeats": 2, "hour": 5, "timeSlot": 30}];
-server[today] = [{"id": 0, "table": 0, "host": "Tim", "phone": "000-000-0000", "numSeats": 3, "hour": 3, "timeSlot": 0}, {"id": 2, "table": 3, "host": "Jim", "phone": "000-000-0000", "numSeats": 1, "hour": 3, "timeSlot": 30}];
-server[tomorrow] = [{"id": 3, "table": 5, "host": "Him", "phone": "000-000-0000", "numSeats": 5, "hour": 3, "timeSlot": 0}];
+server[yesterday] = [{"id": 1, "table": 0, "host": "Bob", "host_id": 0, "phone": "000-000-0000", "numSeats": 2, "hour": 5, "timeSlot": 30}];
+server[today] = [{"id": 0, "table": 0, "host": "Tim", "host_id": 0, "phone": "000-000-0000", "numSeats": 3, "hour": 3, "timeSlot": 0}, {"id": 2, "table": 3, "host": "Jim", "host_id": 0, "phone": "000-000-0000", "numSeats": 1, "hour": 3, "timeSlot": 30}];
+server[tomorrow] = [{"id": 3, "table": 5, "host": "Him", "host_id": 0, "phone": "000-000-0000", "numSeats": 5, "hour": 3, "timeSlot": 0}];
 
 let serverMaxReservations = 5;
 let serverNextID = 4;
@@ -32,14 +32,16 @@ const nextDateButton = document.querySelector('#nextDate');
 const currentDateText = document.querySelector('#currentDate');
 const calendar = document.querySelector('#calendar');
 const reviewList = document.querySelector("#reviews");
+const editCard = document.querySelector("#editCard");
 
-reservationList.addEventListener('click', removeButtonFunction);
+reservationList.addEventListener('click', reservationButtonFunction);
 addReservationForm.addEventListener('submit', submitReservationForm);
 calendar.addEventListener('datechange', onDateChange);
 maxReservationForm.addEventListener('submit', updateMaxReservations);
 previousDateButton.addEventListener('click', getPreviousDay);
 nextDateButton.addEventListener('click', getNextDay);
 reviewList.addEventListener('click', addReviewPrompt);
+editCard.addEventListener('click', editCardInfo);
 
 // // // // // // //
 // Date Functions //
@@ -187,7 +189,7 @@ function submitReservationForm(e) {
 
   // If time slot does not conflict with max amount of reservation
   if (!doesConflict(reservationDate)) {
-    createNewReservation(hostName, reservationDate, phone, numSeats);
+    createNewReservation(hostName, "Guest", reservationDate, phone, numSeats);
   }
 }
 
@@ -258,15 +260,15 @@ function getFreeTable(date) {
 // // // // // // // // // // // // //
 
 // POST creation of reservation
-async function addReservationToServer(id, tableNum, hostName, phone, numSeats, reservationDate) {
+async function addReservationToServer(id, tableNum, hostName, hostId, phone, numSeats, reservationDate) {
   // Add new entry into database
   // {
       let serverLst = server[formatDate(reservationDate)];
 
       if(serverLst === undefined) { // No reservations are booked for that date yet
-        server[formatDate(reservationDate)] = [{'id': id, 'table': tableNum, 'host': hostName, 'phone': phone, 'numSeats': numSeats, 'hour': reservationDate.getHours(), 'timeSlot': reservationDate.getMinutes()}];
+        server[formatDate(reservationDate)] = [{'id': id, 'table': tableNum, 'host': hostName, "host_id": hostId, 'phone': phone, 'numSeats': numSeats, 'hour': reservationDate.getHours(), 'timeSlot': reservationDate.getMinutes()}];
       } else {
-        server[formatDate(reservationDate)].push({'id': id, 'table': tableNum, 'host': hostName, 'phone': phone, 'numSeats': numSeats, 'hour': reservationDate.getHours(), 'timeSlot': reservationDate.getMinutes()});
+        server[formatDate(reservationDate)].push({'id': id, 'table': tableNum, 'host': hostName, "host_id": hostId, 'phone': phone, 'numSeats': numSeats, 'hour': reservationDate.getHours(), 'timeSlot': reservationDate.getMinutes()});
       }
   // }
 
@@ -274,18 +276,18 @@ async function addReservationToServer(id, tableNum, hostName, phone, numSeats, r
 }
 
 // Creates a new reservation on reservationList
-function createNewReservation(hostName, reservationDate, phone, numSeats) {
+function createNewReservation(hostName, hostId, reservationDate, phone, numSeats) {
   let tableNum = getFreeTable(reservationDate);
   let id = getNewReservationId();
 
-  addReservationToServer(id, tableNum, hostName, phone, numSeats, reservationDate);
+  addReservationToServer(id, tableNum, hostName, hostId, phone, numSeats, reservationDate);
 
   if (isCurrentDay(reservationDate)) {
-    addReservation(hostName, reservationDate, tableNum, id, phone, numSeats)
+    addReservation(hostName, hostId, reservationDate, tableNum, id, phone, numSeats)
   }
 }
 
-function addReservation(hostName, reservationDate, tableNum, id, phone, numSeats) {
+function addReservation(hostName, hostId, reservationDate, tableNum, id, phone, numSeats) {
   let newReservation = document.createElement('tr');
 
   // Create default tag for reservation info
@@ -306,6 +308,11 @@ function addReservation(hostName, reservationDate, tableNum, id, phone, numSeats
   reservationInfo.innerText = hostName;
   newReservation.appendChild(reservationInfo);
 
+  // Host id
+  reservationInfo = reservationInfo.cloneNode(false);
+  reservationInfo.innerText = hostId;
+  newReservation.appendChild(reservationInfo);
+
   // Host phone number
   reservationInfo = reservationInfo.cloneNode(false);
   reservationInfo.innerText = phone;
@@ -320,6 +327,13 @@ function addReservation(hostName, reservationDate, tableNum, id, phone, numSeats
   reservationInfo = reservationInfo.cloneNode(false);
   reservationInfo.innerText = numSeats;
   newReservation.appendChild(reservationInfo);
+
+  // View profile of patron
+  let viewProfile = document.createElement('button');
+  viewProfile.setAttribute('type', 'button');
+  viewProfile.setAttribute('class', 'btn btn-primary');
+  viewProfile.innerHTML = "View Profile";
+  newReservation.appendChild(viewProfile);
 
   // Remove button
   let removeReservation = document.createElement('button');
@@ -337,19 +351,35 @@ function addReservation(hostName, reservationDate, tableNum, id, phone, numSeats
   reservationList.appendChild(newReservation);
 }
 
+function openPopup(pageUrl, id) {
+    let newUrl = pageUrl + "?" + id;
+    window.open(newUrl, "edit", "scrollbars=1,height=1050px,width=375px");
+}
+
 // Occurs when the remove button on a reservation occurs
-function removeButtonFunction(e) {
+function reservationButtonFunction(e) {
   e.preventDefault();
 
   let parentNode = e.target;
 
-  // If they clicked on the text instead of the button
-  if (parentNode.getAttribute('class') === 'fas fa-trash-alt') {
-    parentNode = parentNode.parentNode;
-  }
+  if (parentNode.getAttribute('class') === 'btn btn-primary') {
+      // View person's profile
+      const hostId = parentNode.parentNode.childNodes[3].innerText;
 
-  if (parentNode.getAttribute('class') === "btn btn-danger") {
-    deleteReservation(parentNode.parentNode);
+      if(hostId === "Guest") {
+          window.alert("Guest does not have a profile!");
+      } else {
+          openPopup("userView.html", hostId);
+      }
+  }
+  // If they clicked on the text instead of the button
+  else if (parentNode.getAttribute('class') === 'fas fa-trash-alt') {
+    // Try to remove
+    parentNode = parentNode.parentNode;
+
+    if (parentNode.getAttribute('class') === "btn btn-danger") {
+      deleteReservation(parentNode.parentNode);
+    }
   }
 }
 
@@ -414,7 +444,7 @@ function addReservations(dates) {
   for (let i = 0; i < dates.length; i++) {
     tempDate.setHours(dates[i]['hour']);
     tempDate.setMinutes(dates[i]['timeSlot']);
-    addReservation(dates[i]['host'], tempDate, dates[i]['table'], dates[i]['id'], dates[i]['phone'], dates[i]['numSeats']);
+    addReservation(dates[i]['host'], dates[i]['host_id'], tempDate, dates[i]['table'], dates[i]['id'], dates[i]['phone'], dates[i]['numSeats']);
   }
 }
 
@@ -495,6 +525,10 @@ function addReviewPrompt(e) {
 
   console.log(review);
   addTextBubble(review)
+}
+
+function editCardInfo() {
+    openPopup("restCardEdit.html", "restId");
 }
 
 // Run startup procedures
