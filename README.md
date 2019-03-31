@@ -1,11 +1,7 @@
 # team05
 
-Start a static web server serving this directory.
+navigate to http://replacewithurl/index.html to see our deployed website
 
-* If you have `python3` installed, you may use `python3 -m http.server`
-* If you have `node` installed, you may use `npm install -g serve && serve .`
+read phase 1 instructions in [phase1.txt](./phase1.txt)
 
-Using the latest stable version of Google Chrome, navigate to http://localhost:PORT/index.html where
-PORT is replaced by the port number that the static web server is listening on.
-
-Continue reading instructions in [phase1.txt](./phase1.txt)
+read phase 2 instructions in [phase2.txt](./phase2.txt) and api routes in [phase2-routes.txt](./phase2-routes.txt)

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Home &bull; CSC309 Team 5</title>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/vendor/bootstrap@4.0.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/vendor/fontawesome@5.7.2/css/all.min.css" />
+</head>
+
+<body>
+  <div id="loading"></div>
+
+  <csc309-navigation></csc309-navigation>
+
+  <div class="mb-5">
+    <csc309-cover-curve class="mb-5">
+      <div class="container my-5" slot="children">
+        <div class="row">
+          <h1 class="mb-4">Discover restaurants in your area</h1>
+        </div>
+
+        <form class="row" method="GET" action="/restaurantsSearch.html">
+          <div class="form-row align-items-center">
+            <div class="col-auto">
+              <csc309-input id="location" name="location" placeholder="City" icon-class="fas fa-map-marker-alt">
+              </csc309-input>
+            </div>
+
+            <div class="col-auto">
+              <button type="submit" class="btn btn-primary">Find</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </csc309-cover-curve>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="restaurant-previews d-flex my-5">
+        <csc309-restaurant-preview heading="Italian" image="/images/restaurants/porta-via.png"
+          url="/restaurantsSearch.html?cuisine=italian">
+        </csc309-restaurant-preview>
+
+        <csc309-restaurant-preview heading="Mediterranean" image="/images/restaurants/flava-ceen.jpg"
+          url="/restaurantsSearch.html?cuisine=mediterranean">
+        </csc309-restaurant-preview>
+
+        <csc309-restaurant-preview heading="Chinese" image="/images/restaurants/umami-hakka.jpg"
+          url="/restaurantsSearch.html?cuisine=chinese">
+        </csc309-restaurant-preview>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-light">
+    <div class="container">
+      <div class="row py-5 my-5">
+        <div class="col-sm">
+          <h2>
+            Become a Restaurant Partner
+          </h2>
+
+          <p class="lead">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+            efficitur laoreet ligula eu malesuada. Fusce bibendum, neque in
+            dignissim lobortis, tellus ligula tempor leo, non tincidunt lacus
+            erat in nisl. Vestibulum eget lacus dolor. Nulla facilisi. Integer
+            nunc elit, vulputate sit amet bibendum ac, facilisis in leo.
+          </p>
+
+          <a class="btn btn-primary mb-5" href="/profile.html">
+            Get Started
+          </a>
+        </div>
+        <div class="col-sm">
+          <img class="img-fluid" src="/images/become-partner.jpg" alt="Become a partner" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/vendor/jquery@3.3.1/jquery.min.js"></script>
+  <script src="/vendor/bootstrap@4.0.0/js/bootstrap.min.js"></script>
+  <script type="module" src="/components/loader.js"></script>
+</body>
+
+</html>

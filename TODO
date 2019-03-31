@@ -1,0 +1,36 @@
+* Client
+  * Sign in - login.html (IMAN)
+    [ ] Style
+      * Heading is ugly
+      * Redirect to
+    [ ] Connect to server
+  * Sign up - profile.html (IMAN)
+    [ ] Style
+      * Heading is ugly
+      * Fix on small screen size
+    [ ] Connect to server
+  * Admin Page - adminPage.html (IMAN)
+    [ ] Create a new restaurant (button + form)
+    [ ] Connect to server
+    [ ] Fix nav bar - it should show logged in always
+    [ ] Cancel or close, what's the difference? Fix or remove one
+  * Home - index.html, restaurant.html (OMAR)
+    [ ] Connect to server, get top 3 categories
+  * Restaurants Search  - restaurantsSearch.html (OMAR)
+    [ ] Connect to server
+  * Restaurant Owner restaurantOwner.html (TIM)
+    [ ] Popup to edit the restaurant info
+    [ ] Add reviews
+  * User profile (TIM)
+    [ ] Recycle user edit form
+
+* All html pages
+  [ ] remove mock data code make sure everything is network calls
+  [ ] format documents nicely, control shift f, shortcut for most editors
+
+* Server (YATHAN)
+  [X] split server.js into seperate controllers
+  [X] Cuisine endpoint add featured image
+  [X] Hours needs to be updated on restaurant model and controller
+  [X] Index fields that are used frequently in find queries
+  [X] restaurant/location, restaurant/cuisine, etc seem to be broken need to fix

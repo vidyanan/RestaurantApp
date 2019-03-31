@@ -1,0 +1,63 @@
+/* Add a black background color to the top navigation bar */
+.topnav {
+  overflow: hidden;
+  float: right;
+  background-color: #e9e9e9;
+  padding-bottom: 5px;
+  padding-right: 10px;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Style the search box inside the navigation bar */
+.topnav input[type=text] {
+  padding: 6px;
+  border: none;
+  margin-top: 8px;
+  margin-right: 16px;
+  margin-left: 10px;
+  font-size: 17px;
+}
+
+/*from styles.css*/
+#loading {
+  background: white;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.restaurant-previews {
+  overflow-x: scroll;
+}
+
+#loginForm {
+  position: fixed;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#profileForm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.reviews {
+  display: flex;
+  flex-wrap: wrap;
+}

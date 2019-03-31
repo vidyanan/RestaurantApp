@@ -12,7 +12,7 @@ From "/index.html" click sign in top right hand side
  -> user, user brings you to regular standard user view
  -> user2, user2 brings you to restaurant owner view
 
-rom "/index.html"  click sign up top right hand side
+From "/index.html"  click sign up top right hand side
  -> creates an account regular user redirects you to standard user view
  -> restaurant owner redirects you to restaurant owner view
 
