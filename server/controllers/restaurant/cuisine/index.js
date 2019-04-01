@@ -1,4 +1,4 @@
-const { Restaurant } = require('../../models/restaurant')
+const { Restaurant } = require('../../../models/restaurant')
 
 module.exports = (req, res) => {
   Restaurant.find({}).then((restaurant) => {

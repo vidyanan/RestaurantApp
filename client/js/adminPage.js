@@ -101,7 +101,7 @@ function addRest(restaurant) {
   element3.textContent = restaurant["featuredImage"]
   rowElement.appendChild(element3)
   const element4 = document.createElement('td')
-  element4.textContent = restaurant["url"]
+  element4.textContent = restaurant["slug"]
   rowElement.appendChild(element4)
   const element5 = document.createElement('td')
   element5.textContent = restaurant["location"]

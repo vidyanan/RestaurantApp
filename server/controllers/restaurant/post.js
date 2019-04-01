@@ -2,14 +2,13 @@ const { Restaurant } = require('../../models/restaurant')
 
 module.exports = (req, res) => {
 	const restaurant = new Restaurant({
-		name: req.query.name,
+		name: req.body.name,
 		restaurantOwner: req.query.restaurantOwner,
-		featuredImage: req.query.featuredImage,
-		url: req.query.url,
-		location: req.query.location,
-		cuisine: req.query.cuisine,
-    cuisineImage: req.query.cuisineImage,
-		hours: req.query.hours
+		featuredImage: req.body.featuredImage,
+		slug: req.body.slug,
+		location: req.body.location,
+		cuisine: req.body.cuisine,
+		hours: req.body.hours
 	})
 
 	restaurant.save().then((result) => {

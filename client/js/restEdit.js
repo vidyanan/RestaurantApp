@@ -14,17 +14,16 @@ function fillInData(i){
   myform.children[0].value = i;
   myform.children[1].value = reponse["name"];
   myform.children[2].value = reponse["featuredImage"];
-  myform.children[5].value = reponse["url"];
+  myform.children[5].value = reponse["slug"];
   myform.children[8].value = reponse["location"];
   myform.children[11].value = reponse["cuisine"];
-  myform.children[14].value = reponse["cuisineImage"];
   myform.children[17].value = reponse["hours"];
 }
 
 function beginClosing(e){
   if (e.target.classList.contains('btn modify')) {
     deleteRest(myform.children[0].value)
-    newRestaurant(reponse["hours"], reponse["name"], reponse["featuredImage"],reponse["url"],reponse["location"], reponse["cuisine"],reponse["cuisineImage"])
+    newRestaurant(reponse["hours"], reponse["name"], reponse["featuredImage"],reponse["slug"],reponse["location"], reponse["cuisine"])
   }
   window.close();
 }

@@ -52,7 +52,8 @@ const restaurantGetById = require('./controllers/restaurant/getById');
 const restaurantGet = require('./controllers/restaurant/get');
 const restaurantName = require('./controllers/restaurant/name');
 const restaurantLocation = require('./controllers/restaurant/location');
-const restaurantCuisine = require('./controllers/restaurant/cuisine');
+const restaurantCuisine = require('./controllers/restaurant/cuisine/index');
+const restaurantCuisineFeatured = require('./controllers/restaurant/cuisine/featured');
 const restaurantHours = require('./controllers/restaurant/hours');
 const restaurantDelete = require('./controllers/restaurant/delete');
 const restaurantPut = require('./controllers/restaurant/put');
@@ -63,6 +64,7 @@ app.get('/restaurant', restaurantGet)
 app.get('/name', restaurantName)
 app.get('/location', restaurantLocation)
 app.get('/cuisine', restaurantCuisine)
+app.get('/cuisine/featured', restaurantCuisineFeatured)
 app.get('/hours', restaurantHours)
 app.delete('/restaurant', restaurantDelete)
 app.put('/restaurant', restaurantPut)

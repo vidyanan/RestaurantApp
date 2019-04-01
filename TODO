@@ -34,3 +34,14 @@
   [X] Hours needs to be updated on restaurant model and controller
   [X] Index fields that are used frequently in find queries
   [X] restaurant/location, restaurant/cuisine, etc seem to be broken need to fix
+
+
+
+
+
+Omar's Notes:
+  [ ] POST, PUT, PATCH endpoints should use request body instead of query params
+  [ ] Use req.json(object) instead of req.send(object)
+  [ ] Use req.end() instead of req.send()
+  [ ] Avoid excessive dependency on order of children! search ".children["
+  [x] Rename restaurant.url to restaurant.slug
