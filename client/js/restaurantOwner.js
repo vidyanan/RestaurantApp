@@ -40,7 +40,7 @@ calendar.addEventListener('datechange', onDateChange);
 maxReservationForm.addEventListener('submit', updateMaxReservations);
 previousDateButton.addEventListener('click', getPreviousDay);
 nextDateButton.addEventListener('click', getNextDay);
-reviewList.addEventListener('click', addReviewPrompt);
+reviewList.addEventListener('click', addReview);
 editCard.addEventListener('click', editCardInfo);
 
 // // // // // // //
@@ -467,64 +467,78 @@ function createCurrentDayReservations() {
 // Review modifying functions //
 // // // // // // // // // // //
 
-function createCustomInputTag() {
-  let text = document.createElement('input');
-  text.required = true;
-  return text;
+function createReview(review) {
+    return $('<csc309-restaurant-review></csc309-restaurant-review')
+    .attr('heading', review['name'])
+    .attr('comment', review['comment'])
+    .attr('stars', review['stars'])
+    .attr('date', new Date(review['createdAt']).toLocaleDateString());
 }
 
-function createTextBubble() {
-  let bubble = document.createElement('div');
-  bubble.setAttribute('class', 'row offset-1');
+function constructReviewHTML(reviewContext) {
+    let newRow = document.createElement("div");
+    newRow.setAttribute("class", "row justify-content-center");
 
-  let text = createCustomInputTag();
+    $(newRow).append(createReview(reviewContext));
 
-  bubble.appendChild(text);
-
-  let button = document.createElement('input');
-  button.setAttribute('type', 'button');
-  button.setAttribute('value', 'Submit');
-  button.setAttribute('class', 'btn btn-primary h-50" style="margin-top: 23.5px');
-
-  bubble.appendChild(button);
-
-  return bubble;
+    return newRow;
 }
 
-function addTextBubble(target) {
-  let parent = target.parentNode;
-  let children = parent.children;
-
-  for (let i = 0; i < children.length; i++) {
-    if (children[i] === target) {
-      try {
-        if (children[i + 1].getAttribute('class') === 'review') {
-          parent.insertBefore(createTextBubble(), children[i + 1]);
-        }
-      } catch (Exception) {
-        parent.appendChild(createTextBubble());
-      }
-
-      break;
+function addReviews(maxLoad) {
+    $.get('/review').then((reviews) => {
+        for(let i = 0; i < Math.min(maxLoad, reviews.length); i++) {
+            $("#reviews").append(constructReviewHTML(reviews[i]));
     }
-  }
+    });
 }
 
-function addReviewPrompt(e) {
-  let review = e.target;
+function createReviewPrompt() {
+  let group = document.createElement('div');
+  group.setAttribute('class', 'input-group');
 
-  if (review.getAttribute('class') !== 'review' &&
-      review.parentNode.getAttribute('class') !== 'review') {
-    return;
+  let input = document.createElement('input');
+  input.setAttribute('type', 'text');
+  input.setAttribute('class', 'form-control');
+
+  let buttonDiv = document.createElement('div');
+  buttonDiv.setAttribute('class', 'input-group-append');
+
+  let button = document.createElement('button');
+  button.setAttribute('type', 'button');
+  button.setAttribute('class', 'btn btn-primary');
+  button.innerText = 'Publish';
+
+  buttonDiv.appendChild(button);
+  group.appendChild(input);
+  group.appendChild(buttonDiv);
+  return group;
+}
+
+function addReview(e) {
+  const target = e.target;
+
+  if(target.parentNode.id.localeCompare("reviews") &&
+     target.className === '' && target.nextSibling === null) {
+      // If you click on a review
+      $(createReviewPrompt()).insertAfter(target);
   }
 
-  else if (review.getAttribute('class') !== 'review') {
-    review = review.parentNode;
+  else if(target.parentNode.className === 'input-group-append') {
+      const originalText = $(target.parentNode.parentNode).prev()[0].getAttribute('comment');
+      let reviewText = '"' + originalText + '": ' + $(target.parentNode).prev().val();
+
+      if(reviewText.length !== 0) {
+        const originalReview = target.parentNode.parentNode.parentNode;
+        const reviewObj = {'name': 'Owner', 'comment': reviewText, 'stars': 0, 'createdAt': new Date()};
+
+        $.post('/review?name="Owner"&stars=0&comment=' + reviewText).then((res) => {
+            // Remove text box
+            $(target.parentNode.parentNode).remove();
+            // Put the owner's reply on the page
+            $(constructReviewHTML(reviewObj)).insertAfter(originalReview);
+        });
+      }
   }
-
-
-  console.log(review);
-  addTextBubble(review)
 }
 
 function editCardInfo() {
@@ -533,6 +547,7 @@ function editCardInfo() {
 
 // Run startup procedures
 function initialize() {
+  addReviews(6);
   retrieveMaxReservations();
   createCurrentDayReservations();
 }
