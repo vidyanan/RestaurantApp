@@ -76,18 +76,28 @@ function deleteProfile(id) {
 
 //restaurant
 
-function newRestaurant(hours, name, featuredImage, url, location, cuisine, cuisineImage) {
+function newRestaurant(hours, name, featuredImage, slug, location, cuisine) {
   var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "/restaurant/?name="+name+"&featuredImage="+featuredImage+"&url="+url+"&location="+location+"&cuisine="+cuisine+"&cuisineImage="+cuisineImage+"&hours="+hours.toString(),
-  "method": "POST",
-  "headers": {
+    "async": true,
+    "crossDomain": true,
+    "url": "/restaurant",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+    },
+    "processData": false,
+    "data": JSON.stringify({
+      hours,
+      name,
+      featuredImage,
+      slug,
+      location,
+      cuisine
+    })
   }
-}
 
   $.ajax(settings).done(function (response) {
-    return response;
+    console.log(response);
   });
 }
 

@@ -11,7 +11,7 @@ const Restaurant = mongoose.model('Restaurant', {
 		type: String,
 		required: true
 	},
-	url: {
+	slug: {
 		type: String,
 		required: true
 	},
@@ -22,10 +22,6 @@ const Restaurant = mongoose.model('Restaurant', {
 		index: true
 	},
 	cuisine: {
-		type: String,
-		required: true
-	},
-	cuisineImage: {
 		type: String,
 		required: true
 	},

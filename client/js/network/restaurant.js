@@ -2,6 +2,7 @@ export {
   getRestaurants,
   getRestaurantLocations,
   getRestaurantCuisines,
+  getRestaurantCuisinesFeatured,
   getRestaurantBySlug,
   getRestaurantReviewsByRestaurantSlug,
   createRestaurantBooking,
@@ -262,6 +263,35 @@ async function getRestaurantCuisines() {
     "Mediterranean",
     "Mexican",
   ];
+}
+
+/**
+ * Fetches featured restaurant cuisines, returns a promise that resolves to an array of cuisines.
+ *
+ * @returns {Promise<Array<String>>}
+ * @example
+ * await getRestaurantCuisines()
+ * [
+ *   {
+ *     "name": "Italian",
+ *     "featuredImage": "/images/restaurants/little-caesars.jpg"
+ *   }
+ * ]
+ */
+async function getRestaurantCuisinesFeatured() {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      "async": true,
+      "crossDomain": true,
+      "url": "/cuisine/featured",
+      "method": "GET",
+      "headers": {
+        "cache-control": "no-cache",
+      }
+    })
+      .done(resolve)
+      .fail(reject);
+  })
 }
 
 /**

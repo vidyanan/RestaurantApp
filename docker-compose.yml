@@ -1,0 +1,14 @@
+version: '3.1'
+
+services:
+  csc309-mongo:
+    image: mongo:4
+    ports:
+      - 27017:27017
+    volumes:
+     - csc309-mongo-data:/data/db
+    logging:
+      driver: 'none'
+
+volumes:
+  csc309-mongo-data:

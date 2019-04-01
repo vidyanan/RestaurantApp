@@ -43,7 +43,7 @@ function renderRestaurantPreview(x) {
   return $('<csc309-restaurant-preview></csc309-restaurant-preview>')
       .attr('heading', x.name)
       .attr('image', x.featuredImage)
-      .attr('url', x.url)
+      .attr('url', `/restaurant.html?id=${encodeURIComponent(x.slug)}`)
 }
 
 function renderDatalist($datalist) {
