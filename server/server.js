@@ -5,15 +5,6 @@ const express = require('express')
 const path = require('path')
 const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
-const { ObjectID } = require('mongodb')
-
-const { mongoose } = require('./db/mongoose')
-
-// import the model
-const { Profile } = require('./models/profile')
-const { Restaurant } = require('./models/restaurant')
-const { Review } = require('./models/review')
-const { Reservation } = require('./models/reservation')
 
 // express
 const app = express();
