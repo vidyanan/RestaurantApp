@@ -261,6 +261,17 @@ function getFreeTable(date) {
 
 // POST creation of reservation
 async function addReservationToServer(id, tableNum, hostName, hostId, phone, numSeats, reservationDate) {
+  /*
+  /reservation ?name=&location=&email=&host=&table=&startTime=&endTime=
+      name === String && will be unique
+      location === String && will be unique
+      email === String && will be unique
+      host === String
+      table === Number
+      startTime === Date
+      endTime === Date
+   */
+
   // Add new entry into database
   // {
       let serverLst = server[formatDate(reservationDate)];
