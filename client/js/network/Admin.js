@@ -4,7 +4,7 @@ function newProfile(firstname, lastname, address, email, password, phonenumber, 
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": "http://localhost:3000/profile/?firstname=+"+firstname+"+&lastname="+lastname+"&address="+address+"&email="+email+"&password="+password+"&phonenumber="+phonenumber+"&birthday="+birthday+"",
+	  "url": "/profile/?firstname=+"+firstname+"+&lastname="+lastname+"&address="+address+"&email="+email+"&password="+password+"&phonenumber="+phonenumber+"&birthday="+birthday+"",
 	  "method": "POST",
 	  "headers": {
 	  }
@@ -19,7 +19,7 @@ function getProfiles(){
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": "http://localhost:3000/profile/",
+	  "url": "/profile/",
 	  "method": "GET",
 	  "headers": {
 	  }
@@ -33,7 +33,7 @@ function getProfileByID(id) {
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": "http://localhost:3000/profile/?="+id,
+	  "url": "/profile/?="+id,
 	  "method": "GET",
 	  "headers": {
 	  }
@@ -48,7 +48,7 @@ function login(email, password) {
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": "http://localhost:3000/login?email="+email+"&password="+password,
+	  "url": "/login?email="+email+"&password="+password,
 	  "method": "GET",
 	  "headers": {
 	  }
@@ -63,7 +63,7 @@ function deleteProfile(id) {
 	var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://localhost:3000/profile?="+id,
+  "url": "/profile?="+id,
   "method": "DELETE",
   "headers": {
   }
@@ -80,7 +80,7 @@ function newRestaurant(hours, name, featuredImage, url, location, cuisine, cuisi
   var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://localhost:3000/restaurant/?name="+name+"&featuredImage="+featuredImage+"&url="+url+"&location="+location+"&cuisine="+cuisine+"&cuisineImage="+cuisineImage+"&hours="+hours.toString(),
+  "url": "/restaurant/?name="+name+"&featuredImage="+featuredImage+"&url="+url+"&location="+location+"&cuisine="+cuisine+"&cuisineImage="+cuisineImage+"&hours="+hours.toString(),
   "method": "POST",
   "headers": {
   }
@@ -95,7 +95,7 @@ function RestaurantByID(id) {
   var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://localhost:3000/restaurant/"+id,
+  "url": "/restaurant/"+id,
   "method": "GET",
   "headers": {
     "cache-control": "no-cache",
@@ -112,7 +112,7 @@ function getRestaurants() {
   var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://localhost:3000/restaurant",
+  "url": "/restaurant",
   "method": "GET",
   "headers": {
     "cache-control": "no-cache",
@@ -129,11 +129,10 @@ function deleteRest(id) {
 	var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://localhost:3000/restaurant/?="+id,
+  "url": "/restaurant/?="+id,
   "method": "DELETE",
   "headers": {
-    "cache-control": "no-cache",
-    "Postman-Token": "d8873fae-a489-4802-a14d-eedca038847f"
+
   }
 }
 
@@ -148,7 +147,7 @@ function getReviews() {
   var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://localhost:3000/review",
+  "url": "/review",
   "method": "GET",
   "headers": {
   }
@@ -163,7 +162,7 @@ function deleteReview(id) {
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://localhost:3000/review?="+id,
+    "url": "/review?="+id,
     "method": "DELETE",
     "headers": {
       "cache-control": "no-cache",
