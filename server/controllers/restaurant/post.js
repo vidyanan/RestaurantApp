@@ -3,6 +3,7 @@ const { Restaurant } = require('../../models/restaurant')
 module.exports = (req, res) => {
 	const restaurant = new Restaurant({
 		name: req.query.name,
+		restaurantOwner: req.query.restaurantOwner,
 		featuredImage: req.query.featuredImage,
 		url: req.query.url,
 		location: req.query.location,

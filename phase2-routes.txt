@@ -22,8 +22,9 @@ DELETE /profile?______
 
 
 
-POST /restaurant ?name=&featuredImage=&url=&location=&cuisine=&cuisineImage=&hours=
+POST /restaurant ?name=&restaurantowner=&featuredImage=&url=&location=&cuisine=&cuisineImage=&hours=
       name === String && will be unique
+      restaurantOwner === String
       featureImage === String
       url === String
       location === String && will be unique
@@ -51,8 +52,9 @@ DELETE /restaurant?______
 
 
 
-POST /review ?name=&stars=&comment=
+POST /review ?name=&restaurantName=&stars=&comment=
       name === String && will be unique
+      restaurantName === String
       stars === Number
       comment === String
 GET /review
@@ -68,21 +70,21 @@ DELETE /review?______
 
 
 
-POST /reservation ?name=&location=&email=&host=&table=&startTime=&endTime=
+POST /reservation ?name=&location=&phonenumber=&host=&table=&seats=&startTime=
       name === String && will be unique
       location === String && will be unique
-      email === String && will be unique
+      phonenumber === Number
       host === String
       table === Number
+      seats === Number
       startTime === Date
-      endTime === Date
 GET /reservation
       returns all the reservation as {}
 GET /reservation/:id
       returns reservation with id as {}
 GET /reservation?______
       returns reservation by any combination of query parameter as {}
-PUT /reservation?name=&location=&email=&______
-      modify any attributes pass it along with name, location, email has to be defined as its unique
+PUT /reservation?name=&location=
+      modify any attributes pass it along with name, location has to be defined as its unique
 DELETE /reservation?______
       returns response 202 if accepted, pass in any query parameter combination

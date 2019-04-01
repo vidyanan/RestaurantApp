@@ -4,11 +4,11 @@ module.exports = (req, res) => {
 	const reservation = new Reservation({
 		name: req.query.name,
 		location: req.query.location,
-		email: req.query.email,
+		phonenumber: req.query.phonenumber,
 		host: req.query.host,
 		table: req.query.table,
-		startTime: Date(req.query.startTime),
-		endTime: Date(req.query.endTime)
+		seats: req.query.seats,
+		startTime: Date(req.query.startTime)
 	})
 
 	reservation.save().then((result) => {

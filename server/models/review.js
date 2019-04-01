@@ -3,9 +3,11 @@ const mongoose = require('mongoose')
 const Review = mongoose.model('Review', {
 	name: {
 		type: String,
-		required: true,
-		unique: true,
-		index: true
+		required: true
+	},
+	restaurantName: {
+		type: String,
+		required: true
 	},
 	stars: {
 		type: Number,

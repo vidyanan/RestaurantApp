@@ -7,6 +7,10 @@ const Restaurant = mongoose.model('Restaurant', {
 		unique: true,
 		index: true
 	},
+	restaurantOwner:{
+		type: String,
+		required: true
+	},
 	featuredImage: {
 		type: String,
 		required: true

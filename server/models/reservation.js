@@ -13,11 +13,9 @@ const Reservation = mongoose.model('Reservation', {
 		unique: true,
 		index: true
 	},
-	email: {
-		type: String,
-		required: true,
-		unique: true,
-		index: true
+	phonenumber: {
+		type: Number,
+		required: false
 	},
 	host: {
 		type: String,
@@ -27,11 +25,11 @@ const Reservation = mongoose.model('Reservation', {
 		type: Number,
 		required: true
 	},
-	startTime: {
-		type: Date,
-		required: true
+	seats: {
+		type: Number,
+		required: false
 	},
-	endTime: {
+	startTime: {
 		type: Date,
 		required: true
 	}

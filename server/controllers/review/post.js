@@ -3,6 +3,7 @@ const { Review } = require('../../models/review')
 module.exports = (req, res) => {
 	const review = new Review({
 		name: req.query.name,
+		restaurantName: req.query.restaurantName,
 		stars: req.query.stars,
 		comment: req.query.comment
 	})
