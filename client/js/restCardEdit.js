@@ -12,12 +12,8 @@ temp.setAttribute("name", "food");
 
 inputField.appendChild(temp);
 
-async function getCuisines() {
-  let temp = ["a", "b", "c"];
-
-  // Pull from server
-
-  return temp;
+async function getCuisines(restId) {
+  return $.get('restaurant/' + restId);
 }
 
 async function saveCuisines() {
@@ -40,7 +36,9 @@ async function saveCuisines() {
 }
 
 async function fillInData(){
-  await getCuisines().then((cuisines) => {
+  let restId = 0;
+
+  await getCuisines(restId).then((cuisines) => {
     for(let i = 0; i < cuisines.length; i++) {
           let tempField = inputField.cloneNode(true);
           tempField.childNodes[0].value = cuisines[i];
