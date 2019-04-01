@@ -438,6 +438,8 @@ function removeAllReservations() {
 
 // GET from server
 async function requestDayReservations(date) {
+  // let dates = $.get('/reservation/id=restId&startTime=date');
+
   // Call database to get all dates on date
   // {
     let dates = server[formatDate(date)];
