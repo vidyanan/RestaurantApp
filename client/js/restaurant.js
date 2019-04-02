@@ -19,6 +19,8 @@ window.addEventListener('CSC309CustomElementsReady', () => {
     .then((restaurant) => {
       renderRestaurant(restaurant)
 
+      $(".restaurant-id").val(restaurant._id)
+
       // GET restaurant reviews from server and render them
       getRestaurantReviewsByRestaurantId(restaurant._id)
         .then(renderReviews);
@@ -104,15 +106,25 @@ async function onCreateBookingSubmit(event) {
 
 // POST review to server
 async function onCreateReviewSubmit(event) {
-  event.preventDefault();
-  const data = new FormData(event.target);
-  await createRestaurantReview(data);
-  $("#reviews").append(
-    renderReview({
-      name: data.get("name"),
-      stars: data.get("stars"),
-      comment: data.get("comment"),
-    })
-  );
-  event.target.reset();
+  try {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    await createRestaurantReview(data);
+    $("#reviews").append(
+      renderReview({
+        name: data.get("name"),
+        stars: data.get("stars"),
+        comment: data.get("comment"),
+        createdAt: new Date(),
+      })
+    );
+    event.target.reset();
+  } catch (err) {
+    console.error(err);
+    $('#review .text-danger').text(
+      err.responseJSON
+      ? err.responseJSON.message
+      : 'Internal error, please try again'
+    );
+  }
 }

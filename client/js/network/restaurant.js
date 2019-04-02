@@ -1,3 +1,4 @@
+import formDataToJSON from '/js/helpers/formDataToJSON.js';
 export {
   getRestaurants,
   getRestaurantLocations,
@@ -229,11 +230,38 @@ async function createRestaurantBooking(booking) {
  * Returns a promise that resolves to the new review. Promise will reject if the booking failed to
  * be created for any reason (user or system error).
  *
- * @param {FormData} review
+ * @param {Object|FormData} review
  * @returns {Promise<Object>}
+ * @example
+ * await createRestaurantReview({
+ *   "name": "Alice Doe",
+ *   "restaurantId": "5ca294ba5a7683a1fae31e59",
+ *   "stars": 4,
+ *   "comment": "Lorem ipsum dolor set amit lorem ipsum"
+ * })
+ * // Alternatively, in a form submit event handler
+ * (event) => createRestaurantReview(new FormData(event.target))
  */
 async function createRestaurantReview(review) {
-  return null;
+  return new Promise((resolve, reject) => {
+    if (review instanceof FormData) {
+      review = formDataToJSON(review);
+    }
+    $.ajax({
+      "async": true,
+      "crossDomain": true,
+      "url": "/review",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "cache-control": "no-cache",
+      },
+      "processData": false,
+      "data": JSON.stringify(review)
+    })
+      .done(resolve)
+      .fail(reject);
+  })
 }
 
 
