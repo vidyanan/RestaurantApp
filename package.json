@@ -1,0 +1,15 @@
+{
+  "name": "team05",
+  "private": true,
+  "scripts": {
+    "heroku-postbuild": "cd server && npm install && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csc309-winter-2019/team05.git"
+  },
+  "bugs": {
+    "url": "https://github.com/csc309-winter-2019/team05/issues"
+  },
+  "homepage": "https://github.com/csc309-winter-2019/team05#readme"
+}
