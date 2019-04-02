@@ -22,7 +22,9 @@ export class Navigation extends HTMLElement {
 
   attributeChangedCallback(attrName, oldVal, newVal) {
     const handler = Navigation.onAttributeChanged[attrName];
-    handler.call(this, oldVal, newVal);
+    if (handler) {
+      handler.call(this, oldVal, newVal);
+    }
   }
 
   onLoggedinAttributeChanged(oldVal, newVal) {

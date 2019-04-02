@@ -40,7 +40,9 @@ export class Input extends HTMLElement {
 
   attributeChangedCallback(attrName, oldVal, newVal) {
     const handler = Input.onAttributeChanged[attrName];
-    handler.call(this, oldVal, newVal);
+    if (handler) {
+      handler.call(this, oldVal, newVal);
+    }
   }
 
   onHelpAttributeChanged(oldVal, newVal) {

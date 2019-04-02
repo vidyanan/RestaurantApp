@@ -22,7 +22,9 @@ export class Stars extends HTMLElement {
 
   attributeChangedCallback(attrName, oldVal, newVal) {
     const handler = Stars.onAttributeChanged[attrName];
-    handler.call(this, oldVal, newVal);
+    if (handler) {
+      handler.call(this, oldVal, newVal);
+    }
   }
 
   onCountAttributeChanged(oldVal, newVal) {

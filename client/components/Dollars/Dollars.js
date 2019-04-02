@@ -22,7 +22,9 @@ export class Dollars extends HTMLElement {
 
   attributeChangedCallback(attrName, oldVal, newVal) {
     const handler = Dollars.onAttributeChanged[attrName];
-    handler.call(this, oldVal, newVal);
+    if (handler) {
+      handler.call(this, oldVal, newVal);
+    }
   }
 
   onCountAttributeChanged(oldVal, newVal) {

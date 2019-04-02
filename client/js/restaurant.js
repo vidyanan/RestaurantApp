@@ -17,6 +17,7 @@ window.addEventListener('CSC309CustomElementsReady', () => {
   // GET restaurant from server and render it
   getRestaurantBySlug(slug)
     .then(renderRestaurant)
+    .catch(handleRestaurantError)
 
   // GET restaurant reviews from server and render them
   getRestaurantReviewsByRestaurantSlug(slug)
@@ -24,6 +25,9 @@ window.addEventListener('CSC309CustomElementsReady', () => {
 });
 
 function renderRestaurant(restaurant) {
+  $('#restaurant-featuredimage')
+    .attr('src', restaurant.featuredImage);
+
   $('#restaurant-dollars')
     .attr('count', restaurant.dollars);
 
@@ -33,6 +37,24 @@ function renderRestaurant(restaurant) {
   return $('#restaurant-card')
     .attr('heading', restaurant.name)
     .attr('description', restaurant.cuisine);
+}
+
+function handleRestaurantError(err) {
+  const status = err.status || 500;
+  switch (status) {
+    case 404:
+      return renderError('Restaurant does not exist!');
+
+    default:
+      return renderError('Internal error, something went wrong with our servers, please contact us!');
+  }
+}
+
+function renderError(text) {
+  return $('#page')
+    .empty()
+    .addClass('container')
+    .append($('<h1 class="h3 mt-5"></h1>').text(text));
 }
 
 function renderReviews(reviews) {

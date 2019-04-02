@@ -5,7 +5,10 @@ const express = require('express')
 const path = require('path')
 const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
+const connectToDatabase = require('./db/mongoose');
+const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/API';
 
+connectToDatabase(mongoUrl)
 // express
 const app = express();
 // body-parser middleware - will parse the JSON and convert to object
@@ -40,6 +43,7 @@ app.put('/profile', profilePut)
 //****************************************************************************//
 const restaurantPost = require('./controllers/restaurant/post');
 const restaurantGetById = require('./controllers/restaurant/getById');
+const restaurantGetBySlug = require('./controllers/restaurant/getBySlug');
 const restaurantGet = require('./controllers/restaurant/get');
 const restaurantName = require('./controllers/restaurant/name');
 const restaurantLocation = require('./controllers/restaurant/location');
@@ -51,6 +55,7 @@ const restaurantPut = require('./controllers/restaurant/put');
 
 app.post('/restaurant', restaurantPost)
 app.get('/restaurant/:id', restaurantGetById)
+app.get('/restaurant/slug/:slug', restaurantGetBySlug)
 app.get('/restaurant', restaurantGet)
 app.get('/name', restaurantName)
 app.get('/location', restaurantLocation)
