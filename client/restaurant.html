@@ -35,16 +35,16 @@
         <form id="booking" class="col-sm">
           <h2>Book Your Table</h2>
 
-          <input class="restaurant-slug" name="slug" type="hidden">
+          <input class="restaurant-id" name="restaurantId" type="hidden">
 
           <csc309-input input-id="name" name="name" label="Name" icon-class="fas fa-user" required>
           </csc309-input>
 
-          <csc309-input input-id="phone" name="phone" type="tel" label="Phone" icon-class="fas fa-phone"
+          <csc309-input input-id="phone" name="phonenumber" type="tel" label="Phone" icon-class="fas fa-phone"
             help="We may call you to verify your reservation" required>
           </csc309-input>
 
-          <csc309-input input-id="datetime" name="datetime" type="datetime-local" label="Date & Time"
+          <csc309-input input-id="datetime" name="startTime" type="datetime-local" label="Date & Time"
             icon-class="fas fa-calendar-alt" required>
           </csc309-input>
 
@@ -55,6 +55,8 @@
           <button type="submit" class="btn btn-primary my-3">
             Book Now
           </button>
+
+          <p class="text-danger"></p>
         </form>
 
         <div class="col-sm">

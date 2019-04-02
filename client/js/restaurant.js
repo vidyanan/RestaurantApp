@@ -47,14 +47,14 @@ function handleRestaurantError(err) {
   const status = err.status || 500;
   switch (status) {
     case 404:
-      return renderError('Restaurant does not exist!');
+      return renderPageError('Restaurant does not exist!');
 
     default:
-      return renderError('Internal error, something went wrong with our servers, please contact us!');
+      return renderPageError('Internal error, something went wrong with our servers, please contact us!');
   }
 }
 
-function renderError(text) {
+function renderPageError(text) {
   return $('#page')
     .empty()
     .addClass('container')
@@ -97,16 +97,27 @@ function onCalendarDateChange(event) {
 
 // POST booking to server
 async function onCreateBookingSubmit(event) {
-  event.preventDefault();
-  const data = new FormData(event.target);
-  await createRestaurantBooking(data);
-  alert(`${data.get('name')}, we have received your booking!`)
-  event.target.reset();
+  try {
+    $('#booking .text-danger').text('');
+    event.preventDefault();
+    const data = new FormData(event.target);
+    await createRestaurantBooking(data);
+    alert(`${data.get('name')}, we have received your booking!`)
+    event.target.reset();
+  } catch (err) {
+    console.error(err);
+    $('#booking .text-danger').text(
+      err.responseJSON
+      ? err.responseJSON.message || err.responseJSON.errmsg
+      : 'Internal error, please try again'
+    );
+  }
 }
 
 // POST review to server
 async function onCreateReviewSubmit(event) {
   try {
+    $('#review .text-danger').text('');
     event.preventDefault();
     const data = new FormData(event.target);
     await createRestaurantReview(data);
@@ -123,7 +134,7 @@ async function onCreateReviewSubmit(event) {
     console.error(err);
     $('#review .text-danger').text(
       err.responseJSON
-      ? err.responseJSON.message
+      ? err.responseJSON.message || err.responseJSON.errmsg
       : 'Internal error, please try again'
     );
   }

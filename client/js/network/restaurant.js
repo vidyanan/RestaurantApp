@@ -217,11 +217,40 @@ async function getRestaurantReviewsByRestaurantId(id) {
  * Returns a promise that resolves to the new booking. Promise will reject if the booking failed to
  * be created for any reason (user or system error).
  *
- * @param {FormData} booking
+ * @param {Object|FormData} booking
  * @returns {Promise<Object>}
+ * @example
+ * await createRestaurantBooking({
+ *   "name": "Omar Chehab",
+ *   "restaurantId": "5ca294015a7683a1fae31e57",
+ *   "phonenumber": "+12893423432",
+ *   "table": "53",
+ *   "seats": 6,
+ *   "startTime": "2019-04-02T03:46:26.376Z"
+ * })
+ * // Alternatively, in a form submit event handler
+ * (event) => createRestaurantBooking(new FormData(event.target))
  */
 async function createRestaurantBooking(booking) {
-  return null;
+  return new Promise((resolve, reject) => {
+    if (booking instanceof FormData) {
+      booking = formDataToJSON(booking);
+    }
+    $.ajax({
+      "async": true,
+      "crossDomain": true,
+      "url": "/reservation",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "cache-control": "no-cache",
+      },
+      "processData": false,
+      "data": JSON.stringify(booking),
+    })
+      .done(resolve)
+      .fail(reject);
+  })
 }
 
 /**

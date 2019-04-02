@@ -70,11 +70,10 @@ DELETE /review?______
 
 
 
-POST /reservation ?name=&location=&phonenumber=&host=&table=&seats=&startTime=
+POST /reservation ?name=&location=&phonenumber=&table=&seats=&startTime=
       name === String && will be unique
       location === String && will be unique
       phonenumber === Number
-      host === String
       table === Number
       seats === Number
       startTime === Date
