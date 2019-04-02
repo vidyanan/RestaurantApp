@@ -15,9 +15,15 @@
     [ ] Fix nav bar - it should show logged in always
     [ ] Cancel or close, what's the difference? Fix or remove one
   * Home - index.html, restaurant.html (OMAR)
-    [ ] Connect to server, get top 3 categories
+    [X] Connect get top 3 categories to server
   * Restaurants Search  - restaurantsSearch.html (OMAR)
-    [ ] Connect to server
+    [X] Connect search to server
+    [X] Connect filtering to server
+  * Restaurants Page  - restaurant.html (OMAR)
+    [X] Connect get restaurant info to server
+    [X] Connect create booking to server
+    [X] Connect get reviews to server
+    [X] Connect create review to server
   * Restaurant Owner restaurantOwner.html (TIM)
     [ ] Popup to edit the restaurant info
     [ ] Add reviews
