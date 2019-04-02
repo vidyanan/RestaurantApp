@@ -1,12 +1,13 @@
 const mongoose = require('mongoose')
+const { ObjectId } = mongoose.Types;
 
 const Review = mongoose.model('Review', {
 	name: {
 		type: String,
 		required: true
 	},
-	restaurantName: {
-		type: String,
+	restaurantId: {
+    type: ObjectId,
 		required: true
 	},
 	stars: {

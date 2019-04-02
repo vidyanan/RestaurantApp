@@ -1,6 +1,6 @@
 import {
   getRestaurantBySlug,
-  getRestaurantReviewsByRestaurantSlug,
+  getRestaurantReviewsByRestaurantId,
   createRestaurantBooking,
   createRestaurantReview,
 } from '/js/network/index.js';
@@ -16,12 +16,14 @@ window.addEventListener('CSC309CustomElementsReady', () => {
 
   // GET restaurant from server and render it
   getRestaurantBySlug(slug)
-    .then(renderRestaurant)
-    .catch(handleRestaurantError)
+    .then((restaurant) => {
+      renderRestaurant(restaurant)
 
-  // GET restaurant reviews from server and render them
-  getRestaurantReviewsByRestaurantSlug(slug)
-    .then(renderReviews);
+      // GET restaurant reviews from server and render them
+      getRestaurantReviewsByRestaurantId(restaurant._id)
+        .then(renderReviews);
+    })
+    .catch(handleRestaurantError)
 });
 
 function renderRestaurant(restaurant) {

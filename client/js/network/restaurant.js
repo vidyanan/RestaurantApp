@@ -4,7 +4,7 @@ export {
   getRestaurantCuisines,
   getRestaurantCuisinesFeatured,
   getRestaurantBySlug,
-  getRestaurantReviewsByRestaurantSlug,
+  getRestaurantReviewsByRestaurantId,
   createRestaurantBooking,
   createRestaurantReview,
 };
@@ -184,7 +184,7 @@ async function getRestaurantBySlug(slug) {
  * @param {String|Number} slug restaurant slug
  * @returns {Promise<Array<Object>>}
  * @example
- * await getRestaurantReviewsByRestaurantSlug(132)
+ * await getRestaurantReviewsByRestaurantId("5ca29311dff32fa1e3ebb43d")
  * [
  *   {
  *     "name": "Alice",
@@ -193,46 +193,21 @@ async function getRestaurantBySlug(slug) {
  *   }
  * ]
  */
-async function getRestaurantReviewsByRestaurantSlug(slug) {
-  // GET restaurant reviews from server
-  return [
-    {
-      "name": "Alice",
-      "stars": 5,
-      "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "createdAt": "2019-03-02T16:00:00.000Z"
-    },
-    {
-      "name": "Bob",
-      "stars": 4,
-      "comment": "Sed laoreet, justo sit amet imperdiet fermentum, velit enim tristique sapien, at aliquet massa sapien sed dolor.",
-      "createdAt": "2019-03-03T01:00:00.000Z"
-    },
-    {
-      "name": "Charlie",
-      "stars": 4,
-      "comment": "Aliquam nec vehicula diam. Maecenas ac maximus ex, nec aliquet nisi. Nam maximus feugiat euismod.",
-      "createdAt": "2019-03-04T05:00:00.000Z"
-    },
-    {
-      "name": "David",
-      "stars": 5,
-      "comment": "Vestibulum rutrum sed justo sit amet elementum. Quisque porttitor pellentesque justo, sed tempus purus dapibus eget.",
-      "createdAt": "2019-03-04T10:00:00.000Z"
-    },
-    {
-      "name": "Evan",
-      "stars": 2,
-      "comment": "Phasellus nunc lorem, feugiat non sem eget, efficitur condimentum nisl.",
-      "createdAt": "2019-03-05T05:00:00.000Z"
-    },
-    {
-      "name": "Frank",
-      "stars": 3,
-      "comment": "Praesent vel aliquet elit. Donec placerat lectus volutpat, consequat lectus et, pretium libero.",
-      "createdAt": "2019-03-05T13:32:42.000Z"
-    }
-  ];
+async function getRestaurantReviewsByRestaurantId(id) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      "async": true,
+      "crossDomain": true,
+      "url": `/review?restaurantId=${id}`,
+      "method": "GET",
+      "headers": {
+        "cache-control": "no-cache",
+        "Postman-Token": "57369746-f3ec-455a-9f65-dad638b6e52f"
+      }
+    })
+      .done(resolve)
+      .fail(reject);
+  })
 }
 
 /**

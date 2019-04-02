@@ -37,7 +37,7 @@ GET /restaurant/:id
       returns restaurant with id as {}
 GET /restaurant?______
       returns restaurants by any combination of query parameter as {}
-GET /name
+GET /restaurant/name
       returns all unique restaurant names as []
 GET /location
       returns all unique restaurant locations as []
@@ -52,9 +52,9 @@ DELETE /restaurant?______
 
 
 
-POST /review ?name=&restaurantName=&stars=&comment=
+POST /review ?name=&restaurantId=&stars=&comment=
       name === String && will be unique
-      restaurantName === String
+      restaurantId === String
       stars === Number
       comment === String
 GET /review

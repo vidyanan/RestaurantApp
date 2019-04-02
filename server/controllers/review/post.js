@@ -2,10 +2,10 @@ const { Review } = require('../../models/review')
 
 module.exports = (req, res) => {
 	const review = new Review({
-		name: req.query.name,
-		restaurantName: req.query.restaurantName,
-		stars: req.query.stars,
-		comment: req.query.comment
+		name: req.body.name,
+		restaurantId: req.body.restaurantId,
+		stars: req.body.stars,
+		comment: req.body.comment
 	})
 
 	review.save().then((result) => {
