@@ -131,8 +131,12 @@ function getRestaurants() {
 }
 
 $.ajax(settings).done(function (response) {
-  return response;
+	response.json().then(function(data) {
+	  return response;
+	});
 });
+
+
 }
 
 function deleteRest(id) {
