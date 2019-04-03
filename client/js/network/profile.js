@@ -9,7 +9,7 @@ function newProfile(firstname, lastname, address, email, password, phonenumber, 
 	}
 
 	$.ajax(settings).done(function (response) {
-	  console.log(response);
+	  return response;
 	});
 }
 
@@ -25,6 +25,8 @@ function login(email, password) {
 	}
 
 	$.ajax(settings).done(function (response) {
+		console.log(response);
+		console.log(typeOf(response));
 		return response;
 	});
 }

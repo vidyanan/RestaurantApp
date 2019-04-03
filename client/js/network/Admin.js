@@ -97,7 +97,7 @@ function newRestaurant(hours, name, featuredImage, slug, location, cuisine) {
   }
 
   $.ajax(settings).done(function (response) {
-    console.log(response);
+    return response
   });
 }
 

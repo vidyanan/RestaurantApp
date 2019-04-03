@@ -9,6 +9,8 @@ function submitLoginForm(e) {
 	const password = loginForm.password.value;
 
 	var type = login(username, password);
+	console.log(type);
+	console.log(typeOf(type));
 	// add backend login to encrtpt password save and verify type of account
 	if (type=="admin"){
 		window.location.href = '/adminPage.html';
