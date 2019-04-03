@@ -1,0 +1,48 @@
+team05
+
+navigate to https://csc309-w2019-team05.herokuapp.com/ to see our deployed website
+read phase 1 instructions in phase1.txt
+read phase 2 instructions in phase2.txt and api routes in phase2-routes.txt
+
+
+From home page 'https://csc309-w2019-team05.herokuapp.com/' click sign in top right hand side
+ -> admin, admin brings you to admin view
+ -> user, user brings you to regular standard user view
+ -> user2, user2 brings you to restaurant owner view
+
+From home page 'https://csc309-w2019-team05.herokuapp.com/' click sign up top right hand side
+ -> creates an account regular user redirects you to standard user view
+ -> restaurant owner redirects you to restaurant owner view
+ -> you can sign into the sign on page with your registered email and password
+ 
+From 'https://csc309-w2019-team05.herokuapp.com/'
+  -> Type in "Toronto" in "City" and click "Find"
+    We are now at "/restaurantsSearch.html"
+      -> Delete "Toronto" from "City".
+      -> Type "Jamaican" into "Cuisine".
+      -> Select a future date at 9pm in the datetime input.
+      -> Clear "City" and "Cuisine".
+      -> Click on the 9 in the datetime input and use up and down arrow to cycle through different hours
+          of the day.
+
+From 'https://csc309-w2019-team05.herokuapp.com/restaurantsSearch.html'
+ -> Click on the "Porta Via" restaurant (if it's not there delete all searches)
+  We are now at "/restaurant.html?id=porta-via"
+    -> Click on the prev and next arrows in the custom calendar.
+    -> Click on a cell in the custom calendar, notice how it sets the date in the Book Your Table form.
+    -> Scroll down to "Leave A Review" fill in the form and submit. Notice how it adds a new review.
+
+From 'https://csc309-w2019-team05.herokuapp.com/admin.html' or login from 'https://csc309-w2019-team05.herokuapp.com/' Admin View
+ -> Clicking on "modify" in user table will launch a popup form that allows the modification of the specific user such as names, passwords and date of births.
+ -> Clicking on "modify" in the restaurant table will launch a pop up form that allows the modification of restaurant details such as capacity, name and address.
+ -> Search tool filters out rows that contain the name or ID specified in the search input box
+ -> Clicking on "remove" in the review table will delete the specific review from the database as well as the table.
+
+From 'https://csc309-w2019-team05.herokuapp.com/restaurantOwner.html' or login from 'https://csc309-w2019-team05.herokuapp.com/' Restaurant Owner View
+ -> Click on the "Logout" button on the top right to be directed back to the /index.html page
+ -> Clicking on the "Previous Day" or "Next day" allows you to cycle through the reservations on any particular day shown in the middle.
+ -> Clicking the "Remove" button on a reservation removes the reservation from the server and the list of reservations.
+ -> Booking a table has the same functionality as in /restaurant.html.
+   -> Clicking "Book Now" additionally updates the list of reservations on the respective day.
+ -> At the bottom you can input the maximum number of reservations per time slot the restaurant eligible to take.
+-> Clicking the "Update" button sends the updated maximum number to the server and does not effect any existing reservations.
