@@ -14,7 +14,7 @@ function submitLoginForm(e) {
 		window.location.href = '/adminPage.html';
 	} else if (type=="user"){
 		window.location.href = '/restaurant.html';
-	} else if (type=="user2"){
+	} else if (type=="owner"){
 		window.location.href = '/restaurantOwner.html';
 	} else {
 		alert("error: invalid username and password")
