@@ -11,7 +11,7 @@ function submitProfileForm(e) {
 	const email = profileForm.email.value;
 	const phonenumber = profileForm.phonenumber.value;
 	const birthday = profileForm.birthday.value;
-
+	const password = profileForm.password.value;
 	const type = profileForm.type.value;
 
 	newProfile(firstname, lastname, address, email, password, phonenumber, birthday, type)
