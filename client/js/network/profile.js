@@ -23,10 +23,12 @@ function login(email, password) {
 	  "headers": {
 	  }
 	}
-
 	$.ajax(settings).done(function (response) {
-		console.log(response);
-		console.log(typeOf(response));
-		return response;
+		response.json().then(function(data) {
+			console.log(response);
+			console.log(typeOf(response));
+		  return response;
+		});
 	});
+
 }
