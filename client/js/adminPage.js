@@ -66,7 +66,7 @@ function addUser(user) {
     rowElement.className = 'table-success'
   }
   const element1 = document.createElement('td')
-  element1.textContent = user["__id"]
+  element1.textContent = user["_id"]
   rowElement.appendChild(element1)
   const element2 = document.createElement('td')
   element2.textContent = user["firstname"]
@@ -106,7 +106,7 @@ function addRest(restaurant) {
   const rowElement = document.createElement('tr')
   rowElement.className = "table-active"
   const element1 = document.createElement('td')
-  element1.textContent = restaurant["__id"]
+  element1.textContent = restaurant["_id"]
   rowElement.appendChild(element1)
   const element2 = document.createElement('td')
   element2.textContent = restaurant["name"]
@@ -140,7 +140,7 @@ function addReview(review) {
   const rowElement = document.createElement('tr')
   rowElement.className = "table-active"
   const element1 = document.createElement('td')
-  element1.textContent = review["__id"]
+  element1.textContent = review["_id"]
   rowElement.appendChild(element1)
   const element2 = document.createElement('td')
   element2.textContent = review["name"]
@@ -169,7 +169,7 @@ function addReview(review) {
 
 function openUserEdit(e) {
     e.preventDefault();
-    var f = parseInt(e.target.parentElement.parentElement.children[0].textContent);
+    var f = (e.target.parentElement.parentElement.children[0].textContent);
     if (e.target.classList.contains('btn-success')) {
       var l = "userEdit.html?"
       var final = l.concat(f)
@@ -180,7 +180,7 @@ function openUserEdit(e) {
 
 function openRestEdit(e) {
     e.preventDefault();
-    var f = parseInt(e.target.parentElement.parentElement.children[0].textContent);
+    var f = (e.target.parentElement.parentElement.children[0].textContent);
     if (e.target.classList.contains('btn-success')) {
       var l = "restEdit.html?"
       var final = l.concat(f)

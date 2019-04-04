@@ -17,7 +17,6 @@ function newProfile(firstname, lastname, address, email, password, phonenumber, 
 
 function getProfiles(){
 	return new Promise((resolve, reject) => {
-		console.log("imann");
 		$.ajax({
 			"async": true,
 			"crossDomain": true,
@@ -63,68 +62,78 @@ function login(email, password) {
 }
 
 function deleteProfile(id) {
-	var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "/profile?="+id,
-  "method": "DELETE",
-  "headers": {
-  }
-}
 
-	$.ajax(settings).done(function (response) {
-  	return response
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			"async": true,
+			"crossDomain": true,
+			"url": "/profile?="+id,
+			"method": "DELETE",
+			"headers": {
+				"Content-Type": "application/json",
+			},
+			"processData": false,
+			"data": JSON.stringify({
+				hours,
+				name,
+				featuredImage,
+				slug,
+				location,
+				cuisine
+			})
+		})
+			.done(resolve)
+			.fail(reject);
 	});
 }
 
 //restaurant
 
 function newRestaurant(hours, name, featuredImage, slug, location, cuisine,restaurantOwner) {
-	console.log("as");
-	console.log("as");
-	console.log("as");
-	console.log("as");
-	console.log("as");
 
-	var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": "/restaurant?restaurantOwner="+restaurantOwner,
-    "method": "POST",
-    "headers": {
-      "Content-Type": "application/json",
-    },
-    "processData": false,
-    "data": JSON.stringify({
-      hours,
-      name,
-      featuredImage,
-      slug,
-      location,
-      cuisine
-    })
-  }
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			"async": true,
+			"crossDomain": true,
+			"url": "/restaurant?restaurantOwner="+restaurantOwner,
+			"method": "POST",
+			"headers": {
+				"Content-Type": "application/json",
+			},
+			"processData": false,
+			"data": JSON.stringify({
+				hours,
+				name,
+				featuredImage,
+				slug,
+				location,
+				cuisine
+			})
+		})
+			.done(resolve)
+			.fail(reject);
+	});
 
-  $.ajax(settings).done(function (response) {
-    return response
-  });
 }
 
 function RestaurantByID(id) {
-  var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "/restaurant/"+id,
-  "method": "GET",
-  "headers": {
-    "cache-control": "no-cache",
-    "Postman-Token": "70ac668f-c821-4664-8370-81d724e9e932"
-  }
-}
 
-$.ajax(settings).done(function (response) {
-  return response;
+return new Promise((resolve, reject) => {
+	console.log("imann");
+	$.ajax({
+		"async": true,
+		"crossDomain": true,
+		"url": "/restaurant/"+id,
+		"method": "GET",
+		"headers": {
+			"cache-control": "no-cache",
+		}
+	})
+		.done(resolve)
+		.fail(reject);
 });
+
+
 }
 
 function getRestaurants() {
@@ -158,6 +167,8 @@ function deleteRest(id) {
 }
 
 $.ajax(settings).done(function (response) {
+	console.log("umm y no delete")
+	console.log(reponse);
   return response;
 });
 }

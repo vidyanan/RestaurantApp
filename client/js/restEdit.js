@@ -7,23 +7,36 @@ myform.addEventListener('submit', beginClosing);
 // console.log(v.checked);
 // console.log(window.location.href.split("?"))
 
-const reponse = JSON.parse(RestaurantByID(window.location.href.split("?")[1]));
-fillInData(window.location.href.split("?")[1])
+window.onload = function() {
+  const prmise = (RestaurantByID(window.location.href.split("?")[1]));
+  prmise.then(function(responseUsers) {
+    //console.log(responseUsers);
+    fillInData(responseUsers)
+  });
+
+};
+
 
 function fillInData(i){
-  myform.children[0].value = i;
-  myform.children[1].value = reponse["name"];
-  myform.children[2].value = reponse["featuredImage"];
-  myform.children[5].value = reponse["slug"];
-  myform.children[8].value = reponse["location"];
-  myform.children[11].value = reponse["cuisine"];
-  myform.children[17].value = reponse["hours"];
+  myform.children[0].value = i["_id"];
+  myform.children[1].value = i["name"];
+  myform.children[2].value = i["featuredImage"];
+  myform.children[5].value = i["slug"];
+  myform.children[8].value = i["location"];
+  myform.children[11].value = i["cuisine"];
+  myform.children[17].value = i["hours"];
 }
 
 function beginClosing(e){
+  console.log(myform.children[0].textContent);
+
   if (e.target.classList.contains('btn modify')) {
-    deleteRest(myform.children[0].value)
-    newRestaurant(reponse["hours"], reponse["name"], reponse["featuredImage"],reponse["slug"],reponse["location"], reponse["cuisine"])
+    promise = deleteRest(myform.children[0].value)
+    promise.then(function(responseUsers) {
+      //console.log(responseUsers);
+      console.log(responseUsers);
+    });
+    //newRestaurant(reponse["hours"], reponse["name"], reponse["featuredImage"],reponse["slug"],reponse["location"], reponse["cuisine"])
   }
-  window.close();
+  //window.close();
 }
