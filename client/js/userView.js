@@ -23,8 +23,8 @@ async function fillInData(){
 
   await getUserDetails(userId).then((dictionary) => {
       $("#id").text(userId);
-      $("#firstName").text(dictionary['firstName']);
-      $("#lastName").text(dictionary['lastName']);
+      $("#firstName").text(dictionary['firstname']);
+      $("#lastName").text(dictionary['lastname']);
       $("#address").text(dictionary['address']);
       $("#email").text(dictionary['email']);
       $("#phone").text(dictionary['phonenumber']);
