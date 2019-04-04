@@ -5,6 +5,7 @@ module.exports = (req, res) => {
 		name: req.body.name,
 		restaurantId: req.body.restaurantId,
 		phonenumber: req.body.phonenumber,
+    hostId: req.body.hostId,
 		table: req.body.table,
 		seats: req.body.seats,
 		startTime: Date(req.body.startTime)

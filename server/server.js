@@ -87,12 +87,14 @@ app.put('/review', reviewPut)
 const reservationPost = require('./controllers/reservation/post');
 const reservationGetById = require('./controllers/reservation/getById');
 const reservationGet = require('./controllers/reservation/get');
+const reservationGetRange = require('./controllers/reservation/getRange');
 const reservationDelete = require('./controllers/reservation/delete');
 const reservationPut = require('./controllers/reservation/put');
 
 app.post('/reservation', reservationPost)
 app.get('/reservation/:id', reservationGetById)
 app.get('/reservation', reservationGet)
+app.get('/reservation/:id/:start/:end', reservationGetRange);
 app.delete('/reservation', reservationDelete)
 app.put('/reservation', reservationPut)
 

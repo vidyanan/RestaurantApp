@@ -4,7 +4,8 @@ const { ObjectId } = mongoose.Types;
 const Review = mongoose.model('Review', {
 	name: {
 		type: String,
-		required: true
+		required: true,
+    unique: false
 	},
 	restaurantId: {
     type: ObjectId,

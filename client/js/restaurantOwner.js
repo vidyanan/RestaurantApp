@@ -1,32 +1,179 @@
-// // // // // // // // // // // // // // // // // //
-// TEMPORARY SERVER/DATABASE VARIABLE FOR PHASE 1 //
-// // // // // // // // // // // // // // // // // //
-let yesterday = new Date();
-yesterday.setDate(yesterday.getDate() - 1);
-yesterday = formatDate(yesterday);
-let today = new Date();
-today = formatDate(today);
-let tomorrow = new Date();
-tomorrow.setDate(tomorrow.getDate() + 1);
-tomorrow = formatDate(tomorrow);
+import {
+  getRestaurantBySlug,
+  getRestaurantReviewsByRestaurantId,
+  createRestaurantBooking,
+  createRestaurantReview,
+  deleteServerReservation,
+  getRestaurantReservationsByRestaurantIdAndDate
+} from '/js/network/index.js';
 
-let server = {};
-server[yesterday] = [{"id": 1, "table": 0, "host": "Bob", "host_id": 0, "phone": "000-000-0000", "numSeats": 2, "hour": 5, "timeSlot": 30}];
-server[today] = [{"id": 0, "table": 0, "host": "Tim", "host_id": 0, "phone": "000-000-0000", "numSeats": 3, "hour": 3, "timeSlot": 0}, {"id": 2, "table": 3, "host": "Jim", "host_id": 0, "phone": "000-000-0000", "numSeats": 1, "hour": 3, "timeSlot": 30}];
-server[tomorrow] = [{"id": 3, "table": 5, "host": "Him", "host_id": 0, "phone": "000-000-0000", "numSeats": 5, "hour": 3, "timeSlot": 0}];
+// Global restaurant object
+let restObj = null;
+let tableCount = 0;
 
-let serverMaxReservations = 5;
-let serverNextID = 4;
+window.addEventListener('CSC309CustomElementsReady', () => {
+  $("#booking").on('submit', onCreateBookingSubmit);
+  $("#review").on("submit", onCreateReviewSubmit);
+  $("#calendar").on("datechange", onCalendarDateChange);
 
-let restId = null;
+  const query = new URLSearchParams(location.search);
+  const slug = query.get('slug');
+  $(".restaurant-slug").val(slug)
+
+  // GET restaurant from server and render it
+  getRestaurantBySlug(slug)
+    .then((restaurant) => {
+      restObj = restaurant;
+
+      renderRestaurant(restaurant)
+
+      $(".restaurant-id").val(restaurant._id)
+
+      //retrieveMaxReservations(restaurant);
+      createCurrentDayReservations(restaurant);
+
+      // GET restaurant reviews from server and render them
+      getRestaurantReviewsByRestaurantId(restaurant._id)
+        .then(renderReviews);
+    })
+    .catch(handleRestaurantError)
+});
+
+function renderRestaurant(restaurant) {
+  $('#restaurant-featuredimage')
+    .attr('src', restaurant.featuredImage);
+
+  $('#restaurant-dollars')
+    .attr('count', restaurant.dollars);
+
+  $('#restaurant-stars')
+    .attr('count', restaurant.stars);
+
+  return $('#restaurant-card')
+    .attr('heading', restaurant.name)
+    .attr('description', restaurant.cuisine);
+}
+
+function handleRestaurantError(err) {
+  const status = err.status || 500;
+  switch (status) {
+    case 404:
+      return renderPageError('Restaurant does not exist!');
+
+    default:
+      return renderPageError('Internal error, something went wrong with our servers, please contact us!');
+  }
+}
+
+function renderPageError(text) {
+  return $('#page')
+    .empty()
+    .addClass('container')
+    .append($('<h1 class="h3 mt-5"></h1>').text(text));
+}
+
+function renderReviews(reviews) {
+  return $("#reviews")
+    .append(reviews.map(renderReview))
+}
+
+function renderReview(review) {
+  return $('<csc309-restaurant-review></csc309-restaurant-review')
+    .attr('heading', review.name)
+    .attr('comment', review.comment)
+    .attr('stars', review.stars)
+    .attr('date', new Date(review.createdAt).toLocaleDateString())
+}
+
+/**
+ * Sets the date when a day in the calendar is clicked.
+ *
+ * @param {CustomEvent} event
+ */
+function onCalendarDateChange(event) {
+  const value = event.detail;
+
+  const leftZeroPad = n => (n >= 10 ? String(n) : `0${n}`);
+
+  const year = value.getFullYear();
+  const month = leftZeroPad(value.getMonth() + 1);
+  const day = leftZeroPad(value.getDate());
+  const hour = leftZeroPad(value.getHours());
+  const minute = leftZeroPad(value.getMinutes());
+
+  const datetimeLocal = `${year}-${month}-${day}T${hour}:${minute}`;
+
+  $("#datetime").val(datetimeLocal);
+}
+
+// POST booking to server
+async function onCreateBookingSubmit(event) {
+  try {
+    $('#booking .text-danger').text('');
+    event.preventDefault();
+    let data = new FormData(event.target);
+    data.append('table', tableCount);
+    tableCount += 1;
+
+    const resQuery = await createRestaurantBooking(data);
+
+    const name = data.get('name');
+    const hostId = 'N/A';
+    let reservationDate = new Date(data.get('startTime'));
+    const phone = data.get('phonenumber');
+    const numSeats = data.get('seats');
+
+    console.log(reservationDate);
+    console.log(reservationDate.toJSON());
+
+    createNewReservation(name, hostId, reservationDate, resQuery['_id'], phone, numSeats);
+
+    alert(`${data.get('name')}, we have received your booking!`)
+    event.target.reset();
+  } catch (err) {
+    console.error(err);
+    $('#booking .text-danger').text(
+      err.responseJSON
+      ? err.responseJSON.message || err.responseJSON.errmsg
+      : 'Internal error, please try again'
+    );
+  }
+}
+
+// POST review to server
+async function onCreateReviewSubmit(name, stars, comment) {
+  try {
+    $('#review .text-danger').text('');
+    let data = new FormData();
+    data.append('name', name);
+    data.append('stars', stars);
+    data.append('comment', comment);
+    data.append('restaurantId', restObj._id);
+    await createRestaurantReview(data);
+    $("#reviews").append(
+      renderReview({
+        name: data.get("name"),
+        stars: data.get("stars"),
+        comment: data.get("comment"),
+        createdAt: new Date(),
+      })
+    );
+  } catch (err) {
+    console.error(err);
+    $('#review .text-danger').text(
+      err.responseJSON
+      ? err.responseJSON.message || err.responseJSON.errmsg
+      : 'Internal error, please try again'
+    );
+  }
+}
+
 let intToDay = {1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday", 0: "Sunday"};
 let intToMonth = {0: "January", 1: "February", 2: "March", 3: "April", 4: "May", 5: "June", 6: "July", 7: "August", 8: "September", 9: "October", 10: "November", 11: "December"};
 let maxReservations;
 let currentDate = new Date();
-let currentReviews = 0;
 
 const reservationList = document.querySelector('#reservationList');
-const addReservationForm = document.querySelector('#addReservationForm');
 const maxReservationForm = document.querySelector('#setMaxReservation');
 const previousDateButton = document.querySelector('#previousDate');
 const nextDateButton = document.querySelector('#nextDate');
@@ -36,7 +183,6 @@ const reviewList = document.querySelector("#reviews");
 const editCard = document.querySelector("#editCard");
 
 reservationList.addEventListener('click', reservationButtonFunction);
-addReservationForm.addEventListener('submit', submitReservationForm);
 calendar.addEventListener('datechange', onDateChange);
 maxReservationForm.addEventListener('submit', updateMaxReservations);
 previousDateButton.addEventListener('click', getPreviousDay);
@@ -110,14 +256,14 @@ function isCurrentDay(date) {
 function getNextDay() {
   currentDate.setDate(currentDate.getDate() + 1);
 
-  createCurrentDayReservations();
+  createCurrentDayReservations(restObj);
 }
 
 // Get reservations for the previous day
 function getPreviousDay() {
   currentDate.setDate(currentDate.getDate() - 1);
 
-  createCurrentDayReservations();
+  createCurrentDayReservations(restObj);
 }
 
 function formatDate(date) {
@@ -151,60 +297,9 @@ function getStandardDateFormat(Date) {
   return day + " " + month + " " + date + dateEnd + ", " + year;
 }
 
-function getStandardTimeFormat(Date) {
-  let hours = Date.getHours();
-  let minutes = Date.getMinutes();
-  let amPM = "AM";
-
-  if (hours > 12) {
-    hours = hours % 12;
-    amPM = "PM"
-  }
-
-  if (minutes === 0) {
-    minutes = "00"
-  }
-
-  return hours + ":" + minutes + " " + amPM;
-}
-
 // // // // // // // // //
 // Reservation Functions //
 // // // // // // // // //
-
-// Submit a new reservation
-function submitReservationForm(e) {
-  e.preventDefault();
-
-  const hostName = addReservationForm.name.value;
-  let reservationDate = new Date(addReservationForm.datetime.value);
-  const phone = addReservationForm.phone.value;
-  const numSeats = addReservationForm.seats.value;
-
-  // Test for valid input
-  if (hostName === "" || isNaN(reservationDate)) {
-    return;
-  }
-
-  reservationDate = fitTimeSlot(reservationDate);
-
-  // If time slot does not conflict with max amount of reservation
-  if (!doesConflict(reservationDate)) {
-    createNewReservation(hostName, "Guest", reservationDate, phone, numSeats);
-  }
-}
-
-// Get the lowest new reservation id
-function getNewReservationId() {
-  let newId;
-
-  // Call database
-  // {
-    newId = serverNextID;
-    serverNextID++;
-  // }
-  return newId;
-}
 
 // Updates the maximum reservations allowed in a time slot
 function updateMaxReservations(e) {
@@ -225,76 +320,20 @@ function updateMaxReservations(e) {
 
 // Only called on startup
 function retrieveMaxReservations() {
-  maxReservations = serverMaxReservations; // Call to database to find out the actual max
+  //maxReservations = serverMaxReservations; // Call to database to find out the actual max
 
   $("#maxReservations").attr('value', maxReservations);
-}
-
-function getFreeTable(date) {
-  let table = 1;
-
-  // Query database to return the first table free at date
-  //{
-    // This function just goes through the dictionary in server until an incremented int doesn't appear for that date
-    let list = server[formatDate(date)];
-
-    if (list !== undefined) {
-      let tempTable = 1;
-      while (table === 0) {
-        for (let i = 0; i < list.length; i++) {
-          if (list[i]['table'] === tempTable) {
-            break;
-          } else if (i === list.length - 1) {
-            table = tempTable;
-          }
-        }
-        tempTable++;
-      }
-    }
-  //}
-
-  return table;
 }
 
 // // // // // // // // // // // // //
 // Reservation Modifying Functions //
 // // // // // // // // // // // // //
 
-// POST creation of reservation
-async function addReservationToServer(id, tableNum, hostName, hostId, phone, numSeats, reservationDate) {
-  $.post('/reservation?name="' + hostName + '"&location=Toronto&email="a@a.com"&host="abc"&table=1&startTime=' + new Date());
-
-  /*
-  /reservation ?name=&location=&email=&host=&table=&startTime=&endTime=
-      name === String && will be unique
-      location === String && will be unique
-      email === String && will be unique
-      host === String
-      table === Number
-      startTime === Date
-      endTime === Date
-   */
-
-  // Add new entry into database
-  // {
-      let serverLst = server[formatDate(reservationDate)];
-
-      if(serverLst === undefined) { // No reservations are booked for that date yet
-        server[formatDate(reservationDate)] = [{'id': id, 'table': tableNum, 'host': hostName, "host_id": hostId, 'phone': phone, 'numSeats': numSeats, 'hour': reservationDate.getHours(), 'timeSlot': reservationDate.getMinutes()}];
-      } else {
-        server[formatDate(reservationDate)].push({'id': id, 'table': tableNum, 'host': hostName, "host_id": hostId, 'phone': phone, 'numSeats': numSeats, 'hour': reservationDate.getHours(), 'timeSlot': reservationDate.getMinutes()});
-      }
-  // }
-
-  return true;
-}
 
 // Creates a new reservation on reservationList
-function createNewReservation(hostName, hostId, reservationDate, phone, numSeats) {
-  let tableNum = getFreeTable(reservationDate);
-  let id = getNewReservationId();
-
-  addReservationToServer(id, tableNum, hostName, hostId, phone, numSeats, reservationDate);
+function createNewReservation(hostName, hostId, reservationDate, id, phone, numSeats) {
+  let tableNum = tableCount;
+  tableCount += 1;
 
   if (isCurrentDay(reservationDate)) {
     addReservation(hostName, hostId, reservationDate, tableNum, id, phone, numSeats)
@@ -334,7 +373,7 @@ function addReservation(hostName, hostId, reservationDate, tableNum, id, phone, 
 
   // Date of reservation
   reservationInfo = reservationInfo.cloneNode(false);
-  reservationInfo.innerText = getStandardTimeFormat(reservationDate);
+  reservationInfo.innerText = reservationDate.toLocaleTimeString();//getStandardTimeFormat(reservationDate);
   newReservation.appendChild(reservationInfo);
 
   // Number of seats
@@ -400,28 +439,9 @@ function reservationButtonFunction(e) {
 
 // POST removal of reservation
 async function removeReservationFromServer(child) {
-  // Remove entry from database
-  // {
-      // irl it would go by id
-      let id = parseInt(child.firstChild.innerText);
-      let date = new Date(child.firstChild.nextSibling.nextSibling.nextSibling.innerText);
-      let serverLst = server[formatDate(currentDate)];
+  const id = child.firstChild.innerText;
 
-      if (serverLst === undefined) {
-        console.log("Date does not exist to be deleted!");
-        return false;
-      } else {
-        for (let i = 0; i < serverLst.length; i++) {
-          if (serverLst[i]['id'] === id) {
-            serverLst.splice(i, 1);
-            server[formatDate(date)] = serverLst;
-            break;
-          }
-        }
-      }
-  // }
-
-  return true;
+  return deleteServerReservation(id);
 }
 
 // Remove reservation from reservationList
@@ -440,44 +460,47 @@ function removeAllReservations() {
   }
 }
 
+const monthToInt = {"Jan": "00", "Feb": "01", "Mar": "02", "Apr": "03", "May": "04", "June": "05", "July": "06", "Aug": "07", "Sept": "09", "Nov": "10", "Oct": "11", "Dec": "12"};
+
 // GET from server
-async function requestDayReservations(date) {
-  let dates1 = $.get('/reservation/id=' + restId + '&startTime=' + date);
+async function requestDayReservations(restaurant, tempDate) {
+  let date = new Date(tempDate);
+  date.setMonth(date.getMonth() + 1);
+  const dateString = date.toDateString();
+  let dateSplit = dateString.split(' ');
+  const startDate = dateSplit[3] + "-" + monthToInt[dateSplit[1]] + "-" + dateSplit[2] + "T00:00";
+  date.setDate(date.getDate() + 1);
+  dateSplit = date.toDateString().split(' ');
+  const endDate = dateSplit[3] + "-" + monthToInt[dateSplit[1]] + "-" + dateSplit[2] + "T00:00";
 
-  console.log(dates1);
-
-  // Call database to get all dates on date
-  // {
-    let dates = server[formatDate(date)];
-    if (dates === undefined) {
-      // No reservations exist on the current Date!
-      return;
-    }
-    // sort in sql
-  // }
-  return dates;
+  return getRestaurantReservationsByRestaurantIdAndDate(restaurant._id, new Date(startDate), new Date(endDate)).then((reservations) => {
+    console.log(reservations);
+    return reservations;
+  });
 }
 
 function addReservations(dates) {
-  let tempDate = currentDate;
-  for (let i = 0; i < dates.length; i++) {
+  let tempDate = new Date(currentDate);
+  console.log(dates);
+  for (let i = 0; i < dates['length']; i++) {
     tempDate.setHours(dates[i]['hour']);
     tempDate.setMinutes(dates[i]['timeSlot']);
-    addReservation(dates[i]['host'], dates[i]['host_id'], tempDate, dates[i]['table'], dates[i]['id'], dates[i]['phone'], dates[i]['numSeats']);
+    addReservation(dates[i]['name'], 'N/A', new Date(dates[i]['startTime']), dates[i]['table'], dates[i]['_id'], dates[i]['phonenumber'], dates[i]['seats']);
+    tableCount = Math.max(tableCount, dates[i]['table'] + 1);
   }
 }
 
 // Puts reservations on reservationList for all entries on date
-function createDayReservations() {
+function createDayReservations(restaurant) {
   removeAllReservations();
 
   // GET all reservations on this day then add them to the screen
-  requestDayReservations(currentDate).then(addReservations);
+  requestDayReservations(restaurant, currentDate).then(addReservations);
 }
 
 // Creates entries for the current day
-function createCurrentDayReservations() {
-  createDayReservations(currentDate);
+function createCurrentDayReservations(restaurant) {
+  createDayReservations(restaurant, currentDate);
 
   updateTextDate();
 }
@@ -485,31 +508,6 @@ function createCurrentDayReservations() {
 // // // // // // // // // // //
 // Review modifying functions //
 // // // // // // // // // // //
-
-function createReview(review) {
-    return $('<csc309-restaurant-review></csc309-restaurant-review')
-    .attr('heading', review['name'])
-    .attr('comment', review['comment'])
-    .attr('stars', review['stars'])
-    .attr('date', new Date(review['createdAt']).toLocaleDateString());
-}
-
-function constructReviewHTML(reviewContext) {
-    let newRow = document.createElement("div");
-    newRow.setAttribute("class", "row justify-content-center");
-
-    $(newRow).append(createReview(reviewContext));
-
-    return newRow;
-}
-
-function addReviews(maxLoad) {
-    $.get('/review').then((reviews) => {
-        for(let i = 0; i < Math.min(maxLoad, reviews.length); i++) {
-            $("#reviews").append(constructReviewHTML(reviews[i]));
-    }
-    });
-}
 
 function createReviewPrompt() {
   let group = document.createElement('div');
@@ -536,10 +534,12 @@ function createReviewPrompt() {
 function addReview(e) {
   const target = e.target;
 
-  if(target.parentNode.id.localeCompare("reviews") &&
-     target.className === '') {
+  console.log(target);
+  console.log(target.parentNode)
+
+  if(target.parentNode.className === ("ownerComment")) {
       // If you click on a review
-      if(target.nextSibling === null) {
+      if(target.nextSibling === null || target.nextSibling.className === '') {
         $(createReviewPrompt()).insertAfter(target);
       }
       else {
@@ -548,44 +548,18 @@ function addReview(e) {
   }
 
   else if(target.parentNode.className === 'input-group-append') {
-      const originalText = $(target.parentNode.parentNode).prev()[0].getAttribute('comment');
-      let reviewText = '"' + originalText + '": ' + $(target.parentNode).prev().val();
+      const originalReview = $(target.parentNode.parentNode).prev()[0];
+      const originalName = originalReview.getAttribute('heading');
+      const originalText = originalReview.getAttribute('comment');
+      let reviewText = '"' + originalName + ": " + originalText + '": ' + $(target.parentNode).prev().val();
 
       if(reviewText.length !== 0) {
-        const originalReview = target.parentNode.parentNode.parentNode;
-        const reviewObj = {'name': 'Owner', 'comment': reviewText, 'stars': 0, 'createdAt': new Date()};
-
-        $.post('/review?name="Owner"&stars=0&comment=' + reviewText).then((res) => {
-            // Remove text box
-            $(target.parentNode.parentNode).remove();
-            // Put the owner's reply on the page
-            $(constructReviewHTML(reviewObj)).insertAfter(originalReview);
-        });
+        onCreateReviewSubmit(restObj.slug + " Owner", 0, reviewText);
+        $(originalReview).next().remove();
       }
   }
 }
 
 function editCardInfo() {
-    let restId = "restId";
-    openPopup("restCardEdit.html", 'id=' + restId);
+    openPopup("restCardEdit.html", 'id=' + restObj._id);
 }
-
-function getRestId() {
-  let url = new URL(window.location);
-  let params = url.searchParams;
-  restId = params.get('id');
-  if(restId === null) {
-    window.alert("No restaurant id given!");
-    //window.location.replace('restaurantsSearch.html');
-  }
-}
-
-// Run startup procedures
-function initialize() {
-  getRestId();
-  addReviews(6);
-  retrieveMaxReservations();
-  createCurrentDayReservations();
-}
-
-window.onload=initialize;

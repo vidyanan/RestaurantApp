@@ -3,12 +3,16 @@ const mongoose = require('mongoose')
 const Reservation = mongoose.model('Reservation', {
 	name: {
 		type: String,
-		required: true,
+		required: true
 	},
 	restaurantId: {
 		type: String,
-		required: true,
+		required: true
 	},
+  hostId: {
+	  type: String,
+    required: false
+  },
 	phonenumber: {
 		type: Number,
 		required: false

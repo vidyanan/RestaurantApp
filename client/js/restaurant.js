@@ -120,6 +120,8 @@ async function onCreateReviewSubmit(event) {
     $('#review .text-danger').text('');
     event.preventDefault();
     const data = new FormData(event.target);
+    console.log(event.target);
+    console.log(data);
     await createRestaurantReview(data);
     $("#reviews").append(
       renderReview({
