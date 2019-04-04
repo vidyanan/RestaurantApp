@@ -9,12 +9,14 @@ function submitLoginForm(e) {
 	const password = loginForm.password.value;
 
 	var type = login(username, password);
+	console.log(type);
+	console.log(typeOf(type));
 	// add backend login to encrtpt password save and verify type of account
 	if (type=="admin"){
 		window.location.href = '/adminPage.html';
 	} else if (type=="user"){
 		window.location.href = '/restaurant.html';
-	} else if (type=="user2"){
+	} else if (type=="owner"){
 		window.location.href = '/restaurantOwner.html';
 	} else {
 		alert("error: invalid username and password")

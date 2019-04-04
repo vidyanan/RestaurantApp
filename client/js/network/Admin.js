@@ -97,7 +97,7 @@ function newRestaurant(hours, name, featuredImage, slug, location, cuisine) {
   }
 
   $.ajax(settings).done(function (response) {
-    console.log(response);
+    return response
   });
 }
 
@@ -131,8 +131,12 @@ function getRestaurants() {
 }
 
 $.ajax(settings).done(function (response) {
-  return response;
+	response.json().then(function(data) {
+	  return response;
+	});
 });
+
+
 }
 
 function deleteRest(id) {

@@ -1,6 +1,6 @@
 # team05
 
-navigate to http://replacewithurl/index.html to see our deployed website
+navigate to https://csc309-w2019-team05.herokuapp.com/ to see our deployed website
 
 read phase 1 instructions in [phase1.txt](./phase1.txt)
 
