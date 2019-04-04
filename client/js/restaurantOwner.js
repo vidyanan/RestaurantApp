@@ -123,9 +123,6 @@ async function onCreateBookingSubmit(event) {
     const phone = data.get('phonenumber');
     const numSeats = data.get('seats');
 
-    console.log(reservationDate);
-    console.log(reservationDate.toJSON());
-
     createNewReservation(name, hostId, reservationDate, resQuery['_id'], phone, numSeats);
 
     alert(`${data.get('name')}, we have received your booking!`)
@@ -406,7 +403,6 @@ function addReservation(hostName, hostId, reservationDate, tableNum, id, phone, 
 
 function openPopup(pageUrl, id) {
     let newUrl = pageUrl + "?" + id;
-    console.log(newUrl);
     window.open(newUrl, "edit", "scrollbars=1,height=1050px,width=375px");
 }
 
@@ -474,14 +470,12 @@ async function requestDayReservations(restaurant, tempDate) {
   const endDate = dateSplit[3] + "-" + monthToInt[dateSplit[1]] + "-" + dateSplit[2] + "T00:00";
 
   return getRestaurantReservationsByRestaurantIdAndDate(restaurant._id, new Date(startDate), new Date(endDate)).then((reservations) => {
-    console.log(reservations);
     return reservations;
   });
 }
 
 function addReservations(dates) {
   let tempDate = new Date(currentDate);
-  console.log(dates);
   for (let i = 0; i < dates['length']; i++) {
     tempDate.setHours(dates[i]['hour']);
     tempDate.setMinutes(dates[i]['timeSlot']);
@@ -533,9 +527,6 @@ function createReviewPrompt() {
 
 function addReview(e) {
   const target = e.target;
-
-  console.log(target);
-  console.log(target.parentNode)
 
   if(target.parentNode.className === ("ownerComment")) {
       // If you click on a review

@@ -8,6 +8,8 @@ export {
   getRestaurantReviewsByRestaurantId,
   createRestaurantBooking,
   createRestaurantReview,
+  deleteServerReservation,
+  getRestaurantReservationsByRestaurantIdAndDate
 };
 
 /**
@@ -275,6 +277,7 @@ async function createRestaurantReview(review) {
   return new Promise((resolve, reject) => {
     if (review instanceof FormData) {
       review = formDataToJSON(review);
+      console.log(review);
     }
     $.ajax({
       "async": true,
@@ -293,6 +296,40 @@ async function createRestaurantReview(review) {
   })
 }
 
+async function getRestaurantReservationsByRestaurantIdAndDate(id, startDate, endDate) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      "async": true,
+      "crossDomain": true,
+      "url": `/reservation/${id}/${startDate}/${endDate}"`,
+      "method": "GET",
+      "headers": {
+        "cache-control": "no-cache",
+        "Postman-Token": "57369746-f3ec-455a-9f65-dad638b6e52f"
+      }
+    })
+      .done(resolve)
+      .fail(reject);
+  })
+}
+
+async function deleteServerReservation(id) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      "async": true,
+      "crossDomain": true,
+      "url": "/reservation?_id=" + id,
+      "method": "DELETE",
+      "headers": {
+        "Content-Type": "application/json",
+        "cache-control": "no-cache",
+      },
+      "processData": false,
+    })
+      .done(resolve)
+      .fail(reject);
+  })
+}
 
 
 // Helper functions that should be on the server
