@@ -479,8 +479,16 @@ function addReservations(dates) {
   for (let i = 0; i < dates['length']; i++) {
     tempDate.setHours(dates[i]['hour']);
     tempDate.setMinutes(dates[i]['timeSlot']);
-    addReservation(dates[i]['name'], 'N/A', new Date(dates[i]['startTime']), dates[i]['table'], dates[i]['_id'], dates[i]['phonenumber'], dates[i]['seats']);
-    tableCount = Math.max(tableCount, dates[i]['table'] + 1);
+
+    let table = dates[i]['table'];
+    if (table === 'undefined' || table == null || isNaN(table)) {
+      table = tableCount;
+      tableCount += 1;
+    } else {
+      Math.max(tableCount, dates[i]['table'] + 1);
+    }
+
+    addReservation(dates[i]['name'], 'N/A', new Date(dates[i]['startTime']), table, dates[i]['_id'], dates[i]['phonenumber'], dates[i]['seats']);
   }
 }
 
