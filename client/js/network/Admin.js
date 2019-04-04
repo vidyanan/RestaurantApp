@@ -16,16 +16,19 @@ function newProfile(firstname, lastname, address, email, password, phonenumber, 
 }
 
 function getProfiles(){
-	var settings = {
-	  "async": true,
-	  "crossDomain": true,
-	  "url": "/profile/",
-	  "method": "GET",
-	  "headers": {
-	  }
-	}
-	$.ajax(settings).done(function (response) {
-		return response;
+	return new Promise((resolve, reject) => {
+		console.log("imann");
+		$.ajax({
+			"async": true,
+			"crossDomain": true,
+  		"url": "/profile/",
+			"method": "GET",
+			"headers": {
+				"cache-control": "no-cache",
+			}
+		})
+			.done(resolve)
+			.fail(reject);
 	});
 }
 
@@ -76,11 +79,17 @@ function deleteProfile(id) {
 
 //restaurant
 
-function newRestaurant(hours, name, featuredImage, slug, location, cuisine) {
-  var settings = {
+function newRestaurant(hours, name, featuredImage, slug, location, cuisine,restaurantOwner) {
+	console.log("as");
+	console.log("as");
+	console.log("as");
+	console.log("as");
+	console.log("as");
+
+	var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "/restaurant",
+    "url": "/restaurant?restaurantOwner="+restaurantOwner,
     "method": "POST",
     "headers": {
       "Content-Type": "application/json",
@@ -119,23 +128,21 @@ $.ajax(settings).done(function (response) {
 }
 
 function getRestaurants() {
-  var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "/restaurant",
-  "method": "GET",
-  "headers": {
-    "cache-control": "no-cache",
-    "Postman-Token": "72703c9f-60d9-494d-a208-254d01e35361"
-  }
-}
 
-$.ajax(settings).done(function (response) {
-	response.json().then(function(data) {
-	  return response;
+	return new Promise((resolve, reject) => {
+		console.log("imann");
+		$.ajax({
+			"async": true,
+			"crossDomain": true,
+			"url": "/restaurant",
+			"method": "GET",
+			"headers": {
+				"cache-control": "no-cache",
+			}
+		})
+			.done(resolve)
+			.fail(reject);
 	});
-});
-
 
 }
 
@@ -158,18 +165,21 @@ $.ajax(settings).done(function (response) {
 ///review
 
 function getReviews() {
-  var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "/review",
-  "method": "GET",
-  "headers": {
-  }
-}
+	return new Promise((resolve, reject) => {
+		console.log("imann");
+		$.ajax({
+			"async": true,
+			"crossDomain": true,
+			"url": "/review",
+			"method": "GET",
+			"headers": {
+				"cache-control": "no-cache",
+			}
+		})
+			.done(resolve)
+			.fail(reject);
+	});
 
-$.ajax(settings).done(function (response) {
-  return response
-});
 }
 
 function deleteReview(id) {

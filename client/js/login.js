@@ -8,9 +8,8 @@ function submitLoginForm(e) {
 	const username = loginForm.username.value;
 	const password = loginForm.password.value;
 
-	var type = login(username, password);
-	console.log(type);
-	console.log(typeOf(type));
+	prmise = login(username, password);
+	prmise.then(function(type) {
 	// add backend login to encrtpt password save and verify type of account
 	if (type=="admin"){
 		window.location.href = '/adminPage.html';
@@ -21,5 +20,5 @@ function submitLoginForm(e) {
 	} else {
 		alert("error: invalid username and password")
 	}
-
+	});
 }

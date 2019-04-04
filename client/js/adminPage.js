@@ -20,26 +20,40 @@ deleteBar.addEventListener('click', del)
 fill();
 
 function fill() {
-  responseUsers = JSON.parse(getProfiles());
-  reponseRestaurants = JSON.parse(getRestaurants());
-  reponseReview = JSON.parse(getReviews());
-  var i = 0;
-  while(i<responseUsers.length){
-    addUser(responseUsers[i]);
-    i = i + 1;
-  }
+  promise1 = (getProfiles());
 
-  i = 0;
-  while(i<reponseRestaurants.length){
-    addRest(reponseRestaurants[i]);
-    i = i + 1;
-  }
+  promise1.then(function(responseUsers) {
+    //console.log(responseUsers);
+    var i = 0;
+    //console.log(responseUsers);
+    while(i<responseUsers.length){
+      addUser(responseUsers[i]);
+      i = i + 1;
+    }
+	});
 
-  i = 0;
-  while(i<reponseReview.length){
-    addReview(reponseReview[i]);
-    i = i + 1;
-  }
+  promise2 = (getRestaurants());
+
+  promise2.then(function(reponseRestaurants) {
+    //console.log(responseUsers);
+    i = 0;
+    while(i<reponseRestaurants.length){
+      addRest(reponseRestaurants[i]);
+      i = i + 1;
+    }
+  });
+
+
+  promise3 = (getReviews());
+  promise3.then(function(reponseReview) {
+    //console.log(responseUsers);
+    i = 0;
+    while(i<reponseReview.length){
+      addReview(reponseReview[i]);
+      i = i + 1;
+    }
+  });
+
 
 }
 

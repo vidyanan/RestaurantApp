@@ -15,20 +15,21 @@ function newProfile(firstname, lastname, address, email, password, phonenumber, 
 
 
 function login(email, password) {
-	var settings = {
-	  "async": true,
-	  "crossDomain": true,
-	  "url": "/login?email="+email+"&password="+password,
-	  "method": "GET",
-	  "headers": {
-	  }
-	}
-	$.ajax(settings).done(function (response) {
-		response.json().then(function(data) {
-			console.log(response);
-			console.log(typeOf(response));
-		  return response;
-		});
+
+	return new Promise((resolve, reject) => {
+		console.log("imann");
+		$.ajax({
+			"async": true,
+			"crossDomain": true,
+			"url": "/login?email="+email+"&password="+password,
+			"method": "GET",
+			"headers": {
+				"cache-control": "no-cache",
+			}
+		})
+			.done(resolve)
+			.fail(reject);
 	});
+
 
 }
