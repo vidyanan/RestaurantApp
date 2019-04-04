@@ -1,38 +1,33 @@
 const myform = document.querySelector('#cardForm');
-const cuisineElement = document.querySelector('#cuisines');
 
 myform.addEventListener('click', buttonAction);
 
 let inputField = document.createElement('div');
 inputField.setAttribute('class', 'col');
 
-let temp = document.createElement('input');
-temp.setAttribute("type", "text");
-temp.setAttribute("name", "food");
+let restObj;
 
-inputField.appendChild(temp);
-
-async function getCuisines(restId) {
+async function getRestaurantObj(restId) {
   return $.get('restaurant/' + restId);
 }
 
-async function saveCuisines() {
-  let cuisines = [];
-
-  let children = document.getElementsByName('food');
-
-  for(let i = 0; i < children.length; i++) {
-    let tempVal = children[i].value;
-
-    if(tempVal !== "" && typeof tempVal !== "undefined") {
-      cuisines.push(tempVal);
-    }
-  }
-
-  // Push to server
-  console.log(cuisines);
-
-  return true;
+async function pushToServer() {
+  console.log($('#cuisine').val());
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      "async": true,
+      "crossDomain": true,
+      "url": `/restaurant?name=${restObj['name']}&location=${restObj['location']}&cuisine=${$('#cuisine').val()}&featuredImage=${$('#featureLocation').val()}`,
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "cache-control": "no-cache",
+      },
+      "processData": false
+    })
+      .done(resolve)
+      .fail(reject);
+  })
 }
 
 function getRestId() {
@@ -51,24 +46,19 @@ function getRestId() {
 async function fillInData(){
   let restId = getRestId();
 
-  await getCuisines(restId).then((cuisines) => {
-    for(let i = 0; i < cuisines.length; i++) {
-          let tempField = inputField.cloneNode(true);
-          tempField.childNodes[0].value = cuisines[i];
-          cuisineElement.appendChild(tempField);
-      }
-  });
+  restObj = await getRestaurantObj(restId);
+
+  $('#cuisine').val(restObj['cuisine']);
+  $('#featureLocation').val(restObj['featuredImage']);
 }
 
 async function buttonAction(e){
-  console.log(e.target);
-  if (e.target.className.includes('btn btn-primary')) {
-    console.log("did");
-    cuisineElement.appendChild(inputField);
-  }
-  else if (e.target.className.includes('btn btn-success')) {
+  if (e.target.className.includes('btn btn-success')) {
       //Push changes to server
-      await saveCuisines().then((hasSaved) => {
+      await pushToServer().then((hasSaved) => {
+
+          console.log(hasSaved)
+
           if(hasSaved) {
               window.alert("Successfully saved!");
           } else {
