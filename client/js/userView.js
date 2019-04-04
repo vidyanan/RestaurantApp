@@ -5,8 +5,22 @@ async function getUserDetails(userId) {
   return $.get('/profile/' + userId);
 }
 
+function getUserId() {
+    let url = new URL(window.location);
+    let params = url.searchParams;
+    let id = params.get('id');
+
+    if(id === null) {
+        console.log("Id not given!");
+        window.close();
+    } else {
+      return id;
+    }
+}
+
 async function fillInData(){
-  let userId = 0;
+  let userId = getUserId();
+
   await getUserDetails(userId).then((dictionary) => {
       $("#id").text(userId);
       $("#firstName").text(dictionary['firstName']);

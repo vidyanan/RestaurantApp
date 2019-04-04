@@ -35,8 +35,21 @@ async function saveCuisines() {
   return true;
 }
 
+function getRestId() {
+    let url = new URL(window.location);
+    let params = url.searchParams;
+    let id = params.get('id');
+
+    if(id === null) {
+        console.log("Id not given!");
+        window.close();
+    } else {
+      return id;
+    }
+}
+
 async function fillInData(){
-  let restId = 0;
+  let restId = getRestId();
 
   await getCuisines(restId).then((cuisines) => {
     for(let i = 0; i < cuisines.length; i++) {

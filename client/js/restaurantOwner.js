@@ -18,6 +18,7 @@ server[tomorrow] = [{"id": 3, "table": 5, "host": "Him", "host_id": 0, "phone": 
 let serverMaxReservations = 5;
 let serverNextID = 4;
 
+let restId = null;
 let intToDay = {1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday", 0: "Sunday"};
 let intToMonth = {0: "January", 1: "February", 2: "March", 3: "April", 4: "May", 5: "June", 6: "July", 7: "August", 8: "September", 9: "October", 10: "November", 11: "December"};
 let maxReservations;
@@ -261,6 +262,8 @@ function getFreeTable(date) {
 
 // POST creation of reservation
 async function addReservationToServer(id, tableNum, hostName, hostId, phone, numSeats, reservationDate) {
+  $.post('/reservation?name="' + hostName + '"&location=Toronto&email="a@a.com"&host="abc"&table=1&startTime=' + new Date());
+
   /*
   /reservation ?name=&location=&email=&host=&table=&startTime=&endTime=
       name === String && will be unique
@@ -364,6 +367,7 @@ function addReservation(hostName, hostId, reservationDate, tableNum, id, phone, 
 
 function openPopup(pageUrl, id) {
     let newUrl = pageUrl + "?" + id;
+    console.log(newUrl);
     window.open(newUrl, "edit", "scrollbars=1,height=1050px,width=375px");
 }
 
@@ -380,7 +384,7 @@ function reservationButtonFunction(e) {
       if(hostId === "Guest") {
           window.alert("Guest does not have a profile!");
       } else {
-          openPopup("userView.html", hostId);
+          openPopup("userView.html", 'id=' + hostId);
       }
   }
   // If they clicked on the text instead of the button
@@ -438,7 +442,9 @@ function removeAllReservations() {
 
 // GET from server
 async function requestDayReservations(date) {
-  // let dates = $.get('/reservation/id=restId&startTime=date');
+  let dates1 = $.get('/reservation/id=' + restId + '&startTime=' + date);
+
+  console.log(dates1);
 
   // Call database to get all dates on date
   // {
@@ -531,9 +537,14 @@ function addReview(e) {
   const target = e.target;
 
   if(target.parentNode.id.localeCompare("reviews") &&
-     target.className === '' && target.nextSibling === null) {
+     target.className === '') {
       // If you click on a review
-      $(createReviewPrompt()).insertAfter(target);
+      if(target.nextSibling === null) {
+        $(createReviewPrompt()).insertAfter(target);
+      }
+      else {
+        $(target).next().remove();
+      }
   }
 
   else if(target.parentNode.className === 'input-group-append') {
@@ -555,11 +566,23 @@ function addReview(e) {
 }
 
 function editCardInfo() {
-    openPopup("restCardEdit.html", "restId");
+    let restId = "restId";
+    openPopup("restCardEdit.html", 'id=' + restId);
+}
+
+function getRestId() {
+  let url = new URL(window.location);
+  let params = url.searchParams;
+  restId = params.get('id');
+  if(restId === null) {
+    window.alert("No restaurant id given!");
+    //window.location.replace('restaurantsSearch.html');
+  }
 }
 
 // Run startup procedures
 function initialize() {
+  getRestId();
   addReviews(6);
   retrieveMaxReservations();
   createCurrentDayReservations();
