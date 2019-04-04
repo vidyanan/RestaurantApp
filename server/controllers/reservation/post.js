@@ -8,7 +8,7 @@ module.exports = (req, res) => {
     hostId: req.body.hostId,
 		table: req.body.table,
 		seats: req.body.seats,
-		startTime: Date(req.body.startTime)
+		startTime: new Date(req.body.startTime)
 	})
 
 	reservation.save().then((result) => {
