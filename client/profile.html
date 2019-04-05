@@ -16,29 +16,31 @@
 <body>
   <csc309-navigation loggedin></csc309-navigation>
 
-	<h1> Register </h1>
 
 	<div class="form-popup" id="popup">
-		<form class="form-container" id='profileForm'>
-			firstname:
-			<input type="text" name="firstname">
-			lastname:
-			<input type="text" name="lastname">
-			address:
-			<input type="text" name="address">
-			email:
-			<input type="text" name="email" placeholder="email@email.com">
-			phonenumber:
-			<input type="text" name="phonenumber" placeholder="000000000">
-			birthday:
-			<input type="text" name="birthday" placeholder="01/31/2019">
-			password:
-			<input type="text" name="password" placeholder="******">
-			type of account: <br>
-			<input type="radio" name="type" value="regularuser" id="myRadio1" checked> regular user <br>
-			<input type="radio" name="type" value="restaurantowner" id="myRadio"> restaurant owner</br></br>
+    <form class="form-container" id='profileForm'>
+      <h1> Register </h1>
 
-			<input type="submit" class="btn btn-primary" value="create profile"></br>
+			First Name
+			<input type="text" name="firstname">
+			Last Name
+			<input type="text" name="lastname">
+			Address
+			<input type="text" name="address">
+			Email
+			<input type="text" name="email" placeholder="email@email.com">
+			Phone Number
+			<input type="text" name="phonenumber" placeholder="000000000">
+			Birthday
+			<input type="text" name="birthday" placeholder="01/31/2019">
+			Password
+			<input type="text" name="password" placeholder="******">
+      Account Type
+      <br>
+			<input type="radio" name="type" value="regularuser" id="myRadio1" checked> Regular User <br>
+			<input type="radio" name="type" value="restaurantowner" id="myRadio"> Restaurant Owner</br></br>
+
+			<input type="submit" class="btn btn-primary" value="Sign Up"></br>
 		</form>
 	</div>
 	<script src="vendor/jquery@3.3.1/jquery.min.js"></script>

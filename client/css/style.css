@@ -42,15 +42,10 @@
   overflow-x: scroll;
 }
 
-#loginForm {
-  position: fixed;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+#loginForm {margin: 40px auto;}
 
 #profileForm {
-  text-align: center;
+  text-align: left;
   margin: 40px auto;
 }
 
