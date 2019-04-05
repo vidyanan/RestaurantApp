@@ -118,7 +118,7 @@ async function onCreateBookingSubmit(event) {
     const resQuery = await createRestaurantBooking(data);
 
     const name = data.get('name');
-    const hostId = 'N/A';
+    const hostId = 'Guest';
     let reservationDate = new Date(data.get('startTime'));
     const phone = data.get('phonenumber');
     const numSeats = data.get('seats');
@@ -488,7 +488,7 @@ function addReservations(dates) {
       Math.max(tableCount, dates[i]['table'] + 1);
     }
 
-    addReservation(dates[i]['name'], 'N/A', new Date(dates[i]['startTime']), table, dates[i]['_id'], dates[i]['phonenumber'], dates[i]['seats']);
+    addReservation(dates[i]['name'], 'Guest', new Date(dates[i]['startTime']), table, dates[i]['_id'], dates[i]['phonenumber'], dates[i]['seats']);
   }
 }
 
