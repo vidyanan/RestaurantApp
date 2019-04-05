@@ -17,7 +17,7 @@ function submitProfileForm(e) {
 	newProfile(firstname, lastname, address, email, password, phonenumber, birthday, type)
 	// add backend login to create account save preferences, etc.
 	if (type=="regularuser"){
-		window.location.href = 'restaurant.html';
+		window.location.href = '/';
 	} else if (type=="restaurantowner"){
 		window.location.href = 'restaurantOwner.html';
 	} else {

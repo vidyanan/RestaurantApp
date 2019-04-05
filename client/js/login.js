@@ -14,7 +14,7 @@ function submitLoginForm(e) {
 	if (type=="admin"){
 		window.location.href = '/adminPage.html';
 	} else if (type=="user"){
-		window.location.href = '/restaurant.html';
+		window.location.href = '/';
 	} else if (type=="owner"){
 		window.location.href = '/restaurantOwner.html';
 	} else {
