@@ -1,11 +1,11 @@
-Start a static web server serving this directory.
+To run the server, run the following commands:
 
-* If you have `python3` installed, you may use `python3 -m http.server`
-* If you have `node` installed, you may use `npm install -g serve && serve .`
+cd server
+npm install
+npm start
 
 Using the latest stable version of Google Chrome, navigate to http://localhost:PORT/index.html where
 PORT is replaced by the port number that the static web server is listening on.
-
 
 From "/index.html" click sign in top right hand side
  -> admin, admin brings you to admin view
